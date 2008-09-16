@@ -1,0 +1,3 @@
+[submodule "vendor/plugins/ruote_plugin"]
+	path = vendor/plugins/ruote_plugin
+	url = git://github.com/jmettraux/ruote_plugin.git
