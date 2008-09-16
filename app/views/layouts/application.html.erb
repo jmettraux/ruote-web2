@@ -1,0 +1,51 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>ruote-web2 <%= request.request_uri %></title>
+
+    <%= javascript_include_tag 'application' %>
+    <%= stylesheets %>
+
+    <!-- TODO : link to syndication if logged in -->
+
+  </head>
+  <body>
+
+    <div class="header">
+      <img src="/images/openwfe-logo.png" />ruote-web2
+    </div>
+
+    <div class="subheader">
+      <div class="left">
+        open source workflow and bpm engine, written in ruby
+      </div>
+      <div class="right">
+        <%= current_user ? render_menu : 'please log in' %>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+    <div class="content">
+
+      <%= content_tag(
+        'div', h(flash[:notice]), :class => 'notice', :id => 'notice'
+        ) if flash[:notice] %>
+
+      <%= content_tag(
+        'div', h(flash[:error]), :class => 'notice error', :id => 'error'
+        ) if flash[:error] %>
+
+      <%= yield :layout %>
+    </div>
+
+    <div class="footer">
+    </div>
+
+  </body>
+</html>
+

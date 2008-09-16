@@ -1,0 +1,45 @@
+
+body {
+  color: #888;
+  font-family: Helvetica;
+  font-size: 14px;
+  margin: 20px 70px;
+}
+a, a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+.header {
+  padding-bottom: 3px;
+  border-bottom: 1px #888 solid;
+}
+.footer {
+  border-top: 1px #888 solid;
+}
+.subheader {
+  margin-top: 4px;
+}
+
+.notice {
+  border: 1px #888 solid;
+  background-color: #EAF2F5;
+  text-align: center;
+  font-style: italic;
+  color: black;
+  padding: 10px;
+}
+.error {
+  border: 1px red solid;
+  background-color: #FD4848;
+}
+
+.content {
+  margin-top: 1em;
+}
+
+/* well ... */
+.left { float: left; }
+.right { float: right; }
+.clear { clear: both; }
+
