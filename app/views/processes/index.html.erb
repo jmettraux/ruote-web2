@@ -1,3 +1,6 @@
 
-nada
+processes :
+<pre>
+  <%= @processes.values.collect { |ps| ps.wfid }.join("\n") %>
+</pre>
 
