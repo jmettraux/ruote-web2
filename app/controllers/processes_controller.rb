@@ -77,12 +77,8 @@ class ProcessesController < ApplicationController
 
     flash[:notice] = "launched process instance #{fei.wfid}"
 
-    # TODO
-    #
-    # html : redirect to a 'home' page
-    # json and xml : no redirection but 201 and 'Location' header
+    # TODO : html : redirect to a 'home' page
 
-    #headers['Location'] = "/processes/#{fei.wfid}"
     headers['Location'] = process_url(fei.wfid)
 
     respond_to do |format|
@@ -102,29 +98,10 @@ class ProcessesController < ApplicationController
       return OpenWFE::Xml::launchitem_from_xml(request.body.read) \
         if ct == 'application/xml'
 
-      h = params
-      h = ActiveSupport::JSON.decode(request.body.read) \
+      return OpenWFE::Json.launchitem_from_json(request.body.read) \
         if ct == 'application/json'
 
-      pdef_url = h['pdef_url'] || h['workflow_definition_url'] || h['definition_url']
-      pdef = h['pdef'] || h['definition']
-
-      fields = h['fields'] || {}
-      fields = ActiveSupport::JSON.decode(h['fields']) if fields.is_a?(String)
-
-      li = nil
-      if pdef
-        li = OpenWFE::LaunchItem.new(pdef)
-      elsif url
-        li = OpenWFE::LaunchItem.new
-        li.definition_url = url
-      end
-
-      return nil unless li
-
-      li.attributes.merge!(fields)
-
-      li
+      OpenWFE::LaunchItem.from_h(params)
     end
 end
 
