@@ -1,0 +1,55 @@
+
+CREDITS
+=======
+
+Ruote (OpenWFEru) is an open source Ruby workflow and BPM engine.
+
+Ruote-Web2 is a Ruby on Rails web application wrapping an instance of Ruote and a worklist.
+
+
+The main project team
+---------------------
+
+John Mettraux ( project lead ( john >at< openwfe.org ) )
+Tomaso Tosolini - database persisted engine implementation and patches
+
+
+Contributors
+------------
+
+Scott Conrad (bootstrap_dev_db.rake enhancements)
+Torsten Schoenebaum - better engine.stop for Mongrel
+Scott Sproule (form action issue on Glassfish)
+Arjan van Bentem (patches)
+Amedeo Paglione (patches)
+Juan Pedro Paredes (patches)
+Ron Fox Kendou (concurrence bug)
+
+
+Sponsors
+--------
+
+(none)
+
+
+Donators
+--------
+
+(none)
+
+
+Feedback
+--------
+
+(none)
+
+
+Misc
+----
+
+Tools
+-----
+
+- Ruby on Rails             http://rubyonrails.org
+- the Styler rails plugin   http://the.railsi.st
+

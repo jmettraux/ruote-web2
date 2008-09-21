@@ -1,0 +1,8 @@
+
+= OpenWFEru "ruote-web2" - CHANGELOG.txt
+
+
+== ruote-web2 - 0.9.20    not yet released
+
+- todo  #XXXXX : nada
+

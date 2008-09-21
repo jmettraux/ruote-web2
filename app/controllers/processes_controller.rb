@@ -46,10 +46,13 @@ class ProcessesController < ApplicationController
     @processes = ruote_engine.list_process_status
 
     respond_to do |format|
-      format.html
+
+      format.html # => app/views/processes.html.erb
+
       format.json do
         render :json => @processes.values.to_json
       end
+
       format.xml do
         render(
           :xml => OpenWFE::Xml::processes_to_xml(
@@ -58,10 +61,70 @@ class ProcessesController < ApplicationController
     end
   end
 
+  def show
+  end
+
   #
   # POST /processes
   #
   def create
+
+    li = parse_launchitem
+
+    # TODO : complain if no launchitem
+
+    fei = ruote_engine.launch(li)
+
+    flash[:notice] = "launched process instance #{fei.wfid}"
+
+    # TODO
+    #
+    # html : redirect to a 'home' page
+    # json and xml : no redirection but 201 and 'Location' header
+
+    #headers['Location'] = "/processes/#{fei.wfid}"
+    headers['Location'] = process_url(fei.wfid)
+
+    respond_to do |format|
+
+      format.html { redirect_to "/processes/#{fei.wfid}" }
+      format.json { render :json => "{\"wfid\":#{fei.wfid}}", :status => 201 }
+      format.xml { render :xml => "<wfid>#{fei.wfid}</wfid>", :status => 201 }
+    end
   end
+
+  protected
+
+    def parse_launchitem
+
+      ct = request.content_type.to_s
+
+      return OpenWFE::Xml::launchitem_from_xml(request.body.read) \
+        if ct == 'application/xml'
+
+      h = params
+      h = ActiveSupport::JSON.decode(request.body.read) \
+        if ct == 'application/json'
+
+      pdef_url = h['pdef_url'] || h['workflow_definition_url'] || h['definition_url']
+      pdef = h['pdef'] || h['definition']
+
+      fields = h['fields'] || {}
+      fields = ActiveSupport::JSON.decode(h['fields']) if fields.is_a?(String)
+
+      li = nil
+      if pdef
+        li = OpenWFE::LaunchItem.new(pdef)
+      elsif url
+        li = OpenWFE::LaunchItem.new
+        li.definition_url = url
+      end
+
+      return nil unless li
+
+      li.attributes.merge!(fields)
+
+      li
+    end
 end
 

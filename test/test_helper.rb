@@ -19,7 +19,7 @@ class Test::Unit::TestCase
   # don't care one way or the other, switching from MyISAM to InnoDB tables
   # is recommended.
   #
-  # The only drawback to using transactional fixtures is when you actually 
+  # The only drawback to using transactional fixtures is when you actually
   # need to test transactions.  Since your test is bracketed by a transaction,
   # any transactions started in your code will be automatically rolled back.
   self.use_transactional_fixtures = true
@@ -45,4 +45,32 @@ class Test::Unit::TestCase
   def unset_basic_authentication
     @request.env.delete('HTTP_AUTHORIZATION')
   end
+
+  #
+  # RAW post
+  #
+  # like an integration test post
+  #
+  #   rpost :create, xml, :format => :xml
+  #
+  def rpost (method, body, options={})
+
+    mime = case options[:format]
+      when :xml then 'application/xml'
+      when :json then 'application/json'
+      else 'application/xml'
+    end
+
+    @request.env['CONTENT_TYPE'] = mime
+    @request.env['HTTP_ACCEPT'] = mime
+
+    @request.env['RAW_POST_DATA'] = body
+
+    post method
+  end
 end
+
+require 'fileutils'
+FileUtils.rm_rf('work_test')
+puts "\ncleaned up work_test/\n\n"
+

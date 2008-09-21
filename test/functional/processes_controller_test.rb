@@ -28,7 +28,6 @@ class ProcessesControllerTest < ActionController::TestCase
 
   def test_empty_process_list_xml
     set_basic_authentication "admin:admin"
-    #get :index, {}, { 'accept' => 'application/xml' }
     @request.env['HTTP_ACCEPT'] = 'application/xml'
     get :index
     assert_response :success
@@ -37,10 +36,43 @@ class ProcessesControllerTest < ActionController::TestCase
   end
 
   def test_empty_process_list_json
-    set_basic_authentication "admin:admin"
+    set_basic_authentication 'admin:admin'
     @request.env['HTTP_ACCEPT'] = 'application/json'
     get :index
     assert_response :success
-    assert_equal "[]", @response.body
+    assert_equal '[]', @response.body
+  end
+
+  def test_launch_process_form
+    login_as :admin
+    post :create, :pdef => '["sequence",{},[["participant",{"ref":"toto"},[]]]]'
+    assert_response 302
+    assert_match /processes/, @response.headers['Location']
+  end
+
+  def test_launch_process_xml
+    xml = <<-EOS
+      <process>
+        <definition>["sequence",{},[["participant",{"ref":"toto"},[]]]]</definition>
+      </process>
+    EOS
+    set_basic_authentication 'admin:admin'
+    rpost :create, xml, :format => :xml
+    assert_response 201
+    assert_match /processes/, @response.headers['Location']
+    assert_equal 'application/xml', @response.content_type
+    assert_match /wfid/, @response.body
+  end
+
+  def test_launch_process_json
+    json = '{"definition":["sequence",{},[["participant",{"ref":"toto"},[]]]]}'
+    set_basic_authentication 'admin:admin'
+    rpost :create, json, :format => :json
+    assert_response 201
+    assert_match /processes/, @response.headers['Location']
+    assert_equal 'application/json', @response.content_type
+    b = ActiveSupport::JSON.decode @response.body
+    assert_not_nil b['wfid']
   end
 end
+
