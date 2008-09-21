@@ -71,7 +71,7 @@ class ProcessesController < ApplicationController
 
     li = parse_launchitem
 
-    # TODO : complain if no launchitem
+    return error_reply('no suitable launchitem found') unless li
 
     fei = ruote_engine.launch(li)
 
@@ -102,6 +102,12 @@ class ProcessesController < ApplicationController
         if ct == 'application/json'
 
       OpenWFE::LaunchItem.from_h(params)
+
+      rescue Exception => e
+
+        logger.warn "failed to parse launchitem : #{e}"
+
+        nil
     end
 end
 

@@ -74,5 +74,12 @@ class ProcessesControllerTest < ActionController::TestCase
     b = ActiveSupport::JSON.decode @response.body
     assert_not_nil b['wfid']
   end
+
+  def test_launch_process_error
+    set_basic_authentication 'admin:admin'
+    rpost :create, '', :format => :json
+    assert_response 400
+    assert_equal 'text/plain', @response.content_type
+  end
 end
 
