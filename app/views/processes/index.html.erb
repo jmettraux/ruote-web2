@@ -1,6 +1,28 @@
 
-processes :
-<pre>
-  <%= @processes.values.collect { |ps| ps.wfid }.join("\n") %>
-</pre>
+<table class="processes">
+  <thead class="process_header">
+    <tr>
+      <td class="wfid">id</td>
+      <td class="wfname">workflow</td>
+      <td class="launch">since</td>
+      <td class="launcher">launcher</td>
+      <td class="branches">br</td>
+      <td class="errors">err</td>
+      <td class="buttons"></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @processes.values.collect do |ps| %>
+    <tr class="process">
+      <td class="wfid"><%= h ps.wfid %></td>
+      <td class="wfname"><%= h "#{ps.wfname} #{ps.wfrevision}" %></td>
+      <td class="launch"><%= h display_time(ps.launch_time) %></td>
+      <td class="launcher"><%= h (ps.variables['launcher'] || '-') %></td>
+      <td class="branches"><%= h ps.branches %></td>
+      <td class="errors"><%= h ps.errors.size %></td>
+      <td class="buttons">x</td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 

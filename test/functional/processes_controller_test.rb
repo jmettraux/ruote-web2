@@ -53,7 +53,9 @@ class ProcessesControllerTest < ActionController::TestCase
   def test_launch_process_xml
     xml = <<-EOS
       <process>
-        <definition>["sequence",{},[["participant",{"ref":"toto"},[]]]]</definition>
+        <definition>
+          ["sequence",{},[["participant",{"ref":"toto"},[]]]]
+        </definition>
       </process>
     EOS
     set_basic_authentication 'admin:admin'

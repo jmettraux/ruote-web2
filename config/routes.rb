@@ -50,8 +50,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :processes
 
-  map.root :controller => 'sessions', :action => 'new'
+  #map.root :controller => 'sessions', :action => 'new'
+  map.root :controller => 'processes', :action => 'index'
 
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end
+
