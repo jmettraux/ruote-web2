@@ -14,7 +14,7 @@
   <tbody>
     <% @processes.values.collect do |ps| %>
     <tr class="process">
-      <td class="wfid"><%= h ps.wfid %></td>
+      <td class="wfid"><%= link_to(h(ps.wfid), process_url(ps.wfid)) %></td>
       <td class="wfname"><%= h "#{ps.wfname} #{ps.wfrevision}" %></td>
       <td class="launch"><%= h display_time(ps.launch_time) %></td>
       <td class="launcher"><%= h (ps.variables['launcher'] || '-') %></td>

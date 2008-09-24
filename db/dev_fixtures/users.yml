@@ -5,5 +5,4 @@ admin:
   email: admin@example.com
   salt: da4b9237bacccdf19c0760cab7aec4a8359010b0 # SHA1('2')
   crypted_password: 63710bb278180c26c60fe6d362881472490ea10c
-  admin: true
 

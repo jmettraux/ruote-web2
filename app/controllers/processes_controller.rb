@@ -43,14 +43,16 @@ class ProcessesController < ApplicationController
   #
   def index
 
-    @processes = ruote_engine.list_process_status
+    @processes = ruote_engine.process_statuses
 
     respond_to do |format|
 
       format.html # => app/views/processes.html.erb
 
       format.json do
-        render :json => @processes.values.to_json
+        render(
+          :json => @processes.values.collect { |p|
+            p.to_h(:request => request) }.to_json)
       end
 
       format.xml do
@@ -62,6 +64,23 @@ class ProcessesController < ApplicationController
   end
 
   def show
+
+    @process = ruote_engine.process_status(params[:id])
+
+    respond_to do |format|
+
+      format.html # => app/views/show.html.erb
+
+      format.json do
+        render :json => @process.to_h(:request => request).to_json
+      end
+
+      format.xml do
+        render(
+          :xml => OpenWFE::Xml::process_to_xml(
+            @process, :request => request, :indent => 2))
+      end
+    end
   end
 
   #
@@ -76,8 +95,6 @@ class ProcessesController < ApplicationController
     fei = ruote_engine.launch(li)
 
     flash[:notice] = "launched process instance #{fei.wfid}"
-
-    # TODO : html : redirect to a 'home' page
 
     headers['Location'] = process_url(fei.wfid)
 
