@@ -5,7 +5,7 @@
 namespace :submodule do
 
   desc(
-    "performs a 'git submodule init' then 'git module update' to make sure "
+    "performs a 'git submodule init' then 'git module update' to make sure " +
     "that the vendor/plugins/ruote_plugin is loaded correctly")
   task :update do
     sh 'git submodule init'
