@@ -15,7 +15,7 @@ prerequesite : Rails 2.1.1+
 
 This sequence of commands will install ruote-web2 in your current directory (under ruote-web2/)
 
-  git git://github.com/jmettraux/ruote-web2.git
+  git clone git://github.com/jmettraux/ruote-web2.git
   cd ruote-web2
   rake submodule:update
   rake ruote:install
