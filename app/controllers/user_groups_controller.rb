@@ -78,13 +78,33 @@ class UserGroupsController < ApplicationController
     @user_group = UserGroup.new(params[:user_group])
 
     respond_to do |format|
+
       if @user_group.save
-        flash[:notice] = 'UserGroup was successfully created.'
-        format.html { redirect_to :controller => :groups, :action => :show, :id => @user_group.group_id }
-        format.xml { render :xml => @user_group, :status => :created, :location => @user_group }
+
+        #flash[:notice] = 'UserGroup was successfully created.'
+        format.html do
+          if request.env['HTTP_REFERER']
+            redirect_to :back
+          else
+            redirect_to(
+              :controller => :groups,
+              :action => :show,
+              :id => @user_group.group_id)
+          end
+        end
+        format.xml do
+          render(
+            :xml => @user_group,
+            :status => :created,
+            :location => @user_group)
+        end
+
       else
-        format.html { render :controller => :groups, :action => :index }
-        format.xml { render :xml => @user_group.errors, :status => :unprocessable_entity }
+
+        format.html {
+          render :controller => :groups, :action => :index }
+        format.xml {
+          render :xml => @user_group.errors, :status => :unprocessable_entity }
       end
     end
   end

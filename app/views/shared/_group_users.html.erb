@@ -1,0 +1,25 @@
+
+<table>
+  <tr class="nhover">
+    <td colspan="2">members :</td>
+  </tr>
+<% for elt in in_elements %>
+  <tr>
+    <td><%= h elt.user.login %></td>
+    <td> <%= link_to 'remove', elt, :confirm => 'Are you sure ?', :method => :delete %></td>
+  </tr>
+<% end %>
+  <tr class="nhover">
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr class="nhover">
+    <td colspan="2">non members :</td>
+  </tr>
+<% for elt in out_elements %>
+  <tr>
+    <td><%= h elt.login %></td>
+    <td>add</td>
+  </tr>
+<% end %>
+</table>
+

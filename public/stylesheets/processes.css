@@ -1,10 +1,8 @@
 
 .processes {
   border-spacing: 0px;
-  padding: 2px;
+  padding: 0px;
 }
 .process {
 }
-.process:hover {
-  background-color: #E3E3E3;
-}
+

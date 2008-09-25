@@ -1,17 +1,27 @@
 
-<div class='content_title'>Editing group</div>
+<div class='content_title'>editing group '<%= @group.name %>'</div>
 
-<% form_for(@group) do |f| %>
-  <%= f.error_messages %>
+<div class='left_pane'>
 
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
+  <% form_for(@group) do |f| %>
+    <%= f.error_messages %>
 
-<%= link_to 'Show', @group %> |
-<%= link_to 'Back', groups_path %>
+    <p>
+      <%= f.label :name %><br />
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.submit "Update" %>
+    </p>
+  <% end %>
+
+  <%= link_to 'Show', @group %> |
+  <%= link_to 'Back', groups_path %>
+</div>
+
+<div class='right_pane'>
+  <%= render :partial => 'shared/group_users', :locals => @ug_locals %>
+</div>
+
+<div class='clear'></div>
+

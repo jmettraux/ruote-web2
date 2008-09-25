@@ -1,25 +1,35 @@
 
-<div class="content_title">editing user <%= @user.login %></div>
+<div class="content_title">editing user '<%= @user.login %>'</div>
 
-<% form_for(@user) do |f| %>
-  <%= f.error_messages %>
+<div class='left_pane'>
 
-  <p>
-    <%= f.label :login %><br />
-    <%= f.text_field :login %>
-  </p>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
+  <% form_for(@user) do |f| %>
+    <%= f.error_messages %>
 
-<%= link_to 'show', @user %> |
-<%= link_to 'back', users_path %>
+    <p>
+      <%= f.label :login %><br />
+      <%= f.text_field :login %>
+    </p>
+    <p>
+      <%= f.label :name %><br />
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.label :email %><br />
+      <%= f.text_field :email %>
+    </p>
+    <p>
+      <%= f.submit "Update" %>
+    </p>
+  <% end %>
+
+  <%= link_to 'show', @user %> |
+  <%= link_to 'back', users_path %>
+</div>
+
+<div class='right_pane'>
+  <%= render :partial => 'shared/user_groups', :locals => @ug_locals %>
+</div>
+
+<div class='clear'></div>
+

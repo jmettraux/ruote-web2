@@ -45,6 +45,10 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    @ug_locals = {
+      :in_elements => @user.user_groups,
+      :out_elements => Group.find(:all) - @user.groups
+    }
   end
 
   def new

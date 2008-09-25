@@ -2,12 +2,22 @@
 body {
   color: #888;
   font-family: Helvetica;
-  font-size: 14px;
+  font-size: 16px;
   margin: 20px 70px;
 }
 a, a:visited {
   color: black;
   text-decoration: none;
+}
+table {
+  border-spacing: 0px;
+  padding: 0px;
+}
+tr:hover {
+  background-color: #E3E3E3;
+}
+.nhover:hover {
+  background-color: white;
 }
 
 .header {
@@ -19,6 +29,7 @@ a, a:visited {
 }
 .subheader {
   margin-top: 4px;
+  font-size: 80%;
 }
 
 .notice {
@@ -54,3 +65,11 @@ a, a:visited {
 .right { float: right; }
 .clear { clear: both; }
 
+.left_pane {
+  width: 48%;
+  float: left;
+}
+.right_pane {
+  width: 48%;
+  float: right;
+}
