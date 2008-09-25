@@ -1,0 +1,16 @@
+
+<div class="content_title">user</div>
+
+<div class="user">
+  <div class="id"><%= @user.id %></div>
+  <div class="login"><%= @user.login %></div>
+  <div class="name"><%= @user.name %></div>
+  <div class="email"><%= @user.email %></div>
+  <div class="created_at"><%= @user.created_at %></div>
+  <div class="updated_at"><%= @user.updated_at %></div>
+</div>
+
+<% if current_user.is_admin? %>
+  <%= link_to 'edit', edit_user_path(@user.id), :class => 'group_button group_new' %>
+<% end %>
+

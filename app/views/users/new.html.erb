@@ -1,4 +1,6 @@
-<h1>Sign up as a new user</h1>
+
+<div class="content_title">new user</div>
+
 <% @user.password = @user.password_confirmation = nil %>
 
 <%= error_messages_for :user %>
@@ -17,3 +19,4 @@
 
 <p><%= submit_tag 'Sign up' %></p>
 <% end -%>
+

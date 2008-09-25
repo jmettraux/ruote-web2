@@ -35,12 +35,24 @@ class UsersController < ApplicationController
 
   before_filter :login_required
 
-  def new
+  def index
+  end
 
+  def show
+    @user = User.find(params[:id])
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def new
     @user = User.new
   end
 
   def create
+
+    # TODO : let it accept XML
 
     logout_keeping_session!
 
@@ -63,6 +75,24 @@ class UsersController < ApplicationController
 
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
       render :action => 'new'
+    end
+  end
+
+  # PUT /users/1
+  #
+  def update
+
+    @user = User.find(params[:id])
+
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        flash[:notice] = 'User was successfully updated.'
+        format.html { redirect_to(@user) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => 'edit' }
+        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+      end
     end
   end
 

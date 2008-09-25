@@ -11,7 +11,7 @@ a, a:visited {
 }
 
 .header {
-  padding-bottom: 7px;
+  padding-bottom: 9px;
   border-bottom: 1px #888 solid;
 }
 .footer {
@@ -37,6 +37,9 @@ a, a:visited {
 .content {
   margin-top: 1em;
   margin-bottom: 1em;
+}
+.content_title {
+  font-size: 1.5em;
 }
 
 /* well ... */

@@ -3,9 +3,10 @@ module ApplicationHelper
 
   def render_menu
 
-    <<-EOS
-<a href="/processes">processes</a> | <a href="/logout">logout</a>
-    EOS
+    items = %w{ processes logout }
+    items = %w{ users } + items if current_user.is_admin?
+
+    items.collect { |i| "<a href='/#{i}'>#{i}</a>" }.join(' | ')
   end
 
   #
