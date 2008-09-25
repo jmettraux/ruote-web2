@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
   #
   ADMIN_GROUP_NAME = 'admins'
 
-  has_many :user_groups
+  has_many :user_groups, :dependent => :delete_all
   has_many :groups, :through => :user_groups
 
   validates_presence_of     :login

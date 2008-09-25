@@ -1,24 +1,23 @@
 
-<div class="content_title">groups</div>
+<div class='content_title'>groups</div>
 
-<table>
+<table class='coll'>
   <tr>
     <th>name</th>
     <th>members</th>
   </tr>
 
 <% for group in @groups %>
-  <tr>
+  <tr class='group'>
     <td class='group_name'><%= h group.name %></td>
-    <td class='group_members'><%= h group.user_logins.sort.join(", ") %></td>
+    <td class='group_members'><%= comma_list(group.users, :login) %></td>
     <!--td><%= link_to 'Show', group %></td-->
-    <td class='group_button'><%= link_to 'edit', edit_group_path(group) %></td>
-    <td class='group_button'><%= link_to 'destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td class='coll_button'>
+      <%= link_to 'edit', edit_group_path(group) %> |
+      <%= link_to 'destroy', group, :confirm => 'Are you sure ?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New group', new_group_path, :class => 'group_button group_new' %>
+<%= link_to 'new group', new_group_path, :class => 'coll_button group_new' %>
 

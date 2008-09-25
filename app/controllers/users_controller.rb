@@ -36,6 +36,7 @@ class UsersController < ApplicationController
   before_filter :login_required
 
   def index
+    @users = User.find(:all)
   end
 
   def show

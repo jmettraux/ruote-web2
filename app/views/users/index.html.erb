@@ -1,2 +1,23 @@
 
+<div class='content_title'>users</div>
+
+<table class='coll'>
+  <tr>
+    <th>login</th>
+    <th>name</th>
+    <th>groups</th>
+  </tr>
+<% for user in @users %>
+  <tr class='user'>
+    <td class='user_login'><%= h user.login %></td>
+    <td class='user_name'><%= h user.name %></td>
+    <td class='user_groups'><%= comma_list(user.groups) %></td>
+    <td class='coll_button'>
+      <%= link_to 'edit', edit_user_path(user) %> |
+      <%= link_to 'destroy', user, :confirm => 'Are you sure ?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'new user', new_user_path, :class => 'coll_button user_new' %>
 

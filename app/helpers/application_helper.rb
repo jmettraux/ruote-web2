@@ -39,4 +39,13 @@ module ApplicationHelper
 
     Rufus::to_duration_string(d, :drop_seconds => true)
   end
+
+  def comma_list (objects, accessor=:name)
+    objects.collect { |o|
+      name = o.send(accessor)
+      path = send "#{o.class.to_s.downcase}_path", o
+      link_to(h(name), path)
+    }.join(', ')
+  end
 end
+
