@@ -1,22 +1,24 @@
 
-<h1>Listing groups</h1>
+<h1>groups</h1>
 
 <table>
   <tr>
-    <th>Name</th>
+    <th>name</th>
+    <th>members</th>
   </tr>
 
 <% for group in @groups %>
   <tr>
-    <td><%=h group.name %></td>
-    <td><%= link_to 'Show', group %></td>
-    <td><%= link_to 'Edit', edit_group_path(group) %></td>
-    <td><%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td class='group_name'><%= h group.name %></td>
+    <td class='group_members'><%= h group.user_logins.sort.join(", ") %></td>
+    <!--td><%= link_to 'Show', group %></td-->
+    <td class='group_button'><%= link_to 'edit', edit_group_path(group) %></td>
+    <td class='group_button'><%= link_to 'destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New group', new_group_path %>
+<%= link_to 'New group', new_group_path, :class => 'group_button group_new' %>
 
