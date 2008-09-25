@@ -15,15 +15,12 @@ namespace :data do
 
     Fixtures.create_fixtures(
       'db/dev_fixtures',
-      #%w{ groups launch_permissions store_permissions users wi_stores })
-      %w{ users })
+      %w{ users groups user_groups })
 
     puts
     puts "loaded #{User.find(:all).size} users"
-    #puts "loaded #{Group.find(:all).size} group memberships"
-    #puts "loaded #{WiStore.find(:all).size} workitem stores"
-    #puts "loaded #{StorePermission.find(:all).size} store permissions"
-    #puts "loaded #{LaunchPermission.find(:all).size} launch permissions"
+    puts "loaded #{Group.find(:all).size} groups"
+    puts "loaded #{UserGroup.find(:all).size} user_groups"
     puts
   end
 

@@ -1,9 +1,18 @@
+
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
+
+  #
+  # Used by is_admin?
+  #
+  ADMIN_GROUP_NAME = 'admins'
+
+  has_many :user_groups
+  has_many :groups, :through => :user_groups
 
   validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40
@@ -45,6 +54,20 @@ class User < ActiveRecord::Base
 
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
+  end
+
+  #
+  # Returns true if the user is member of the administrators group
+  #
+  def is_admin?
+    group_names.include?(ADMIN_GROUP_NAME)
+  end
+
+  #
+  # Returns the array of group names the user belongs to.
+  #
+  def group_names
+    groups.collect { |g| g.name }
   end
 
   protected

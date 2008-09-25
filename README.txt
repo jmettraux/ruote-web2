@@ -22,6 +22,10 @@ This sequence of commands will install ruote-web2 in your current directory (und
   rake db:migrate
   rake data:populate
 
+Note that "rake ruote:install" will install the source of Ruote and its dependencies under vendor/plugins/ruote_plugin/lib_ruote/ (and try to sudo install two gems (will ask for your password)).
+You could run "rake ruote:gem_install" instead to install Ruote and its dependencies as gems.
+
+
 == running it
 
   cd ruote-web2
