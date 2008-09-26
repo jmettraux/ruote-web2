@@ -3,8 +3,8 @@ module ApplicationHelper
 
   def render_menu
 
-    items = %w{ processes logout }
-    items = %w{ users } + items if current_user.is_admin?
+    items = %w{ processes workitems logout }
+    items = %w{ users groups } + items if current_user.is_admin?
 
     items.collect { |i| "<a href='/#{i}'>#{i}</a>" }.join(' | ')
   end

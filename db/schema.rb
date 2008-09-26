@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(:version => 20080925002330) do
     t.datetime "updated_at"
   end
 
+  add_index "groups", ["name"], :name => "index_groups_on_name", :unique => true
+
   create_table "history", :force => true do |t|
     t.datetime "created_at"
     t.string   "source",      :default => "", :null => false
@@ -50,6 +52,8 @@ ActiveRecord::Schema.define(:version => 20080925002330) do
     t.integer "user_id",  :null => false
     t.integer "group_id", :null => false
   end
+
+  add_index "user_groups", ["user_id", "group_id"], :name => "index_user_groups_on_user_id_and_group_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "login",                     :limit => 40

@@ -6,6 +6,7 @@ class CreateGroups < ActiveRecord::Migration
       t.string :name
       t.timestamps
     end
+    add_index :groups, :name, :unique => true
   end
 
   def self.down

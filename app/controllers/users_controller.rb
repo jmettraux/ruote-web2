@@ -40,11 +40,11 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = find_user
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = find_user
     @ug_locals = {
       :in_elements => @user.user_groups,
       :out_elements => Group.find(:all) - @user.groups
@@ -109,6 +109,14 @@ class UsersController < ApplicationController
     def authorized? #(action = action_name, resource = nil)
 
       current_user && current_user.is_admin?
+    end
+
+    #
+    # TODO : is it worth it ? what about a redirection to /users/1 ?
+    #
+    def find_user
+      i = params[:id].to_i
+      i == 0 ? User.find_by_login(params[:id]) : User.find(i)
     end
 end
 
