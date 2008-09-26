@@ -19,6 +19,9 @@ tr:hover {
 .nhover:hover {
   background-color: white;
 }
+th {
+  font-weight: normal;
+}
 
 .header {
   padding-bottom: 9px;

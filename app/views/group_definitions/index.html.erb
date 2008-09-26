@@ -1,0 +1,22 @@
+<h1>Listing group_definitions</h1>
+
+<table>
+  <tr>
+    <th>Group</th>
+    <th>Definition</th>
+  </tr>
+
+<% for group_definition in @group_definitions %>
+  <tr>
+    <td><%=h group_definition.group_id %></td>
+    <td><%=h group_definition.definition_id %></td>
+    <td><%= link_to 'Show', group_definition %></td>
+    <td><%= link_to 'Edit', edit_group_definition_path(group_definition) %></td>
+    <td><%= link_to 'Destroy', group_definition, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New group_definition', new_group_definition_path %>

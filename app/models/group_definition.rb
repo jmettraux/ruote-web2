@@ -31,12 +31,12 @@
 #++
 #
 
-class Group < ActiveRecord::Base
+#
+# Between groups and definitions
+#
+class GroupDefinition < ActiveRecord::Base
 
-  has_many :user_groups, :dependent => :delete_all
-  has_many :users, :through => :user_groups
-
-  has_many :group_definitions, :dependent => :delete_all
-  has_many :definitions, :through => :group_definitions
+  belongs_to :group
+  belongs_to :definition
 end
 

@@ -31,12 +31,49 @@
 #++
 #
 
-class Group < ActiveRecord::Base
+#require 'openwfe/representations'
 
-  has_many :user_groups, :dependent => :delete_all
-  has_many :users, :through => :user_groups
 
-  has_many :group_definitions, :dependent => :delete_all
-  has_many :definitions, :through => :group_definitions
+class WorkitemsController < ApplicationController
+
+  before_filter :login_required
+
+  # GET /workitems
+  #
+  def index
+
+    @workitems = []
+
+    respond_to do |format|
+      format.html # => app/views/processes.html.erb
+      format.json { render :text => 'json' }
+      format.xml { render :text => 'json' }
+    end
+  end
+
+  # GET /workitems/1/edit
+  #
+  def edit
+    render :text => 'not yet implemented'
+  end
+
+  # GET /workitems/1
+  #
+  def show
+
+    @workitem = nil
+
+    respond_to do |format|
+      format.html # => app/views/show.html.erb
+      format.json { render :text => 'json' }
+      format.xml { render :text => 'json' }
+    end
+  end
+
+  # PUT /workitems/1
+  #
+  def update
+    render :text => 'not yet implemented'
+  end
 end
 

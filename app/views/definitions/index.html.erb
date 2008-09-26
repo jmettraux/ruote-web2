@@ -1,0 +1,28 @@
+
+<div class='content_title'>/definitions</div>
+
+<table class='coll' style='width: 60%;'>
+  <tr class='nhover'>
+    <th>name</th>
+    <th>uri</th>
+    <th>groups</th>
+  </tr>
+<% for definition in @definitions %>
+  <tr>
+    <td><%= link_to h(definition.name), definition %></td>
+    <td><%= link_to h(definition.uri), definition.full_uri %></td>
+    <td><%= comma_list(definition.groups) %></td>
+    <td class='coll_buttons'>
+      <%= link_to 'show', definition %> |
+      <%= link_to 'edit', edit_definition_path(definition) %> |
+      <%= link_to 'remove', definition, :confirm => 'Are you sure ?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+  <tr>
+    <td class='coll_buttons nhover' colspan='4'>
+      <%= link_to 'new definition', new_definition_path %>
+    </td>
+  </tr>
+</table>
+

@@ -8,15 +8,21 @@
     <th>groups</th>
   </tr>
 <% for user in @users %>
-  <tr class='user'>
-    <td class='user_login'><%= link_to h(user.login), user_path(user) %></td>
-    <td class='user_name'><%= h user.name %></td>
-    <td class='user_groups'><%= comma_list(user.groups) %></td>
+  <tr>
+    <td><%= link_to h(user.login), user_path(user) %></td>
+    <td><%= h user.name %></td>
+    <td><%= comma_list(user.groups) %></td>
     <td class='coll_buttons'>
+      <%= link_to 'show', user_path(user) %> |
       <%= link_to 'edit', edit_user_path(user) %> |
-      <%= link_to 'destroy', user, :confirm => 'Are you sure ?', :method => :delete %></td>
+      <%= link_to 'remove', user, :confirm => 'Are you sure ?', :method => :delete %>
+    </td>
   </tr>
 <% end %>
+  <tr>
+    <td class='coll_buttons nhover' colspan='4'>
+      <%= link_to 'new user', new_user_path %>
+    </td>
+  </tr>
 </table>
-<%= link_to 'new user', new_user_path, :class => 'coll_button user_new' %>
 

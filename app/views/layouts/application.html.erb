@@ -17,15 +17,24 @@
   <body>
 
     <div class="header">
-      <img src="/images/openwfe-logo.png" />ruote-web2
+      <div class="left">
+        <img src="/images/openwfe-logo.png" />
+      </div>
+      <div class="left" style="padding-top: 7px; padding-left: 7px">
+        ruote-web2
+      </div>
+      <div class="right">
+        <%= current_user ? render_log_menu : '' %>
+      </div>
+      <div class="clear"></div>
     </div>
 
     <div class="subheader">
       <div class="left">
-        open ruby source workflow and bpm engine
+        open source ruby workflow and bpm engine
       </div>
       <div class="right">
-        <%= current_user ? render_menu : 'please log in' %>
+        <%= current_user ? render_res_menu : 'please log in' %>
       </div>
       <div class="clear"></div>
     </div>

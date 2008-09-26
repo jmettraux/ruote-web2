@@ -1,25 +1,34 @@
 
 <div class='content_title'>/processes</div>
 
-<table class='processes' style="width: 100%;">
+<table class='coll' style="width: 100%;">
   <tr class="nhover">
-    <td class="wfid">id</td>
-    <td class="wfname">workflow</td>
-    <td class="launch">since</td>
-    <td class="launcher">launcher</td>
-    <td class="branches">br</td>
-    <td class="errors">err</td>
-    <td class="buttons"></td>
+    <th class="wfid">id</th>
+    <th class="wfname">workflow</th>
+    <th class="launch">since</th>
+    <th class="launcher">launcher</th>
+    <th class="branches">br</th>
+    <th class="errors">err</th>
+    <th></th>
   </tr>
-<% @processes.values.collect do |ps| %>
+<% for ps in @processes.values
+     launcher = ps.variables['launcher'] %>
   <tr class="process">
-    <td class="wfid"><%= link_to(h(ps.wfid), process_url(ps.wfid)) %></td>
+    <td class="wfid"><%= link_to(h(ps.wfid), process_path(ps.wfid)) %></td>
     <td class="wfname"><%= h "#{ps.wfname} #{ps.wfrevision}" %></td>
     <td class="launch"><%= h display_time(ps.launch_time) %></td>
-    <td class="launcher"><%= h(ps.variables['launcher'] || '-') %></td>
+    <td class="launcher"><%= h(launcher || '-') %></td>
     <td class="branches"><%= h ps.branches %></td>
     <td class="errors"><%= h ps.errors.size %></td>
-    <td class="buttons">x</td>
+    <td class="coll_buttons">
+      <%= link_to 'show', process_url(ps.wfid) %>
+      <% if current_user.is_admin? %>
+        | <%= link_to 'edit', edit_process_url(ps.wfid) %>
+      <% end -%>
+      <% if current_user.is_admin? or (current_user.login == launcher) %>
+        | <%= link_to 'abort', process_url(ps.wfid), :confirm => 'Are you sure ?', :method => :delete %></td>
+      <% end -%>
+    </td>
   </tr>
 <% end -%>
 </table>

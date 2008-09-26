@@ -14,11 +14,17 @@
     <td class='group_members'><%= comma_list(group.users, :login) %></td>
     <!--td><%= link_to 'Show', group %></td-->
     <td class='coll_buttons'>
+      <%= link_to 'show', group_path(group) %> |
       <%= link_to 'edit', edit_group_path(group) %> |
-      <%= link_to 'destroy', group, :confirm => 'Are you sure ?', :method => :delete %></td>
+      <%= link_to 'remove', group, :confirm => 'Are you sure ?', :method => :delete %>
+    </td>
   </tr>
 <% end %>
+  <tr>
+    <td class='coll_buttons nhover' colspan='4'>
+      <%= link_to 'new group', new_group_path, :class => 'coll_button group_new' %>
+    </td>
+  </tr>
 </table>
 
-<%= link_to 'new group', new_group_path, :class => 'coll_button group_new' %>
 

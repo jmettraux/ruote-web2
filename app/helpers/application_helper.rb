@@ -1,9 +1,14 @@
 
 module ApplicationHelper
 
-  def render_menu
+  def render_log_menu
+    'user ' + link_to(h(current_user.login), user_path(current_user)) + ' | ' +
+    link_to('logout', '/logout')
+  end
 
-    items = %w{ processes workitems logout }
+  def render_res_menu
+
+    items = %w{ processes workitems definitions }
     items = %w{ users groups } + items if current_user.is_admin?
 
     items.collect { |i| "<a href='/#{i}'>#{i}</a>" }.join(' | ')

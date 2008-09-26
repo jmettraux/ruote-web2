@@ -9,7 +9,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   map.resource :session
   map.resources :groups
+
   map.resources :user_groups
+  map.resources :group_definitions
 
   # The priority is based upon order of creation: first created -> highest priority.
 
@@ -52,6 +54,8 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing the them or commenting them out if you're using named routes and resources.
 
   map.resources :processes
+  map.resources :workitems
+  map.resources :definitions
 
   #map.root :controller => 'sessions', :action => 'new'
   map.root :controller => 'processes', :action => 'index'

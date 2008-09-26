@@ -1,0 +1,9 @@
+
+one:
+  name: def1
+  uri: flow1.xml
+
+two:
+  name: def2
+  uri: flow2.rb
+

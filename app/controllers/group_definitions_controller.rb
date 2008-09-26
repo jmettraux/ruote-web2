@@ -35,110 +35,85 @@
 # This RESTful resource has no 'edit' nor 'new' view. User 'groups' for
 # interaction via HTML.
 #
-class UserGroupsController < ApplicationController
+class GroupDefinitionsController < ApplicationController
 
   before_filter :login_required
 
 
-  # GET /user_groups
-  # GET /user_groups.xml
+  # GET /group_definitions
+  # GET /group_definitions.xml
   #
   def index
 
-    @user_groups = UserGroup.find(:all)
+    @group_definitions = GroupDefinition.find(:all)
 
     respond_to do |format|
-      format.html { redirect_to :controller => :groups, :action => :index }
-      format.xml { render :xml => @user_groups }
+      format.html # index.html.erb
+      format.xml  { render :xml => @group_definitions }
     end
   end
 
-  # GET /user_groups/1
-  # GET /user_groups/1.xml
+  # GET /group_definitions/1
+  # GET /group_definitions/1.xml
   #
   def show
 
-    @user_group = UserGroup.find(params[:id])
+    @group_definition = GroupDefinition.find(params[:id])
 
     respond_to do |format|
-      format.html do
-        redirect_to(
-          :controller => :groups,
-          :action => :show,
-          :id => @user_group.group_id)
-      end
-      format.xml { render :xml => @user_group }
+      format.html # show.html.erb
+      format.xml  { render :xml => @group_definition }
     end
   end
 
-  # POST /user_groups
-  # POST /user_groups.xml
+  # POST /group_definitions
+  # POST /group_definitions.xml
   #
   def create
 
-    @user_group = UserGroup.new(params[:user_group])
+    @group_definition = GroupDefinition.new(params[:group_definition])
 
     respond_to do |format|
-
-      if @user_group.save
-
-        #flash[:notice] = 'UserGroup was successfully created.'
-        format.html do
-          if request.env['HTTP_REFERER']
-            redirect_to :back
-          else
-            redirect_to(
-              :controller => :groups,
-              :action => :show,
-              :id => @user_group.group_id)
-          end
-        end
-        format.xml do
-          render(
-            :xml => @user_group,
-            :status => :created,
-            :location => @user_group)
-        end
-
+      if @group_definition.save
+        flash[:notice] = 'GroupDefinition was successfully created.'
+        format.html { redirect_to(@group_definition) }
+        format.xml  { render :xml => @group_definition, :status => :created, :location => @group_definition }
       else
-
-        format.html {
-          render :controller => :groups, :action => :index }
-        format.xml {
-          render :xml => @user_group.errors, :status => :unprocessable_entity }
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @group_definition.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  # PUT /user_groups/1
-  # PUT /user_groups/1.xml
+  # PUT /group_definitions/1
+  # PUT /group_definitions/1.xml
   #
   def update
 
-    @user_group = UserGroup.find(params[:id])
+    @group_definition = GroupDefinition.find(params[:id])
 
     respond_to do |format|
-      if @user_group.update_attributes(params[:user_group])
-        flash[:notice] = 'UserGroup was successfully updated.'
-        format.html { redirect_to :controller => :groups, :action => :show, :id => @user_group.group_id }
-        format.xml { head :ok }
+      if @group_definition.update_attributes(params[:group_definition])
+        flash[:notice] = 'GroupDefinition was successfully updated.'
+        format.html { redirect_to(@group_definition) }
+        format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml { render :xml => @user_group.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @group_definition.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /user_groups/1
-  # DELETE /user_groups/1.xml
+  # DELETE /group_definitions/1
+  # DELETE /group_definitions/1.xml
   #
   def destroy
 
-    @user_group = UserGroup.find(params[:id])
-    @user_group.destroy
+    @group_definition = GroupDefinition.find(params[:id])
+    @group_definition.destroy
 
     respond_to do |format|
-      format.html { redirect_to(user_groups_url) }
+      format.html { redirect_to(group_definitions_url) }
       format.xml  { head :ok }
     end
   end

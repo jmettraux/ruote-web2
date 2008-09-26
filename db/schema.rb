@@ -9,7 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080925002330) do
+ActiveRecord::Schema.define(:version => 20080926082146) do
+
+  create_table "definitions", :force => true do |t|
+    t.string   "name"
+    t.string   "uri"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "definitions", ["name"], :name => "index_definitions_on_name", :unique => true
 
   create_table "fields", :force => true do |t|
     t.string  "fkey",        :default => "", :null => false
@@ -23,6 +32,13 @@ ActiveRecord::Schema.define(:version => 20080925002330) do
   add_index "fields", ["fkey"], :name => "index_fields_on_fkey"
   add_index "fields", ["vclass"], :name => "index_fields_on_vclass"
   add_index "fields", ["svalue"], :name => "index_fields_on_svalue"
+
+  create_table "group_definitions", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "definition_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "groups", :force => true do |t|
     t.string   "name"

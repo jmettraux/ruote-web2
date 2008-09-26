@@ -31,12 +31,13 @@
 #++
 #
 
-class Group < ActiveRecord::Base
-
-  has_many :user_groups, :dependent => :delete_all
-  has_many :users, :through => :user_groups
+class Definition < ActiveRecord::Base
 
   has_many :group_definitions, :dependent => :delete_all
-  has_many :definitions, :through => :group_definitions
+  has_many :groups, :through => :group_definitions
+
+  def full_uri
+    self.uri.index('/') ? self.uri : "/defs/#{self.uri}"
+  end
 end
 
