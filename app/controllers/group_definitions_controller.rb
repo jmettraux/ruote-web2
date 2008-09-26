@@ -32,7 +32,7 @@
 #
 
 #
-# This RESTful resource has no 'edit' nor 'new' view. User 'groups' for
+# This RESTful resource has no 'edit' nor 'new' view. Use 'definitions' for
 # interaction via HTML.
 #
 class GroupDefinitionsController < ApplicationController
@@ -47,10 +47,7 @@ class GroupDefinitionsController < ApplicationController
 
     @group_definitions = GroupDefinition.find(:all)
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @group_definitions }
-    end
+    render :xml => @group_definitions
   end
 
   # GET /group_definitions/1
@@ -60,10 +57,7 @@ class GroupDefinitionsController < ApplicationController
 
     @group_definition = GroupDefinition.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @group_definition }
-    end
+    render :xml => @group_definition
   end
 
   # POST /group_definitions

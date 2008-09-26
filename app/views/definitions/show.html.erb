@@ -1,13 +1,42 @@
-<p>
-  <b>Name:</b>
-  <%=h @definition.name %>
-</p>
 
-<p>
-  <b>Uri:</b>
-  <%=h @definition.uri %>
-</p>
+<div class='left_pane'>
 
+  <div class="content_title">/definitions/<%= h @definition.name %></div>
 
-<%= link_to 'Edit', edit_definition_path(@definition) %> |
-<%= link_to 'Back', definitions_path %>
+  <table>
+    <tr>
+      <td>name</td>
+      <td><%= h @definition.name %></td>
+    </tr>
+    <tr>
+      <td>uri</td>
+      <td><%= link_to h(@definition.uri), @definition.full_uri %></td>
+    </tr>
+    <tr>
+      <td>created_at</td>
+      <td><%= h @definition.created_at %></td>
+    </tr>
+    <tr>
+      <td>updated_at</td>
+      <td><%= h @definition.updated_at %></td>
+    </tr>
+    <tr>
+      <td class='col_buttons' colspan='2'>
+  <% if current_user.is_admin? %>
+        <%= link_to 'edit', edit_user_path(@user) %> |
+  <% end %>
+        <%= link_to 'back', :back %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class='right_pane' style='text-align: right;'>
+
+  <!-- render_fluo :definition => @definition -->
+  <%= render_fluo :tree => [ 'sequence', {}, [ [ 'alpha', {}, [] ], [ 'bravo', {}, [] ] ] ] %>
+
+</div>
+
+<div class='clear'></div>
+

@@ -15,13 +15,14 @@
     <td class='coll_buttons'>
       <%= link_to 'show', definition %> |
       <%= link_to 'edit', edit_definition_path(definition) %> |
-      <%= link_to 'remove', definition, :confirm => 'Are you sure ?', :method => :delete %>
+      <%= link_to 'remove', definition, :confirm => 'Are you sure ?', :method => :delete %> |
+      <%= link_to 'launch', new_process_path(:definition => definition.id) %>
     </td>
   </tr>
 <% end %>
   <tr>
-    <td class='coll_buttons nhover' colspan='4'>
-      <%= link_to 'new definition', new_definition_path %>
+    <td class='coll_new_button' colspan='4'>
+      <%= link_to 'add process definition', new_definition_path %>
     </td>
   </tr>
 </table>

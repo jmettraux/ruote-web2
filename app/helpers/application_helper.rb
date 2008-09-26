@@ -52,5 +52,53 @@ module ApplicationHelper
       link_to(h(name), path)
     }.join(', ')
   end
+
+  #
+  # FLUO
+  #
+  def render_fluo (opts)
+
+    rep = if d = opts[:definition]
+      "<script src=\"/definition/#{d.id}/tree.js&var=proc_rep\"></script>"
+    elsif p = opts[:process]
+      "<script src=\"/processes/#{p.wfid}/tree.js&var=proc_rep\"></script>"
+    elsif t = opts[:tree]
+      "<script>var proc_rep = #{t.to_json};</script>"
+    else
+      '<script>var proc_rep = null;</script>'
+    end
+
+    hl = if e = opts[:expid]
+      "\nFluoCan.highlight('fluo', '#{e}');"
+    else
+      ''
+    end
+
+    workitems = Array(opts[:workitems])
+
+    %{
+  <!-- fluo -->
+
+  <script src="/javascripts/fluo-json.js"></script>
+  <script src="/javascripts/fluo-can.js"></script>
+
+  <canvas id="fluo" width="50" height="50"></canvas>
+  #{rep}
+  <script>
+    if (proc_rep) {
+      FluoCan.renderFlow('fluo', proc_rep, {'workitems': #{workitems.inspect}});
+      FluoCan.crop('fluo');#{hl}
+    }
+  </script>
+
+  <div style='margin-top: 14px;'>
+    <a id="dataurl_link" href="">graph data url</a>
+    <script>
+      var a = document.getElementById('dataurl_link');
+      a.href = document.getElementById('fluo').toDataURL();
+    </script>
+  </div>
+    }
+  end
 end
 

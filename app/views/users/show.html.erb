@@ -30,9 +30,14 @@
     <td>updated_at</td>
     <td><%= h @user.updated_at %></td>
   </tr>
+<% if current_user.is_admin? %>
+  <tr>
+    <td class='col_buttons' colspan='2'>
+      <%= link_to 'edit', edit_user_path(@user) %> |
+      <%= link_to 'back', :back %>
+    </td>
+  </tr>
+<% end %>
 </table>
 
-<% if current_user.is_admin? %>
-  <%= link_to 'edit', edit_user_path(@user.id), :class => 'group_button group_new' %>
-<% end %>
 

@@ -59,7 +59,7 @@ h2 {
   margin-bottom: 1em;
 }
 .content_title {
-  font-size: 1.5em;
+  font-size: 1.3em;
   margin-bottom: 14px;
 }
 
@@ -70,6 +70,13 @@ h2 {
 }
 .coll_buttons {
   text-align: right;
+}
+.coll_new_button {
+  padding-top: 5px;
+  text-align: right;
+}
+.coll_new_button:hover {
+  background-color: white;
 }
 
 /* well ... */
@@ -85,3 +92,4 @@ h2 {
   width: 48%;
   float: right;
 }
+
