@@ -80,7 +80,7 @@ class GroupsController < ApplicationController
 
     @group = Group.find(params[:id])
     @ug_locals = {
-      :in_elements => @group.user_groups,
+      :in_elements => @group.user_groups || [],
       :out_elements => User.find(:all) - @group.users
     }
   end

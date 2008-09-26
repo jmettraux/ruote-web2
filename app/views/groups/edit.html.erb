@@ -1,22 +1,22 @@
 
-<div class='content_title'>editing group '<%= @group.name %>'</div>
+<div class='content_title'>/groups/<%= h @group.name %></div>
 
 <div class='left_pane'>
 
   <% form_for(@group) do |f| %>
     <%= f.error_messages %>
 
-    <p>
-      <%= f.label :name %><br />
-      <%= f.text_field :name %>
-    </p>
-    <p>
-      <%= f.submit "Update" %>
-    </p>
-  <% end %>
+    <div>
+      <%= f.label :name %>
+      name <%= f.text_field :name %>
+    </div>
+    <div>
+      <%= f.submit 'update' %>
+      <%= link_to 'show', @group %> |
+      <%= link_to 'back', groups_path %>
+    </div>
+  <% end -%>
 
-  <%= link_to 'Show', @group %> |
-  <%= link_to 'Back', groups_path %>
 </div>
 
 <div class='right_pane'>

@@ -1,7 +1,7 @@
 
 <div class='content_title'>/users</div>
 
-<table class='coll'>
+<table class='coll' style='width: 60%;'>
   <tr class='nhover'>
     <th>login</th>
     <th>name</th>
@@ -9,10 +9,10 @@
   </tr>
 <% for user in @users %>
   <tr class='user'>
-    <td class='user_login'><%= h user.login %></td>
+    <td class='user_login'><%= link_to h(user.login), user_path(user) %></td>
     <td class='user_name'><%= h user.name %></td>
     <td class='user_groups'><%= comma_list(user.groups) %></td>
-    <td class='coll_button'>
+    <td class='coll_buttons'>
       <%= link_to 'edit', edit_user_path(user) %> |
       <%= link_to 'destroy', user, :confirm => 'Are you sure ?', :method => :delete %></td>
   </tr>

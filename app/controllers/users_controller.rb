@@ -40,15 +40,11 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = find_user
+    load_user
   end
 
   def edit
-    @user = find_user
-    @ug_locals = {
-      :in_elements => @user.user_groups,
-      :out_elements => Group.find(:all) - @user.groups
-    }
+    load_user_and_groups
   end
 
   def new
@@ -87,7 +83,7 @@ class UsersController < ApplicationController
   #
   def update
 
-    @user = User.find(params[:id])
+    load_user_and_groups
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -114,9 +110,17 @@ class UsersController < ApplicationController
     #
     # TODO : is it worth it ? what about a redirection to /users/1 ?
     #
-    def find_user
+    def load_user
       i = params[:id].to_i
-      i == 0 ? User.find_by_login(params[:id]) : User.find(i)
+      @user = i == 0 ? User.find_by_login(params[:id]) : User.find(i)
+    end
+
+    def load_user_and_groups
+      load_user
+      @ug_locals = {
+        :in_elements => @user.user_groups,
+        :out_elements => Group.find(:all) - @user.groups
+      }
     end
 end
 

@@ -1,7 +1,7 @@
 
 <div class='content_title'>/groups</div>
 
-<table class='coll'>
+<table class='coll' style='width: 60%'>
 
   <tr class='nhover'>
     <th>name</th>
@@ -10,10 +10,10 @@
 
 <% for group in @groups %>
   <tr class='group'>
-    <td class='group_name'><%= h group.name %></td>
+    <td class='group_name'><%= link_to h(group.name), group_path(group) %></td>
     <td class='group_members'><%= comma_list(group.users, :login) %></td>
     <!--td><%= link_to 'Show', group %></td-->
-    <td class='coll_button'>
+    <td class='coll_buttons'>
       <%= link_to 'edit', edit_group_path(group) %> |
       <%= link_to 'destroy', group, :confirm => 'Are you sure ?', :method => :delete %></td>
   </tr>

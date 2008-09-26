@@ -1,14 +1,36 @@
 
-<div class="content_title">user</div>
+<div class="content_title">/user/<%= h @user.login %></div>
 
-<div class="user">
-  <div class="id"><%= @user.id %></div>
-  <div class="login"><%= @user.login %></div>
-  <div class="name"><%= @user.name %></div>
-  <div class="email"><%= @user.email %></div>
-  <div class="created_at"><%= @user.created_at %></div>
-  <div class="updated_at"><%= @user.updated_at %></div>
-</div>
+<table>
+  <tr>
+    <td>id</td>
+    <td><%= h @user.id %></td>
+  </tr>
+  <tr>
+    <td>login</td>
+    <td><%= h @user.login %></td>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td><%= h @user.name %></td>
+  </tr>
+  <tr>
+    <td>groups</td>
+    <td><%= comma_list(@user.groups) %></td>
+  </tr>
+  <tr>
+    <td>email</td>
+    <td><%= h @user.email %></td>
+  </tr>
+  <tr>
+    <td>created_at</td>
+    <td><%= h @user.created_at %></td>
+  </tr>
+  <tr>
+    <td>updated_at</td>
+    <td><%= h @user.updated_at %></td>
+  </tr>
+</table>
 
 <% if current_user.is_admin? %>
   <%= link_to 'edit', edit_user_path(@user.id), :class => 'group_button group_new' %>
