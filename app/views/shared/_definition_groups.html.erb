@@ -1,0 +1,25 @@
+
+<table>
+  <tr class="nhover">
+    <td colspan="2">belongs to :</td>
+  </tr>
+<% for elt in in_groups %>
+  <tr>
+    <td><%= h elt.group.name %></td>
+    <td> <%= link_to 'remove', elt, :confirm => 'Are you sure ?', :method => :delete %></td>
+  </tr>
+<% end %>
+  <tr class="nhover">
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr class="nhover">
+    <td colspan="2">doesn't belong to :</td>
+  </tr>
+<% for elt in out_groups %>
+  <tr>
+    <td><%= h elt.name %></td>
+    <td> <%= link_to 'add', group_definitions_path(:group_definition => { :group_id => elt.id, :definition_id => @definition.id}), :method => :post %></td>
+  </tr>
+<% end %>
+</table>
+

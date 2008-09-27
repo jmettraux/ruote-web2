@@ -58,14 +58,14 @@ module ApplicationHelper
   #
   def render_fluo (opts)
 
-    rep = if d = opts[:definition]
-      "<script src=\"/definition/#{d.id}/tree.js&var=proc_rep\"></script>"
+    tree = if d = opts[:definition]
+      "<script src=\"/definitions/#{d.id}/tree.js?var=proc_tree\"></script>"
     elsif p = opts[:process]
-      "<script src=\"/processes/#{p.wfid}/tree.js&var=proc_rep\"></script>"
+      "<script src=\"/processes/#{p.wfid}/tree.js?var=proc_tree\"></script>"
     elsif t = opts[:tree]
-      "<script>var proc_rep = #{t.to_json};</script>"
+      "<script>var proc_tree = #{t.to_json};</script>"
     else
-      '<script>var proc_rep = null;</script>'
+      '<script>var proc_tree = null;</script>'
     end
 
     hl = if e = opts[:expid]
@@ -82,22 +82,19 @@ module ApplicationHelper
   <script src="/javascripts/fluo-json.js"></script>
   <script src="/javascripts/fluo-can.js"></script>
 
-  <canvas id="fluo" width="50" height="50"></canvas>
-  #{rep}
-  <script>
-    if (proc_rep) {
-      FluoCan.renderFlow('fluo', proc_rep, {'workitems': #{workitems.inspect}});
-      FluoCan.crop('fluo');#{hl}
-    }
-  </script>
+  <a id='dataurl_link'>
+    <canvas id="fluo" width="50" height="50"></canvas>
+  </a>
 
-  <div style='margin-top: 14px;'>
-    <a id="dataurl_link" href="">graph data url</a>
-    <script>
-      var a = document.getElementById('dataurl_link');
-      a.href = document.getElementById('fluo').toDataURL();
-    </script>
-  </div>
+  #{tree}
+
+  <script>
+    FluoCan.renderFlow('fluo', proc_tree, {'workitems': #{workitems.inspect}});
+    FluoCan.crop('fluo');#{hl}
+
+    var a = document.getElementById('dataurl_link');
+    a.href = document.getElementById('fluo').toDataURL();
+  </script>
     }
   end
 end

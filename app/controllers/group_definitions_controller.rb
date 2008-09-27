@@ -69,30 +69,11 @@ class GroupDefinitionsController < ApplicationController
 
     respond_to do |format|
       if @group_definition.save
-        flash[:notice] = 'GroupDefinition was successfully created.'
+        #flash[:notice] = 'GroupDefinition was successfully created.'
         format.html { redirect_to(@group_definition) }
         format.xml  { render :xml => @group_definition, :status => :created, :location => @group_definition }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @group_definition.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /group_definitions/1
-  # PUT /group_definitions/1.xml
-  #
-  def update
-
-    @group_definition = GroupDefinition.find(params[:id])
-
-    respond_to do |format|
-      if @group_definition.update_attributes(params[:group_definition])
-        flash[:notice] = 'GroupDefinition was successfully updated.'
-        format.html { redirect_to(@group_definition) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @group_definition.errors, :status => :unprocessable_entity }
       end
     end

@@ -21,10 +21,10 @@
       <td><%= h @definition.updated_at %></td>
     </tr>
     <tr>
-      <td class='col_buttons' colspan='2'>
-  <% if current_user.is_admin? %>
-        <%= link_to 'edit', edit_user_path(@user) %> |
-  <% end %>
+      <td class='col_buttons nhover' colspan='2'>
+        <% if current_user.is_admin? %>
+          <%= link_to 'edit', edit_definition_path(@definition) %> |
+        <% end %>
         <%= link_to 'back', :back %>
       </td>
     </tr>
@@ -33,8 +33,7 @@
 
 <div class='right_pane' style='text-align: right;'>
 
-  <!-- render_fluo :definition => @definition -->
-  <%= render_fluo :tree => [ 'sequence', {}, [ [ 'alpha', {}, [] ], [ 'bravo', {}, [] ] ] ] %>
+  <%= render_fluo :definition => @definition %>
 
 </div>
 

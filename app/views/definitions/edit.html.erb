@@ -1,20 +1,37 @@
-<h1>Editing definition</h1>
 
-<% form_for(@definition) do |f| %>
-  <%= f.error_messages %>
+<div class='content_title'>/definitions/<%= h @definition.name %></div>
 
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :uri %><br />
-    <%= f.text_field :uri %>
-  </p>
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
+<div class='one_third_pane'>
 
-<%= link_to 'Show', @definition %> |
-<%= link_to 'Back', definitions_path %>
+  <% form_for(@definition) do |f| %>
+    <%= f.error_messages %>
+    <table>
+      <tr>
+        <td>name</td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <td>uri</td>
+        <td><%= f.text_field :uri %></td>
+      </tr>
+      <tr>
+        <td class='coll_buttons' colspan='2'>
+          <%= f.submit 'update' %>
+          <%= link_to 'show', @definition %> |
+          <%= link_to 'back', definitions_path %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+
+<div class='two_third_pane'>
+  <%= render :partial => 'shared/definition_groups', :locals => @dg_locals %>
+</div>
+
+<div class='three_third_pane' style='text-align: right;'>
+  <%= render_fluo :definition => @definition %>
+</div>
+
+<div class='clear'></div>
+

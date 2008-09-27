@@ -24,12 +24,6 @@ class GroupDefinitionsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_should_update_group_definition
-    login_as :admin
-    put :update, :id => group_definitions(:one).id, :group_definition => { }
-    assert_redirected_to group_definition_path(assigns(:group_definition))
-  end
-
   def test_should_destroy_group_definition
     login_as :admin
     assert_difference('GroupDefinition.count', -1) do

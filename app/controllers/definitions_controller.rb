@@ -61,6 +61,28 @@ class DefinitionsController < ApplicationController
     end
   end
 
+  # GET /definitions/1/tree
+  # GET /definitions/1/tree.js
+  #
+  def tree
+
+    @definition = Definition.find(params[:id])
+    uri = @definition.full_uri
+    uri = uri[0, 1] == '/' ? "#{RAILS_ROOT}/public#{uri}" : uri
+
+    # TODO : reject outside definitions ?
+
+    pdef = open(uri).read
+
+    var = params[:var] || 'proc_tree'
+
+    tree = RuotePlugin.ruote_engine.get_def_parser.parse(pdef)
+
+    render(
+      :text => "var #{var} = #{tree.to_json};",
+      :content_type => 'text/javascript')
+  end
+
   # GET /definitions/new
   # GET /definitions/new.xml
   #
@@ -79,6 +101,10 @@ class DefinitionsController < ApplicationController
   def edit
 
     @definition = Definition.find(params[:id])
+    @dg_locals = {
+      :in_groups => @definition.group_definitions,
+      :out_groups => Group.find(:all) - @definition.groups
+    }
   end
 
   # POST /definitions

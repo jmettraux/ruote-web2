@@ -18,7 +18,7 @@
 <% for elt in out_elements %>
   <tr>
     <td><%= h elt.login %></td>
-    <td>add</td>
+    <td> <%= link_to 'add', user_groups_path(:user_group => { :group_id => @group.id, :user_id => elt.id}), :method => :post %></td>
   </tr>
 <% end %>
 </table>

@@ -30,12 +30,6 @@ class UserGroupsControllerTest < ActionController::TestCase
     assert_redirected_to group_path(assigns(:user_group).group_id)
   end
 
-  def test_should_update_user_group
-    login_as :admin
-    put :update, :id => user_groups(:two).id, :user_group => { :group_id => 1 }
-    assert_redirected_to group_path(assigns(:user_group).group_id)
-  end
-
   def test_should_destroy_user_group
     login_as :admin
     assert_difference('UserGroup.count', -1) do

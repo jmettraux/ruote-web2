@@ -110,25 +110,6 @@ class UserGroupsController < ApplicationController
     end
   end
 
-  # PUT /user_groups/1
-  # PUT /user_groups/1.xml
-  #
-  def update
-
-    @user_group = UserGroup.find(params[:id])
-
-    respond_to do |format|
-      if @user_group.update_attributes(params[:user_group])
-        flash[:notice] = 'UserGroup was successfully updated.'
-        format.html { redirect_to :controller => :groups, :action => :show, :id => @user_group.group_id }
-        format.xml { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml { render :xml => @user_group.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /user_groups/1
   # DELETE /user_groups/1.xml
   #
@@ -138,8 +119,16 @@ class UserGroupsController < ApplicationController
     @user_group.destroy
 
     respond_to do |format|
-      format.html { redirect_to(user_groups_url) }
-      format.xml  { head :ok }
+      format.html do
+        if request.env['HTTP_REFERER']
+          redirect_to :back
+        else
+          redirect_to :controller => :user_groups, :action => :index
+        end
+      end
+      format.xml do
+        head :ok
+      end
     end
   end
 

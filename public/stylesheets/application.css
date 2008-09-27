@@ -93,3 +93,16 @@ h2 {
   float: right;
 }
 
+.one_third_pane {
+  width: 32%;
+  float: left;
+}
+.two_third_pane {
+  width: 32%;
+  float: left;
+}
+.three_third_pane {
+  width: 32%;
+  float: right;
+}
+
