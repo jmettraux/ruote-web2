@@ -67,8 +67,8 @@ class DefinitionsController < ApplicationController
   def tree
 
     @definition = Definition.find(params[:id])
-    uri = @definition.full_uri
-    uri = uri[0, 1] == '/' ? "#{RAILS_ROOT}/public#{uri}" : uri
+
+    uri = @definition.local_uri
 
     # TODO : reject outside definitions ?
 

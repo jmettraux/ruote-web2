@@ -38,7 +38,6 @@ class ProcessesController < ApplicationController
 
   before_filter :login_required
 
-  #
   # GET /processes
   #
   def index
@@ -63,6 +62,8 @@ class ProcessesController < ApplicationController
     end
   end
 
+  # GET /processes/1
+  #
   def show
 
     @process = ruote_engine.process_status(params[:id])
@@ -83,7 +84,13 @@ class ProcessesController < ApplicationController
     end
   end
 
+  # GET /processes/new
   #
+  def new
+
+    @definition = Definition.find(params[:definition])
+  end
+
   # POST /processes
   #
   def create
@@ -94,13 +101,15 @@ class ProcessesController < ApplicationController
 
     fei = ruote_engine.launch(li)
 
+    sleep 0.200
+
     flash[:notice] = "launched process instance #{fei.wfid}"
 
     headers['Location'] = process_url(fei.wfid)
 
     respond_to do |format|
 
-      format.html { redirect_to "/processes/#{fei.wfid}" }
+      format.html { redirect_to '/processes' }
       format.json { render :json => "{\"wfid\":#{fei.wfid}}", :status => 201 }
       format.xml { render :xml => "<wfid>#{fei.wfid}</wfid>", :status => 201 }
     end
@@ -110,21 +119,32 @@ class ProcessesController < ApplicationController
 
     def parse_launchitem
 
-      ct = request.content_type.to_s
+      begin
 
-      return OpenWFE::Xml::launchitem_from_xml(request.body.read) \
-        if ct == 'application/xml'
+        ct = request.content_type.to_s
 
-      return OpenWFE::Json.launchitem_from_json(request.body.read) \
-        if ct == 'application/json'
+        return OpenWFE::Xml::launchitem_from_xml(request.body.read) \
+          if ct == 'application/xml'
 
-      OpenWFE::LaunchItem.from_h(params)
+        return OpenWFE::Json.launchitem_from_json(request.body.read) \
+          if ct == 'application/json'
+
+        #
+        # then we have a form...
+
+        definition = Definition.find(params[:definition_id])
+        params[:definition_url] = definition.local_uri
+
+        params[:attributes] = ActiveSupport::JSON::decode(params[:attributes])
+
+        OpenWFE::LaunchItem.from_h(params)
 
       rescue Exception => e
 
         logger.warn "failed to parse launchitem : #{e}"
 
         nil
+      end
     end
 end
 

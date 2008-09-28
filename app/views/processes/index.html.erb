@@ -3,13 +3,13 @@
 
 <table class='coll' style="width: 100%;">
   <tr class="nhover">
-    <th class="wfid">id</th>
-    <th class="wfname">workflow</th>
-    <th class="launch">since</th>
-    <th class="launcher">launcher</th>
-    <th class="branches">br</th>
-    <th class="errors">err</th>
-    <th></th>
+    <th>id</th>
+    <th>workflow</th>
+    <th>since</th>
+    <th>launcher</th>
+    <th>br</th>
+    <th>err</th>
+    <th style='text-align: right;'><%= @processes.size %> instances</th>
   </tr>
 <% for ps in @processes.values
      launcher = ps.variables['launcher'] %>

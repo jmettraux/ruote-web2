@@ -36,8 +36,19 @@ class Definition < ActiveRecord::Base
   has_many :group_definitions, :dependent => :delete_all
   has_many :groups, :through => :group_definitions
 
+  #
+  # The URI for web links
+  #
   def full_uri
     self.uri.index('/') ? self.uri : "/defs/#{self.uri}"
+  end
+
+  #
+  # The URI for launching
+  #
+  def local_uri
+    u = self.full_uri
+    u[0, 1] == '/' ? "#{RAILS_ROOT}/public#{u}" : u
   end
 end
 
