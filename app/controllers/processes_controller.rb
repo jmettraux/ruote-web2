@@ -115,6 +115,17 @@ class ProcessesController < ApplicationController
     end
   end
 
+  # DELETE /processes/1
+  #
+  def destroy
+
+    RuotePlugin.ruote_engine.cancel_process params[:id]
+
+    sleep 0.200
+
+    redirect_to :controller => :processes, :action => :index
+  end
+
   protected
 
     def parse_launchitem
