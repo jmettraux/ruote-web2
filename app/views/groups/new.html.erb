@@ -3,15 +3,17 @@
 
 <% form_for(@group) do |f| %>
   <%= f.error_messages %>
-
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.submit 'create' %>
-  </p>
-<% end %>
-
-<%= link_to 'back', groups_path %>
+  <table>
+    <tr>
+      <td>name</td>
+      <td><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <td colspan='2'>
+        <%= f.submit 'create' %>
+        <%= link_to 'back', groups_path %>
+      </td>
+    </tr>
+  <table>
+<% end -%>
 

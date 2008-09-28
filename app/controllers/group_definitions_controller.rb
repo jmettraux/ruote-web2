@@ -68,11 +68,29 @@ class GroupDefinitionsController < ApplicationController
     @group_definition = GroupDefinition.new(params[:group_definition])
 
     respond_to do |format|
+
       if @group_definition.save
+
         #flash[:notice] = 'GroupDefinition was successfully created.'
-        format.html { redirect_to(@group_definition) }
-        format.xml  { render :xml => @group_definition, :status => :created, :location => @group_definition }
+        format.html do
+          if request.env['HTTP_REFERER']
+            redirect_to(:back)
+          else
+            redirect_to(
+              :controller => :definitions,
+              :action => :show,
+              :id => @group_definition.definition_id)
+          end
+        end
+        format.xml do
+          render(
+            :xml => @group_definition,
+            :status => :created,
+            :location => @group_definition)
+        end
+
       else
+
         format.html { render :action => "new" }
         format.xml  { render :xml => @group_definition.errors, :status => :unprocessable_entity }
       end
@@ -88,8 +106,16 @@ class GroupDefinitionsController < ApplicationController
     @group_definition.destroy
 
     respond_to do |format|
-      format.html { redirect_to(group_definitions_url) }
-      format.xml  { head :ok }
+      format.html do
+        if request.env['HTTP_REFERER']
+          redirect_to(:back)
+        else
+          redirect_to(group_definitions_url)
+        end
+      end
+      format.xml do
+        head :ok
+      end
     end
   end
 

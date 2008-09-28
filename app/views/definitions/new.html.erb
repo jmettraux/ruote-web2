@@ -1,19 +1,23 @@
-<h1>New definition</h1>
+
+<div class="content_title">/definitions/new</div>
 
 <% form_for(@definition) do |f| %>
   <%= f.error_messages %>
-
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :uri %><br />
-    <%= f.text_field :uri %>
-  </p>
-  <p>
-    <%= f.submit "Create" %>
-  </p>
+  <table>
+    <tr>
+      <td>name</td>
+      <td><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <td>uri</td>
+      <td><%= f.text_field :uri %></td>
+    </tr>
+    <tr>
+      <td colspan='2'>
+        <%= f.submit "create" %>
+        <%= link_to 'back', definitions_path %>
+      </td>
+    </tr>
+  <table>
 <% end %>
 
-<%= link_to 'Back', definitions_path %>
