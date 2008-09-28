@@ -3,14 +3,26 @@
 
 <table class='coll' style="width: 100%;">
   <tr class="nhover">
-    <th class="wfid">id</th>
-    <th class="expid">workflow</th>
-    <th class="branches">br</th>
-    <th></th>
+    <th>wfid</th>
+    <th>workflow</th>
+    <th>expid</th>
+    <th>store</th>
+    <th>participant</th>
+    <th>activity</th>
   </tr>
 <% for workitem in @workitems %>
-  <tr class="process">
-    <td class="wfid"></td>
+  <tr class="workitem">
+    <td><%= link_to h(workitem.wfid), workitem_url(workitem) %></td>
+    <td><%= h workitem.wf_name %> <%= h workitem.wf_revision %></td>
+    <td><%= h workitem.full_fei.expid %></td>
+    <td><%= h workitem.store_name %></td>
+    <td><%= h workitem.participant_name %></td>
+    <td><%= h workitem.activity %></td>
+    <td class="coll_buttons">
+      <%= link_to 'show', workitem_url(workitem) %> |
+      <%= link_to 'edit', edit_workitem_url(workitem) %> |
+      pick
+    </td>
   </tr>
 <% end -%>
 </table>

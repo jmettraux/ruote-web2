@@ -42,7 +42,7 @@ class WorkitemsController < ApplicationController
   #
   def index
 
-    @workitems = []
+    @workitems = OpenWFE::Extras::Workitem.find(:all)
 
     respond_to do |format|
       format.html # => app/views/processes.html.erb

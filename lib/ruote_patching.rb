@@ -31,19 +31,45 @@
 #++
 #
 
-class Group < ActiveRecord::Base
+require 'openwfe/participants/participantmap'
+require 'openwfe/extras/participants/activeparticipants'
 
-  has_many :user_groups, :dependent => :delete_all
-  has_many :users, :through => :user_groups
 
-  has_many :group_definitions, :dependent => :delete_all
-  has_many :definitions, :through => :group_definitions
+module OpenWFE
 
-  #
-  # User and Group share this method, which returns login and name respectively
-  #
-  def system_name
-    self.name
+  class ParticipantMap
+
+    alias :old_lookup_participant :lookup_participant
+
+    def lookup_participant (participant_name)
+
+      p = old_lookup_participant(participant_name)
+
+      return p if p
+
+      store_name =
+        User.find_by_login(participant_name) ||
+        Group.find_by_name(participant_name)
+      store_name = store_name ? store_name.system_name : 'unknown'
+
+      OpenWFE::Extras::ActiveStoreParticipant.new(store_name)
+        # returns an 'on the fly' participant
+    end
+  end
+
+  module Extras
+
+    class Workitem
+
+      def activity
+
+        h = self.field_hash
+
+        return '-' unless h['params']
+
+        h['params']['activity'] || h['params']['description'] || '-'
+      end
+    end
   end
 end
 

@@ -102,6 +102,13 @@ class User < ActiveRecord::Base
     groups.collect { |g| g.name }
   end
 
+  #
+  # User and Group share this method, which returns login and name respectively
+  #
+  def system_name
+    self.login
+  end
+
   protected
 
 end

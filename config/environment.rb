@@ -50,7 +50,7 @@ Rails::Initializer.run do |config|
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
     :session_key => '_ruote-web2_session',
-    :secret      => 'df5680bbad72009da55f6cfcc4c7808710915ffe4a645519ebbee867209e0e0cd3a45804ebf65ba085fa6ddc9bb459f4d6356ac8bb1e928cf8b0bd589d3f5451'
+    :secret      => '7f5680bbad72009da55f6cfcc4c7808710915ffe4a645519ebbee867209e0e0cd3a45804ebf65ba085fa6ddc9bb459f4d6356ac8bb1e928cf8b0bd589d3f5451'
   }
 
   # Use the database for sessions instead of the cookie-based default,
@@ -67,4 +67,7 @@ Rails::Initializer.run do |config|
   # config.active_record.observers = :cacher, :garbage_collector
 
   $:.unshift('~/ruote/lib') # using the local 'ruote'
+
+  require 'ruote_patching' # lib/ruote_patching.rb
 end
+
