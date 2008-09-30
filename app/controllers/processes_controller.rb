@@ -99,7 +99,11 @@ class ProcessesController < ApplicationController
 
     return error_reply('no suitable launchitem found') unless li
 
-    fei = ruote_engine.launch(li)
+    options = {
+      :variables => { 'launcher' => current_user.login }
+    }
+
+    fei = ruote_engine.launch(li, options)
 
     sleep 0.200
 
@@ -109,9 +113,12 @@ class ProcessesController < ApplicationController
 
     respond_to do |format|
 
-      format.html { redirect_to '/processes' }
-      format.json { render :json => "{\"wfid\":#{fei.wfid}}", :status => 201 }
-      format.xml { render :xml => "<wfid>#{fei.wfid}</wfid>", :status => 201 }
+      format.html {
+        redirect_to :action => 'show', :id => fei.wfid }
+      format.json {
+        render :json => "{\"wfid\":#{fei.wfid}}", :status => 201 }
+      format.xml {
+        render :xml => "<wfid>#{fei.wfid}</wfid>", :status => 201 }
     end
   end
 
@@ -143,10 +150,14 @@ class ProcessesController < ApplicationController
         #
         # then we have a form...
 
-        definition = Definition.find(params[:definition_id])
-        params[:definition_url] = definition.local_uri
+        if definition_id = params[:definition_id]
+          definition = Definition.find(definition_id)
+          params[:definition_url] = definition.local_uri if definition
+        end
 
-        params[:attributes] = ActiveSupport::JSON::decode(params[:attributes])
+        if attributes = params[:attributes]
+          params[:attributes] = ActiveSupport::JSON::decode(attributes)
+        end
 
         OpenWFE::LaunchItem.from_h(params)
 

@@ -4,8 +4,10 @@ admins:
   name: admins
 
 one:
+  id: 2
   name: one
 
 two:
+  id: 3
   name: two
 

@@ -78,7 +78,7 @@ class GroupDefinitionsController < ApplicationController
           else
             redirect_to(
               :controller => :definitions,
-              :action => :show,
+              :action => 'show',
               :id => @group_definition.definition_id)
           end
         end

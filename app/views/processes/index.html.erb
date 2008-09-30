@@ -14,12 +14,12 @@
 <% for ps in @processes.values
      launcher = ps.variables['launcher'] %>
   <tr class="process">
-    <td class="wfid"><%= link_to(h(ps.wfid), process_path(ps.wfid)) %></td>
-    <td class="wfname"><%= h "#{ps.wfname} #{ps.wfrevision}" %></td>
-    <td class="launch"><%= h display_time(ps.launch_time) %></td>
-    <td class="launcher"><%= h(launcher || '-') %></td>
-    <td class="branches"><%= h ps.branches %></td>
-    <td class="errors"><%= h ps.errors.size %></td>
+    <td><%= link_to(h(ps.wfid), process_path(ps.wfid)) %></td>
+    <td><%= h "#{ps.wfname} #{ps.wfrevision}" %></td>
+    <td><%= h display_time(ps.launch_time) %></td>
+    <td><%= h(launcher || '-') %></td>
+    <td><%= h ps.branches %></td>
+    <td><%= h ps.errors.size %></td>
     <td class="coll_buttons">
       <%= link_to 'show', process_url(ps.wfid) %>
       <% if current_user.is_admin? %>

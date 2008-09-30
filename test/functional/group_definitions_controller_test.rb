@@ -13,9 +13,9 @@ class GroupDefinitionsControllerTest < ActionController::TestCase
   def test_should_create_group_definition
     login_as :admin
     assert_difference('GroupDefinition.count') do
-      post :create, :group_definition => { }
+      post :create, :group_definition => { :group_id => 1, :definition_id => 2 }
     end
-    assert_redirected_to group_definition_path(assigns(:group_definition))
+    assert_redirected_to definition_path(2)
   end
 
   def test_should_show_group_definition

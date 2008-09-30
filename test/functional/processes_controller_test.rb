@@ -45,9 +45,11 @@ class ProcessesControllerTest < ActionController::TestCase
 
   def test_launch_process_form
     login_as :admin
-    post :create, :pdef => '["sequence",{},[["participant",{"ref":"toto"},[]]]]'
+    post :create, :definition => '["sequence",{},[["participant",{"ref":"toto"},[]]]]'
+
+    #assert_redirected_to process_path('xxx')
     assert_response 302
-    assert_match /processes/, @response.headers['Location']
+    assert_match /\/processes\//, @response.headers['Location']
   end
 
   def test_launch_process_xml
