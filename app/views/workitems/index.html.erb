@@ -20,7 +20,7 @@
     <td><%= h workitem.activity %></td>
     <td class="coll_buttons">
       <%= link_to 'show', workitem_url(workitem) %> |
-      <%= link_to 'edit', edit_workitem_url(workitem) %> |
+      <%= link_to_if current_user.may_edit?(workitem), 'edit', edit_workitem_url(workitem) %> |
       pick
     </td>
   </tr>

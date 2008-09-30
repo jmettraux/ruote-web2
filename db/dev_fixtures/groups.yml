@@ -3,3 +3,7 @@ admins:
   id: 1
   name: admins
 
+a_team:
+  id: 2
+  name: team a
+

@@ -21,7 +21,7 @@ class GroupsControllerTest < ActionController::TestCase
   def test_should_not_get_index_2
     login_as :aaron
     get :index
-    assert_response 302
+    assert_response :success
   end
 
   def test_should_get_new

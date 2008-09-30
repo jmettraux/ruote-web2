@@ -1,5 +1,11 @@
 
 one:
+  id: 1
   name: simple sequence
   uri: sequence1.rb
+
+two:
+  id: 2
+  name: leave request
+  uri: leave_request1.rb
 

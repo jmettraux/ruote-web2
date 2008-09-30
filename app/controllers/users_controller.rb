@@ -102,9 +102,13 @@ class UsersController < ApplicationController
     #
     # Only an admin can create or delete a user.
     #
-    def authorized? #(action = action_name, resource = nil)
+    def authorized? (action=action_name, resource=nil)
 
-      current_user && current_user.is_admin?
+      return false unless current_user
+
+      return true if [ 'show', 'index' ].include?(action)
+
+      current_user.is_admin?
     end
 
     #

@@ -14,9 +14,9 @@
     <td><%= comma_list(definition.groups) %></td>
     <td class='coll_buttons'>
       <%= link_to 'show', definition %> |
-      <%= link_to 'edit', edit_definition_path(definition) %> |
-      <%= link_to 'remove', definition, :confirm => 'Are you sure ?', :method => :delete %> |
-      <%= link_to 'launch', new_process_path(:definition => definition.id) %>
+      <%= link_to_if current_user.is_admin?, 'edit', edit_definition_path(definition) %> |
+      <%= link_to_if current_user.is_admin?, 'remove', definition, :confirm => 'Are you sure ?', :method => :delete %> |
+      <%= link_to_if current_user.may_launch?(definition), 'launch', new_process_path(:definition => definition.id) %>
     </td>
   </tr>
 <% end %>

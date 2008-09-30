@@ -135,6 +135,15 @@ class ProcessesController < ApplicationController
 
   protected
 
+    def authorized? (action=action_name, resource=nil)
+
+      return false unless current_user
+
+      return true if [ 'show', 'index' ].include?(action)
+
+      current_user.is_admin?
+    end
+
     def parse_launchitem
 
       begin

@@ -85,15 +85,25 @@ module ApplicationHelper
   <a id='dataurl_link'>
     <canvas id="fluo" width="50" height="50"></canvas>
   </a>
+  <div id='fluo_minor_toggle' style='cursor: pointer;'>more</div>
 
   #{tree}
 
   <script>
     FluoCan.renderFlow('fluo', proc_tree, {'workitems': #{workitems.inspect}});
+    FluoCan.toggleMinor('fluo');
     FluoCan.crop('fluo');#{hl}
 
     var a = document.getElementById('dataurl_link');
     a.href = document.getElementById('fluo').toDataURL();
+
+    var toggle = document.getElementById('fluo_minor_toggle');
+    toggle.onclick = function () {
+      FluoCan.toggleMinor('fluo');
+      FluoCan.crop('fluo');
+      if (toggle.innerHTML == 'more') toggle.innerHTML = 'less'
+      else toggle.innerHTML = 'more';
+    };
   </script>
     }
   end

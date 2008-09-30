@@ -126,6 +126,8 @@ class GroupDefinitionsController < ApplicationController
     #
     def authorized? #(action = action_name, resource = nil)
 
-      current_user && current_user.is_admin?
+      return false unless current_user
+
+      current_user.is_admin?
     end
 end

@@ -96,6 +96,32 @@ class User < ActiveRecord::Base
   end
 
   #
+  # Returns true if the user is an administrator ('admin' group) or if the
+  # user launched the given process instance
+  #
+  def is_launcher? (process)
+    is_admin? or login == process.variables['launcher']
+  end
+
+  #
+  # Returns true if user is in the admin group or the user may launch
+  # a process instance of the given definition
+  #
+  def may_launch? (definition)
+    is_admin? or (self.groups & definition.groups).size > 0
+  end
+
+  #
+  # Returns true if the user is in the admin group, or the given workitem
+  # is in his 'inbox' or his group inbox
+  #
+  def may_edit? (workitem)
+    (is_admin? or
+     workitem.store_name == self.login or
+     self.group_names.include?(workitem.store_name))
+  end
+
+  #
   # Returns the array of group names the user belongs to.
   #
   def group_names
