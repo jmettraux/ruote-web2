@@ -62,7 +62,7 @@ ActionController::Routing::Routes.draw do |map|
   #map.root :controller => 'sessions', :action => 'new'
   map.root :controller => 'processes', :action => 'index'
 
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  #map.connect ':controller/:action/:id'
+  #map.connect ':controller/:action/:id.:format'
 end
 

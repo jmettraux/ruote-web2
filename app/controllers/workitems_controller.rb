@@ -61,12 +61,12 @@ class WorkitemsController < ApplicationController
   #
   def show
 
-    @workitem = nil
+    @workitem = OpenWFE::Extras::Workitem.find(params[:id])
 
     respond_to do |format|
       format.html # => app/views/show.html.erb
-      format.json { render :text => 'json' }
-      format.xml { render :text => 'json' }
+      format.json { render :text => 'TODO' }
+      format.xml { render :text => 'TODO' }
     end
   end
 
