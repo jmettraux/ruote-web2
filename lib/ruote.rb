@@ -31,6 +31,10 @@
 #++
 #
 
+#
+# this lib/ruote.rb is 'required' by the ruote_plugin if present.
+#
+
 require 'openwfe/participants/participantmap'
 require 'openwfe/extras/participants/activeparticipants'
 
@@ -70,6 +74,94 @@ module OpenWFE
         h['params']['activity'] || h['params']['description'] || '-'
       end
     end
+  end
+end
+
+#
+# Opening Rails Mapper to add a wfid_resources method
+#
+class ActionController::Routing::RouteSet::Mapper
+
+  def wfid_resources (controller_name)
+
+    controller_name = controller_name.to_s
+
+    # TODO :format ?
+
+    # GET
+    #
+    connect(
+      controller_name,
+      :controller => controller_name,
+      :action => 'index',
+      :conditions => { :method => :get })
+    connect(
+      "#{controller_name}/:wfid",
+      :controller => controller_name,
+      :action => 'index_wfid',
+      :conditions => { :method => :get })
+    connect(
+      "#{controller_name}/:wfid/:expid",
+      :controller => controller_name,
+      :action => 'show',
+      :conditions => { :method => :get })
+
+    # (no POST)
+
+    # PUT
+    #
+    connect(
+      "#{controller_name}/:wfid/:expid",
+      :controller => controller_name,
+      :action => 'update',
+      :conditions => { :method => :put })
+
+    # DELETE
+    #
+    connect(
+      "#{controller_name}/:wfid/:expid",
+      :controller => controller_name,
+      :action => 'destroy',
+      :conditions => { :method => :delete })
+
+    #
+    # paths and URLs
+
+    plural = controller_name
+    singular = plural.singularize
+
+    # ... where to add ?
+
+    ActionView::Base.class_eval <<-EOS
+      def _swapdots (s)
+        s.gsub(/\\./, '_')
+      end
+      #
+      # paths
+      #
+      def #{plural}_path (wfid=nil)
+        return "/#{plural}" unless wfid
+        "/#{plural}/\#{wfid}"
+      end
+      def #{singular}_path (o)
+        "/#{plural}/\#{o.wfid}/\#{_swapdots(o.expid)}"
+      end
+      def edit_#{singular}_path (o)
+        "\#{#{singular}_path(o)}/edit"
+      end
+      #
+      # urls
+      #
+      def #{plural}_url (wfid=nil)
+        "\#{ request.protocol + request.host_with_port }\#{#{plural}_path(wfid)}"
+      end
+      def #{singular}_url (o)
+        "\#{ request.protocol + request.host_with_port }\#{#{singular}_path(o)}"
+      end
+      def edit_#{singular}_url (o)
+        "\#{ request.protocol + request.host_with_port }\#{edit_#{singular}_path(o)}"
+      end
+    EOS
   end
 end
 

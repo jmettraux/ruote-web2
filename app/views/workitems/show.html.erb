@@ -1,0 +1,20 @@
+
+<div class='content_title'>/workitems/<%= h @workitem.wfid %>/<%= h @workitem.full_fei.expid %></div>
+
+<table>
+  <tr>
+    <td>id</td>
+    <td><%= h @workitem.id %></td>
+  </tr>
+  <tr>
+    <td>fields</td>
+    <td><%= h @workitem.field_hash.to_json %></td>
+  </tr>
+  <tr>
+    <td colspan='2'>
+      <%= link_to_if current_user.may_edit?(@workitem), 'edit', edit_group_path(@group) %> |
+      <%= link_to 'back', :back %>
+    <td>
+  </tr>
+</table>
+

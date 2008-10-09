@@ -67,7 +67,5 @@ Rails::Initializer.run do |config|
   # config.active_record.observers = :cacher, :garbage_collector
 
   $:.unshift('~/ruote/lib') # using the local 'ruote'
-
-  require 'ruote_patching' # lib/ruote_patching.rb
 end
 
