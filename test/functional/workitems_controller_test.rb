@@ -21,12 +21,6 @@ class WorkitemsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_should_get_index
-    login_as :admin
-    get :index
-    assert_response :success
-  end
-
   def test_should_show_workitem
     login_as :admin
     get :show, :id => 1

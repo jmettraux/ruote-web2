@@ -67,7 +67,10 @@ class WorkitemsController < ApplicationController
   # GET /workitems/:id/edit
   #
   def edit
-    render :text => 'not yet implemented'
+
+    @workitem = OpenWFE::Extras::Workitem.find(params[:id])
+
+    # only responds in HTML...
   end
 
   # GET /workitems/:id

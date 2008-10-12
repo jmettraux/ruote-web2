@@ -5,6 +5,7 @@
   <tr class="nhover">
     <th>wfid</th>
     <th>workflow</th>
+    <th>since</th>
     <th>expid</th>
     <th>store</th>
     <th>participant</th>
@@ -14,6 +15,7 @@
   <tr class="workitem">
     <td><%= link_to h(workitem.wfid), workitem_url(workitem) %></td>
     <td><%= h workitem.wf_name %> <%= h workitem.wf_revision %></td>
+    <td><%= display_since(workitem, :dispatch_time) %></td>
     <td><%= h workitem.full_fei.expid %></td>
     <td><%= h workitem.store_name %></td>
     <td><%= h workitem.participant_name %></td>

@@ -1,0 +1,22 @@
+
+  <tr>
+    <td>id</td>
+    <td><%= h workitem.id %></td>
+  </tr>
+  <tr>
+    <td>wfid</td>
+    <td><%= h workitem.wfid %></td>
+  </tr>
+  <tr>
+    <td>workflow</td>
+    <td><%= h workitem.wf_name %> <%= h workitem.wf_revision %></td>
+  </tr>
+  <tr>
+    <td>dispatch time</td>
+    <td><%= display_time(workitem, :dispatch_time) %></td>
+  </tr>
+  <tr>
+    <td>last modified</td>
+    <td><%= display_time(workitem, :last_modified) %></td>
+  </tr>
+
