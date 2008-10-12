@@ -84,6 +84,15 @@ class ProcessesController < ApplicationController
     end
   end
 
+  # GET /processes/:wfid/edit
+  #
+  def edit
+
+    @process = ruote_engine.process_status(params[:id])
+
+    # only replying in HTML ...
+  end
+
   # GET /processes/new
   #
   def new
