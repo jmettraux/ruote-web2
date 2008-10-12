@@ -53,13 +53,15 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing the them or commenting them out if you're using named routes and resources.
 
-  map.resources :processes
   map.resources :workitems
 
   map.wfid_resources :expressions
 
   map.resources :definitions
   map.connect 'definitions/:id/tree.js', :controller => 'definitions', :action => 'tree'
+
+  map.resources :processes
+  map.connect 'processes/:id/tree.js', :controller => 'processes', :action => 'tree'
 
   #map.root :controller => 'sessions', :action => 'new'
   map.root :controller => 'processes', :action => 'index'

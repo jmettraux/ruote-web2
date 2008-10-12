@@ -62,6 +62,8 @@ module ApplicationHelper
       "<script src=\"/definitions/#{d.id}/tree.js?var=proc_tree\"></script>"
     elsif p = opts[:process]
       "<script src=\"/processes/#{p.wfid}/tree.js?var=proc_tree\"></script>"
+    elsif i = opts[:wfid]
+      "<script src=\"/processes/#{i}/tree.js?var=proc_tree\"></script>"
     elsif t = opts[:tree]
       "<script>var proc_tree = #{t.to_json};</script>"
     else

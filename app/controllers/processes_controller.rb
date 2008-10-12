@@ -93,6 +93,16 @@ class ProcessesController < ApplicationController
     # only replying in HTML ...
   end
 
+  def tree
+
+    process = ruote_engine.process_status(params[:id])
+    var = params[:var] || 'proc_tree'
+
+    render(
+      :text => "var #{var} = #{process.current_tree.to_json};",
+      :content_type => 'text/javascript')
+  end
+
   # GET /processes/new
   #
   def new

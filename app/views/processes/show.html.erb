@@ -1,18 +1,30 @@
 
-<div class='content_title'>/processes/<%= h @process.wfid %></div>
+<div class='left_pane'>
 
-<table>
-  <%= render :partial => 'shared/process_header', :locals => { :process => @process } %>
-  <tr>
-    <td>0</td>
-    <td>1</td>
-  </tr>
-  <tr>
-    <td colspan='2'>
-      <%= link_to_if current_user.is_admin?, 'edit', edit_process_path(@process.wfid) %> |
-      <%= link_to_if current_user.is_launcher?(@process), 'abort', process_path(@process.wfid), :confirm => 'Are you sure ?', :method => :delete %> |
-      <%= link_to 'back', :back %>
-    <td>
-  </tr>
-</table>
+  <div class='content_title'>/processes/<%= h @process.wfid %></div>
+
+  <table>
+    <%= render :partial => 'shared/process_header', :locals => { :process => @process } %>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td colspan='2'>
+        <%= link_to_if current_user.is_admin?, 'edit', edit_process_path(@process.wfid) %> |
+        <%= link_to_if current_user.is_launcher?(@process), 'abort', process_path(@process.wfid), :confirm => 'Are you sure ?', :method => :delete %> |
+        <%= link_to 'back', :back %>
+      <td>
+    </tr>
+  </table>
+
+</div>
+
+<div class='right_pane' style="text-align: right;">
+
+  <%= render_fluo :process => @process, :workitems => @process.expressions.collect { |exp| exp.fei.expid } %>
+
+</div>
+
+<div class='clear'></div>
 

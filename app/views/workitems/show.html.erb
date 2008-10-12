@@ -1,17 +1,29 @@
 
-<div class='content_title'>/workitems/<%= h @workitem.id %></div>
+<div class='left_pane'>
 
-<table>
-  <%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem } %>
-  <tr class="nhover">
-    <td>fields</td>
-    <td><pre><%= h @workitem.field_hash.to_json.gsub(/,/, ",\n") %></pre></td>
-  </tr>
-  <tr>
-    <td colspan='2'>
-      <%= link_to_if current_user.may_edit?(@workitem), 'edit', edit_workitem_path(@workitem) %> |
-      <%= link_to 'back', :back %>
-    <td>
-  </tr>
-</table>
+  <div class='content_title'>/workitems/<%= h @workitem.id %></div>
+
+  <table>
+    <%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem } %>
+    <tr class="nhover">
+      <td>fields</td>
+      <td><pre><%= h @workitem.field_hash.to_json.gsub(/,/, ",\n") %></pre></td>
+    </tr>
+    <tr>
+      <td colspan='2'>
+        <%= link_to_if current_user.may_edit?(@workitem), 'edit', edit_workitem_path(@workitem) %> |
+        <%= link_to 'back', :back %>
+      <td>
+    </tr>
+  </table>
+
+</div>
+
+<div class='right_pane' style="text-align: right;">
+
+  <%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.expid ] %>
+
+</div>
+
+<div class='clear'></div>
 
