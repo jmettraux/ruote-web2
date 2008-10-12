@@ -133,9 +133,6 @@ class ActionController::Routing::RouteSet::Mapper
     # ... where to add ?
 
     ActionView::Base.class_eval <<-EOS
-      def _swapdots (s)
-        s.gsub(/\\./, '_')
-      end
       #
       # paths
       #
@@ -144,7 +141,7 @@ class ActionController::Routing::RouteSet::Mapper
         "/#{plural}/\#{wfid}"
       end
       def #{singular}_path (o)
-        "/#{plural}/\#{o.wfid}/\#{_swapdots(o.expid)}"
+        "/#{plural}/\#{o.wfid}/\#{swapdots(o.expid)}"
       end
       def edit_#{singular}_path (o)
         "\#{#{singular}_path(o)}/edit"
@@ -163,5 +160,12 @@ class ActionController::Routing::RouteSet::Mapper
       end
     EOS
   end
+end
+
+#
+# '.' <-> '_'
+#
+def swapdots (s)
+  (s.index('.') != nil) ? s.gsub(/\./, '_') : s.gsub(/_/, '.')
 end
 

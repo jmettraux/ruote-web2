@@ -39,25 +39,36 @@ class WorkitemsController < ApplicationController
   before_filter :login_required
 
   # GET /workitems
+  #  or
+  # GET /workitems?wfid=:wfid
+  #  or
+  # GET /workitems?q=:q || GET /workitems?query=:query
   #
   def index
 
-    @workitems = OpenWFE::Extras::Workitem.find(:all)
+    @wfid = params[:wfid]
+    @query = params[:q] || params[:query]
+
+    @workitems = if @wfid
+      OpenWFE::Extras::Workitem.find_all_by_wfid(@wfid)
+    else
+      OpenWFE::Extras::Workitem.find(:all)
+    end
 
     respond_to do |format|
       format.html # => app/views/processes.html.erb
       format.json { render :text => 'json' }
-      format.xml { render :text => 'json' }
+      format.xml { render :text => 'xml' }
     end
   end
 
-  # GET /workitems/1/edit
+  # GET /workitems/:id/edit
   #
   def edit
     render :text => 'not yet implemented'
   end
 
-  # GET /workitems/1
+  # GET /workitems/:id
   #
   def show
 
@@ -65,12 +76,12 @@ class WorkitemsController < ApplicationController
 
     respond_to do |format|
       format.html # => app/views/show.html.erb
-      format.json { render :text => 'TODO' }
-      format.xml { render :text => 'TODO' }
+      format.json { render :text => 'json' }
+      format.xml { render :text => 'xml' }
     end
   end
 
-  # PUT /workitems/1
+  # PUT /workitems/:id
   #
   def update
     render :text => 'not yet implemented'
