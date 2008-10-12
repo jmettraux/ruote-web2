@@ -51,12 +51,14 @@ class WorkitemsController < ApplicationController
 
     @workitems = if @wfid
       OpenWFE::Extras::Workitem.find_all_by_wfid(@wfid)
+    elsif @query
+      OpenWFE::Extras::Workitem.search(@query)
     else
       OpenWFE::Extras::Workitem.find(:all)
     end
 
     respond_to do |format|
-      format.html # => app/views/processes.html.erb
+      format.html # => app/views/workitems/index.html.erb
       format.json { render :text => 'json' }
       format.xml { render :text => 'xml' }
     end
