@@ -1,7 +1,7 @@
 
 = Ruote-Web2
 
-Ruote (OpenWFEru) is an open source Ruby workflow and BPM engine.
+Ruote (OpenWFEru) is an open source Ruby workflow and [incidentally] BPM engine.
 
 Ruote-Web2 is a Ruby on Rails web application wrapping an instance of Ruote and a worklist.
 
@@ -11,7 +11,7 @@ Warning : this project is in a really early stage !
 
 == getting it
 
-prerequesite : Rails 2.1.1+
+prerequesite : Rails 2.1.2+
 
 This sequence of commands will install ruote-web2 in your current directory (under ruote-web2/)
 
@@ -19,6 +19,8 @@ This sequence of commands will install ruote-web2 in your current directory (und
   cd ruote-web2
   rake submodule:update
   rake ruote:install
+  
+  mysql -u root -e 'create database rw2_development'
   rake db:migrate
   rake data:populate
 

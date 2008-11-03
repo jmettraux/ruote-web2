@@ -21,11 +21,11 @@ ActiveRecord::Schema.define(:version => 20080926082146) do
   add_index "definitions", ["name"], :name => "index_definitions_on_name", :unique => true
 
   create_table "fields", :force => true do |t|
-    t.string  "fkey",        :default => "", :null => false
-    t.string  "vclass",      :default => "", :null => false
+    t.string  "fkey",        :null => false
+    t.string  "vclass",      :null => false
     t.string  "svalue"
     t.text    "yvalue"
-    t.integer "workitem_id",                 :null => false
+    t.integer "workitem_id", :null => false
   end
 
   add_index "fields", ["workitem_id", "fkey"], :name => "index_fields_on_workitem_id_and_fkey", :unique => true
@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(:version => 20080926082146) do
 
   create_table "history", :force => true do |t|
     t.datetime "created_at"
-    t.string   "source",      :default => "", :null => false
-    t.string   "event",       :default => "", :null => false
+    t.string   "source",      :null => false
+    t.string   "event",       :null => false
     t.string   "wfid"
     t.string   "fei"
     t.string   "participant"
