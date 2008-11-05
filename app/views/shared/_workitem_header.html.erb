@@ -1,11 +1,15 @@
 
   <tr>
-    <td>id</td>
+    <td style="width: 150px;">id</td>
     <td><%= h workitem.id %></td>
   </tr>
   <tr>
     <td>wfid</td>
     <td><%= h workitem.wfid %></td>
+  </tr>
+  <tr>
+    <td>position</td>
+    <td><%= h workitem.full_fei.expname %> <%= h workitem.full_fei.expid %></td>
   </tr>
   <tr>
     <td>workflow</td>

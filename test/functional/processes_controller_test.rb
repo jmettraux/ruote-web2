@@ -53,6 +53,7 @@ class ProcessesControllerTest < ActionController::TestCase
   end
 
   def test_launch_process_xml
+
     xml = <<-EOS
       <process>
         <definition>
@@ -66,6 +67,9 @@ class ProcessesControllerTest < ActionController::TestCase
     assert_match /processes/, @response.headers['Location']
     assert_equal 'application/xml', @response.content_type
     assert_match /wfid/, @response.body
+
+    #p RuotePlugin.ruote_engine.process_statuses
+    #p OpenWFE::Extras::Workitem.find(:all).collect { |wi| wi.full_fei.to_s }
   end
 
   def test_launch_process_json

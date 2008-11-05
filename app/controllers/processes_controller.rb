@@ -145,7 +145,7 @@ class ProcessesController < ApplicationController
   #
   def destroy
 
-    RuotePlugin.ruote_engine.cancel_process params[:id]
+    RuotePlugin.ruote_engine.cancel_process(params[:id])
 
     sleep 0.200
 
@@ -169,11 +169,13 @@ class ProcessesController < ApplicationController
 
         ct = request.content_type.to_s
 
+        # TODO : deal with Atom[Pub]
+
         return OpenWFE::Xml::launchitem_from_xml(request.body.read) \
-          if ct == 'application/xml'
+          if ct.match(/xml$/)
 
         return OpenWFE::Json.launchitem_from_json(request.body.read) \
-          if ct == 'application/json'
+          if ct.match(/json$/)
 
         #
         # then we have a form...

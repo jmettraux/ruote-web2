@@ -37,6 +37,5 @@ class ApplicationController < ActionController::Base
       format.xml &plain_reply
     end
   end
-
 end
 

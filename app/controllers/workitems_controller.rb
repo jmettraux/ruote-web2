@@ -89,7 +89,14 @@ class WorkitemsController < ApplicationController
   # PUT /workitems/:id
   #
   def update
-    render :text => 'not yet implemented'
+    puts
+    puts
+    p request.params
+    p request.body.read
+    puts
+    puts
+    #state = params[:state]
+    render :text => nil
   end
 
   protected

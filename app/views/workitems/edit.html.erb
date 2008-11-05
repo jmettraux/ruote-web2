@@ -1,5 +1,20 @@
 
+<script>
+  function proceed () {
+    document.getElementById('state').value = 'proceeded';
+    document.getElementById('edition_form').submit();
+  }
+</script>
+
 <div class='content_title'>/workitems/<%= h @workitem.id %></div>
+
+<% form_tag(
+  "/workitems/#{@workitem.id}",
+  :id => 'edition_form',
+  :method => :put,
+  :multipart => true) do -%>
+
+<input type="hidden" name="state" id="state" value="" /><!-- :( -->
 
 <table>
   <%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem } %>
@@ -10,9 +25,10 @@
   <tr>
     <td colspan='2'>
       save |
-      proceed |
-      <%= link_to 'back', :back %>
+      <%= link_to_function('proceed', 'proceed(); return true;') %> |
+      <%= link_to('back', :back) %>
     <td>
   </tr>
 </table>
+<% end -%>
 

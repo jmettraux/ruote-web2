@@ -67,6 +67,7 @@ h2 {
   border-spacing: 0px;
   padding: 0px;
   text-align: left;
+  /*width: 100%*/
 }
 .coll_buttons {
   text-align: right;

@@ -47,9 +47,11 @@ module OpenWFE
 
     def lookup_participant (participant_name)
 
-      p = old_lookup_participant(participant_name)
+      part = old_lookup_participant(participant_name)
+      return part if part
 
-      return p if p
+      p [ :lup, participant_name, get_expression_map.get_class(participant_name) ]
+      return nil if get_expression_map.get_class(participant_name)
 
       store_name =
         User.find_by_login(participant_name) ||
