@@ -26,5 +26,18 @@ class WorkitemsControllerTest < ActionController::TestCase
     get :show, :id => 1
     assert_response :success
   end
+
+  def test_should_get_workitem
+
+    RuotePlugin.ruote_engine.launch([ 'participant', { 'ref' => 'toto' }, [] ])
+    sleep 0.350
+
+    login_as :admin
+    @request.env['HTTP_ACCEPT'] = 'application/json'
+    get :index
+    assert_response :success
+
+    p @response.body
+  end
 end
 

@@ -58,9 +58,16 @@ class WorkitemsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html # => app/views/workitems/index.html.erb
-      format.json { render :text => 'json' }
-      format.xml { render :text => 'xml' }
+
+      format.html
+        # => app/views/workitems/index.html.erb
+
+      format.json do
+        render(
+          :json => @workitems.collect { |wi| wi.to_owfe_workitem.to_h }.to_json)
+      end
+
+      format.xml { render(:text => 'xml') }
     end
   end
 
@@ -89,14 +96,13 @@ class WorkitemsController < ApplicationController
   # PUT /workitems/:id
   #
   def update
-    puts
-    puts
-    p request.params
-    p request.body.read
-    puts
-    puts
-    #state = params[:state]
-    render :text => nil
+
+    wi0 = OpenWFE::Extras::Workitem.find(params[:id])
+    wi1 = parse_workitem
+
+    #state1 = wi1.attributes.delete('_state')
+
+    render :text => wi1.inspect
   end
 
   protected
@@ -108,6 +114,41 @@ class WorkitemsController < ApplicationController
       return true if [ 'show', 'index' ].include?(action)
 
       current_user.is_admin?
+    end
+
+    def parse_workitem
+
+      begin
+
+        ct = request.content_type.to_s
+
+        # TODO : deal with Atom[Pub]
+
+        return OpenWFE::Xml::workitem_from_xml(request.body.read) \
+          if ct.match(/xml$/)
+
+        return OpenWFE::Json.workitem_from_json(request.body.read) \
+          if ct.match(/json$/)
+
+        #
+        # then we have a form...
+
+        #if definition_id = params[:definition_id]
+        #  definition = Definition.find(definition_id)
+        #  params[:definition_url] = definition.local_uri if definition
+        #end
+        #if attributes = params[:attributes]
+        #  params[:attributes] = ActiveSupport::JSON::decode(attributes)
+        #end
+
+        OpenWFE::WorkItem.from_h(params)
+
+      rescue Exception => e
+
+        logger.warn "failed to parse workitem : #{e}"
+
+        nil
+      end
     end
 end
 
