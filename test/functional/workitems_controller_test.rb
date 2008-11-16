@@ -5,6 +5,12 @@ require 'workitems_controller'
 # Re-raise errors caught by the controller.
 class WorkitemsController; def rescue_action(e) raise e end; end
 
+class ActionController::TestRequest
+  def path_info
+    'path_info'
+  end
+end
+
 class WorkitemsControllerTest < ActionController::TestCase
 
   fixtures :users, :groups
@@ -27,10 +33,23 @@ class WorkitemsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_should_get_workitem
+  def test_should_save_workitem
+    login_as :admin
+    put :update, { 'id' => 1, 'fields' => '{ "type": "petit bateau" }' }
+    assert_response 302
+    assert_equal 'http://test.host/workitems', @response.headers['Location']
+    wi = OpenWFE::Extras::Workitem.find(1).as_owfe_workitem
+    assert_equal 'petit bateau', wi.attributes['type']
+  end
+
+  def test_should_proceed_workitem
+
+    raise "continue me !"
 
     fei = RuotePlugin.ruote_engine.launch(
-      [ 'participant', { 'ref' => 'toto' }, [] ])
+      [ 'sequence', {}, [
+        [ 'participant', { 'ref' => 'alice' }, [] ],
+        [ 'participant', { 'ref' => 'bob' }, [] ] ] ])
     sleep 0.350
 
     login_as :admin
@@ -42,10 +61,8 @@ class WorkitemsControllerTest < ActionController::TestCase
 
     #p workitems.collect { |wi| wi['flow_expression_id'] }
 
-    assert_equal(
-      1,
-      workitems.select { |wi|
-        wi['flow_expression_id']['workflow_instance_id'] == fei.wfid }.size)
+    wi = workitems.find { |wi|
+      wi['flow_expression_id']['workflow_instance_id'] == fei.wfid }
   end
 end
 

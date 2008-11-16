@@ -49,7 +49,6 @@ class ActionController::MimeResponds::Responder
   end
   def respond
     old_respond
-    p @controller.request.parameters
     @controller.response.content_type = 'text/plain' \
       if @controller.request.parameters['plain'] == 'true'
   end

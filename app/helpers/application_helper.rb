@@ -59,8 +59,6 @@ module ApplicationHelper
       #:script_name
       :path_info, ".#{format}?plain=true"
     ].inject('') do |s, elt|
-      p elt
-      p s
       s << (elt.is_a?(String) ? elt : request.send(elt).to_s)
     end
     href << "&#{request.query_string}" if request.query_string.length > 0

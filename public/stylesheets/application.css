@@ -28,6 +28,7 @@ th {
   border-bottom: 1px #888 solid;
 }
 .footer {
+  margin-top: 21px;
   border-top: 1px #888 solid;
   padding-top: 3px;
 }
@@ -36,8 +37,10 @@ th {
 }
 
 .notice {
-  border: 1px #888 solid;
-  background-color: #EAF2F5;
+  /*border: 1px #888 solid;
+  background-color: #EAF2F5;*/
+  border: 1px #E6DB55 solid;
+  background-color: #FFFBCC;
   text-align: center;
   font-style: italic;
   color: black;

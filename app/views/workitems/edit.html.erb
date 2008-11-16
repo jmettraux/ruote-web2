@@ -1,6 +1,9 @@
 
 <script>
-  function proceed () {
+  function save_wi () {
+    document.getElementById('edition_form').submit();
+  }
+  function proceed_wi () {
     document.getElementById('state').value = 'proceeded';
     document.getElementById('edition_form').submit();
   }
@@ -20,12 +23,12 @@
   <%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem } %>
   <tr class="nhover">
     <td>fields</td>
-    <td><pre><%= h @workitem.field_hash.to_json.gsub(/,/, ",\n") %></pre></td>
+    <td><textarea name='fields' rows='14' cols='80'><%= h @workitem.field_hash.to_json.gsub(/,/, ",\n") %></textarea></td>
   </tr>
   <tr>
-    <td colspan='2'>
-      save |
-      <%= link_to_function('proceed', 'proceed(); return true;') %> |
+    <td colspan='2' class='nhover'>
+      <%= link_to_function('save', 'save_wi(); return true;') %> |
+      <%= link_to_function('proceed', 'proceed_wi(); return true;') %> |
       <%= link_to('back', :back) %>
     <td>
   </tr>

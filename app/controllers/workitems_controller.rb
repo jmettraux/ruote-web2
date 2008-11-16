@@ -97,10 +97,31 @@ class WorkitemsController < ApplicationController
   #
   def update
 
-    wi0 = OpenWFE::Extras::Workitem.find(params[:id])
+    wi = OpenWFE::Extras::Workitem.find(params[:id])
+    owi = wi.to_owfe_workitem
+
     wi1 = parse_workitem
 
-    render :text => "..."
+    wid = "#{wi.id} (#{owi.fei.wfid} #{owi.fei.expid})"
+
+    if params[:state] == 'proceeded'
+
+      owi.attributes = wi1.attributes
+      RuotePlugin.ruote_engine.reply(owi)
+      wi.destroy
+
+      flash[:notice] = "workitem #{wid} proceeded"
+
+    else
+
+      wi.replace_fields(wi1.attributes)
+
+      flash[:notice] = "workitem #{wid} modified"
+    end
+
+    redirect_to :action => 'index'
+      #
+      # TODO : no need for a redirection in case of xml/json...
   end
 
   protected
@@ -142,7 +163,12 @@ class WorkitemsController < ApplicationController
         #  params[:attributes] = ActiveSupport::JSON::decode(attributes)
         #end
 
-        OpenWFE::WorkItem.from_h(params)
+        wi = OpenWFE::WorkItem.from_h(params)
+
+        wi.attributes = ActiveSupport::JSON.decode(wi.attributes) \
+          if wi.attributes.is_a?(String)
+
+        wi
 
       rescue Exception => e
 
