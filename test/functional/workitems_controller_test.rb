@@ -29,7 +29,8 @@ class WorkitemsControllerTest < ActionController::TestCase
 
   def test_should_get_workitem
 
-    RuotePlugin.ruote_engine.launch([ 'participant', { 'ref' => 'toto' }, [] ])
+    fei = RuotePlugin.ruote_engine.launch(
+      [ 'participant', { 'ref' => 'toto' }, [] ])
     sleep 0.350
 
     login_as :admin
@@ -37,7 +38,14 @@ class WorkitemsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
 
-    p @response.body
+    workitems = ActiveSupport::JSON.decode(@response.body)
+
+    #p workitems.collect { |wi| wi['flow_expression_id'] }
+
+    assert_equal(
+      1,
+      workitems.select { |wi|
+        wi['flow_expression_id']['workflow_instance_id'] == fei.wfid }.size)
   end
 end
 

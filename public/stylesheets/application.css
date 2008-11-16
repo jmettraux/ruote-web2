@@ -29,6 +29,7 @@ th {
 }
 .footer {
   border-top: 1px #888 solid;
+  padding-top: 3px;
 }
 .subheader {
   margin-top: 4px;
@@ -41,6 +42,7 @@ th {
   font-style: italic;
   color: black;
   padding: 10px;
+  margin: 10px 0px;
 }
 .error {
   border: 1px red solid;

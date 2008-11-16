@@ -31,7 +31,7 @@
 
     <div class="subheader">
       <div class="left">
-        open source ruby workflow and bpm engine
+        open source ruby workflow engine
       </div>
       <div class="right">
         <%= current_user ? render_res_menu : 'please log in' %>
@@ -53,6 +53,11 @@
     </div>
 
     <div class="footer">
+      <div class="right">
+        <a href="<%= as_x_href(:xml) %>" title="show raw XML">as xml</a> |
+        <a href="<%= as_x_href(:json) %>" title="show raw JSON">as json</a>
+      </div>
+      <div class="clear"></div>
     </div>
 
   </body>

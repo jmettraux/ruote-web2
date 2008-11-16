@@ -100,9 +100,7 @@ class WorkitemsController < ApplicationController
     wi0 = OpenWFE::Extras::Workitem.find(params[:id])
     wi1 = parse_workitem
 
-    #state1 = wi1.attributes.delete('_state')
-
-    render :text => wi1.inspect
+    render :text => "..."
   end
 
   protected
@@ -111,11 +109,14 @@ class WorkitemsController < ApplicationController
 
       return false unless current_user
 
-      return true if [ 'show', 'index' ].include?(action)
+      return true if %w{ show index }.include?(action)
 
       current_user.is_admin?
     end
 
+    #
+    # parsing incoming workitems
+    #
     def parse_workitem
 
       begin
