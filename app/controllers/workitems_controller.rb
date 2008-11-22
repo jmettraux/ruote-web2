@@ -31,7 +31,7 @@
 #++
 #
 
-#require 'openwfe/representations'
+require 'openwfe/representations'
 
 
 class WorkitemsController < ApplicationController
@@ -63,11 +63,16 @@ class WorkitemsController < ApplicationController
         # => app/views/workitems/index.html.erb
 
       format.json do
+        owis = @workitems.collect { |wi| wi.to_owfe_workitem }
         render(
-          :json => @workitems.collect { |wi| wi.to_owfe_workitem.to_h }.to_json)
+          :json => OpenWFE::Json.workitems_to_h(owis).to_json)
       end
 
-      format.xml { render(:text => 'xml') }
+      format.xml do
+        owis = @workitems.collect { |wi| wi.to_owfe_workitem }
+        render(
+          :xml => OpenWFE::Xml.workitems_to_xml(owis, :indent => 2))
+      end
     end
   end
 
