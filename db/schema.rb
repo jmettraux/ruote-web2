@@ -28,10 +28,10 @@ ActiveRecord::Schema.define(:version => 20080926082146) do
     t.integer "workitem_id", :null => false
   end
 
-  add_index "fields", ["workitem_id", "fkey"], :name => "index_fields_on_workitem_id_and_fkey", :unique => true
   add_index "fields", ["fkey"], :name => "index_fields_on_fkey"
-  add_index "fields", ["vclass"], :name => "index_fields_on_vclass"
   add_index "fields", ["svalue"], :name => "index_fields_on_svalue"
+  add_index "fields", ["vclass"], :name => "index_fields_on_vclass"
+  add_index "fields", ["workitem_id", "fkey"], :name => "index_fields_on_workitem_id_and_fkey", :unique => true
 
   create_table "group_definitions", :force => true do |t|
     t.integer  "group_id"
@@ -59,10 +59,10 @@ ActiveRecord::Schema.define(:version => 20080926082146) do
   end
 
   add_index "history", ["created_at"], :name => "index_history_on_created_at"
-  add_index "history", ["source"], :name => "index_history_on_source"
   add_index "history", ["event"], :name => "index_history_on_event"
-  add_index "history", ["wfid"], :name => "index_history_on_wfid"
   add_index "history", ["participant"], :name => "index_history_on_participant"
+  add_index "history", ["source"], :name => "index_history_on_source"
+  add_index "history", ["wfid"], :name => "index_history_on_wfid"
 
   create_table "user_groups", :force => true do |t|
     t.integer "user_id",  :null => false
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20080926082146) do
   create_table "workitems", :force => true do |t|
     t.string   "fei"
     t.string   "wfid"
+    t.string   "expid"
     t.string   "wf_name"
     t.string   "wf_revision"
     t.string   "participant_name"
@@ -97,11 +98,12 @@ ActiveRecord::Schema.define(:version => 20080926082146) do
     t.text     "yattributes"
   end
 
+  add_index "workitems", ["expid"], :name => "index_workitems_on_expid"
   add_index "workitems", ["fei"], :name => "index_workitems_on_fei", :unique => true
-  add_index "workitems", ["wfid"], :name => "index_workitems_on_wfid"
-  add_index "workitems", ["wf_name"], :name => "index_workitems_on_wf_name"
-  add_index "workitems", ["wf_revision"], :name => "index_workitems_on_wf_revision"
   add_index "workitems", ["participant_name"], :name => "index_workitems_on_participant_name"
   add_index "workitems", ["store_name"], :name => "index_workitems_on_store_name"
+  add_index "workitems", ["wf_name"], :name => "index_workitems_on_wf_name"
+  add_index "workitems", ["wf_revision"], :name => "index_workitems_on_wf_revision"
+  add_index "workitems", ["wfid"], :name => "index_workitems_on_wfid"
 
 end

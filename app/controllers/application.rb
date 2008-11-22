@@ -37,6 +37,13 @@ class ApplicationController < ActionController::Base
       format.xml &plain_reply
     end
   end
+
+  #
+  # Returns a new LinkGenerator wrapping the current request.
+  #
+  def linkgen
+    LinkGenerator.new(request)
+  end
 end
 
 #

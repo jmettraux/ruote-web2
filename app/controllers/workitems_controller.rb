@@ -63,15 +63,13 @@ class WorkitemsController < ApplicationController
         # => app/views/workitems/index.html.erb
 
       format.json do
-        owis = @workitems.collect { |wi| wi.to_owfe_workitem }
-        render(
-          :json => OpenWFE::Json.workitems_to_h(owis).to_json)
+        render(:json => OpenWFE::Json.workitems_to_h(
+          @workitems, :linkgen => linkgen).to_json)
       end
 
       format.xml do
-        owis = @workitems.collect { |wi| wi.to_owfe_workitem }
-        render(
-          :xml => OpenWFE::Xml.workitems_to_xml(owis, :indent => 2))
+        render(:xml => OpenWFE::Xml.workitems_to_xml(
+          @workitems, :indent => 2, :linkgen => linkgen))
       end
     end
   end
@@ -93,8 +91,10 @@ class WorkitemsController < ApplicationController
 
     respond_to do |format|
       format.html # => app/views/show.html.erb
-      format.json { render :text => 'json' }
-      format.xml { render :text => 'xml' }
+      format.json { render :json => OpenWFE::Json.workitem_to_h(
+        @workitem, :linkgen => linkgen).to_json }
+      format.xml { render :xml => OpenWFE::Xml.workitem_to_xml(
+        @workitem, :linkgen => linkgen) }
     end
   end
 
