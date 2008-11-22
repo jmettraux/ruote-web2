@@ -44,8 +44,6 @@ class WorkitemsControllerTest < ActionController::TestCase
 
   def test_should_proceed_workitem
 
-    raise "continue me !"
-
     fei = RuotePlugin.ruote_engine.launch(
       [ 'sequence', {}, [
         [ 'participant', { 'ref' => 'alice' }, [] ],
@@ -53,16 +51,25 @@ class WorkitemsControllerTest < ActionController::TestCase
     sleep 0.350
 
     login_as :admin
+
     @request.env['HTTP_ACCEPT'] = 'application/json'
     get :index
     assert_response :success
 
     workitems = ActiveSupport::JSON.decode(@response.body)
 
-    #p workitems.collect { |wi| wi['flow_expression_id'] }
-
     wi = workitems.find { |wi|
       wi['flow_expression_id']['workflow_instance_id'] == fei.wfid }
+
+    assert_not_nil wi['href']
+
+    assert_equal 'alice', wi['participant_name']
+
+    atts = wi['attributes']
+    atts['girl'] = 'Ukifune'
+
+    put :update, { 'state' => 'proceeded', 'fields' => atts }
+    sleep 0.350
   end
 end
 

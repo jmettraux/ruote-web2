@@ -11,7 +11,7 @@ Warning : this project is in a really early stage !
 
 == getting it
 
-prerequesite : Rails 2.1.2+
+prerequesite : Rails 2.2+
 
 This sequence of commands will install ruote-web2 in your current directory (under ruote-web2/)
 

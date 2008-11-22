@@ -4,5 +4,5 @@
 
 == ruote-web2 - 0.9.20    not yet released
 
-- todo  #XXXXX : nada
+- todo  #22883 : upgraded to rails 2.2
 

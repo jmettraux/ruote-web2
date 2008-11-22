@@ -50,8 +50,7 @@ class ProcessesController < ApplicationController
 
       format.json do
         render(
-          :json => @processes.values.collect { |p|
-            p.to_h(:request => request) }.to_json)
+          :json => OpenWFE::Json::processes_to_h(@processes).to_json)
       end
 
       format.xml do
