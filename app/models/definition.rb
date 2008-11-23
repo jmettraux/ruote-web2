@@ -31,10 +31,15 @@
 #++
 #
 
+#
+# Process definitions are tracked via this record class.
+#
 class Definition < ActiveRecord::Base
 
   has_many :group_definitions, :dependent => :delete_all
   has_many :groups, :through => :group_definitions
+
+  include LinksMixin
 
   #
   # The URI for web links
@@ -50,5 +55,11 @@ class Definition < ActiveRecord::Base
     u = self.full_uri
     u[0, 1] == '/' ? "#{RAILS_ROOT}/public#{u}" : u
   end
+
+  protected
+
+    def links (opts={})
+      [ { 'href' => 'toto', 'rel' => 'nada' } ]
+    end
 end
 

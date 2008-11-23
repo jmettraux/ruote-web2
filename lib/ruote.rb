@@ -169,3 +169,27 @@ def swapdots (s)
   (s.index('.') != nil) ? s.gsub(/\./, '_') : s.gsub(/_/, '.')
 end
 
+#
+# adding Links to models' to_xml / to_json
+#
+module LinksMixin
+
+  def to_xml (opts={})
+    super(opts) do |xml|
+      xml.links do
+        links(opts).each { |l| xml.link(l) }
+      end
+    end
+  end
+
+  #def to_json (opts={})
+  #  super(opts.merge(:methods => :links))
+  #end
+  def to_json (opts={})
+    js = ActiveRecord::Serialization::JsonSerializer.new(self, opts)
+    sr = js.serializable_record
+    sr['links'] = links(opts)
+    sr.to_json
+  end
+end
+

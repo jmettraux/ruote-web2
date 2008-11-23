@@ -45,6 +45,7 @@ class DefinitionsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @definitions }
+      format.json  { render :json => @definitions }
     end
   end
 
@@ -58,6 +59,7 @@ class DefinitionsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @definition }
+      format.json  { render :json => @definition }
     end
   end
 
@@ -119,9 +121,11 @@ class DefinitionsController < ApplicationController
         flash[:notice] = 'Definition was successfully created.'
         format.html { redirect_to(@definition) }
         format.xml  { render :xml => @definition, :status => :created, :location => @definition }
+        format.json  { render :json => @definition, :status => :created, :location => @definition }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @definition.errors, :status => :unprocessable_entity }
+        format.json  { render :json => @definition.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -138,9 +142,11 @@ class DefinitionsController < ApplicationController
         flash[:notice] = 'Definition was successfully updated.'
         format.html { redirect_to(@definition) }
         format.xml  { head :ok }
+        format.json  { head :ok }
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @definition.errors, :status => :unprocessable_entity }
+        format.json  { render :json => @definition.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -156,6 +162,7 @@ class DefinitionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(definitions_url) }
       format.xml  { head :ok }
+      format.json  { head :ok }
     end
   end
 
