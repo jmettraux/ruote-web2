@@ -54,9 +54,11 @@
 
     <div class="footer">
       <div class="right">
-        <a href="<%= as_x_href(:xml) %>" title="show raw XML (may not yet be implemented)">as xml</a> |
-        <a href="<%= as_x_href(:json) %>" title="show raw JSON (may not yet be implemented)">as json</a>
+        <% if current_user %>
+          <a href="<%= as_x_href(:xml) %>" title="show raw XML (may not yet be implemented)">as xml</a> |
+          <a href="<%= as_x_href(:json) %>" title="show raw JSON (may not yet be implemented)">as json</a>
       </div>
+        <% end %>
       <div class="clear"></div>
     </div>
 
