@@ -49,14 +49,14 @@ class ProcessesController < ApplicationController
       format.html # => app/views/processes.html.erb
 
       format.json do
-        render(
-          :json => OpenWFE::Json::processes_to_h(@processes).to_json)
+        render(:json => OpenWFE::Json.processes_to_h(
+          @processes, :linkgen => LinkGenerator.new(request)).to_json)
       end
 
       format.xml do
         render(
-          :xml => OpenWFE::Xml::processes_to_xml(
-            @processes, :request => request, :indent => 2))
+          :xml => OpenWFE::Xml.processes_to_xml(
+            @processes, :linkgen => LinkGenerator.new(request), :indent => 2))
       end
     end
   end
@@ -72,13 +72,14 @@ class ProcessesController < ApplicationController
       format.html # => app/views/show.html.erb
 
       format.json do
-        render :json => @process.to_h(:request => request).to_json
+        render(:json => OpenWFE::Json.process_to_h(
+          @process, :linkgen => LinkGenerator.new(request)).to_json)
       end
 
       format.xml do
         render(
-          :xml => OpenWFE::Xml::process_to_xml(
-            @process, :request => request, :indent => 2))
+          :xml => OpenWFE::Xml.process_to_xml(
+            @process, :linkgen => LinkGenerator.new(request), :indent => 2))
       end
     end
   end
