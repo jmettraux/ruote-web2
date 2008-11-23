@@ -98,6 +98,8 @@ class ProcessesController < ApplicationController
     process = ruote_engine.process_status(params[:id])
     var = params[:var] || 'proc_tree'
 
+    # TODO : use Rails callback
+
     render(
       :text => "var #{var} = #{process.current_tree.to_json};",
       :content_type => 'text/javascript')

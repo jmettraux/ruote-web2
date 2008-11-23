@@ -59,7 +59,11 @@ class Definition < ActiveRecord::Base
   protected
 
     def links (opts={})
-      [ { 'href' => 'toto', 'rel' => 'nada' } ]
+      linkgen = LinkGenerator.new(opts[:request])
+      [
+        linkgen.hlink('via', 'definitions'),
+        linkgen.hlink('self', 'definitions', self.id.to_s)
+      ]
     end
 end
 

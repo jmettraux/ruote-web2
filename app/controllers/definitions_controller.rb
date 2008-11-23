@@ -44,8 +44,8 @@ class DefinitionsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @definitions }
-      format.json  { render :json => @definitions }
+      format.xml { render :xml => @definitions.to_xml(:request => request) }
+      format.json { render :json => @definitions.to_json(:request => request) }
     end
   end
 
@@ -58,8 +58,8 @@ class DefinitionsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @definition }
-      format.json  { render :json => @definition }
+      format.xml { render :xml => @definition.to_xml(:request => request) }
+      format.json { render :json => @definition.to_json(:request => request) }
     end
   end
 
@@ -78,6 +78,8 @@ class DefinitionsController < ApplicationController
 
     var = params[:var] || 'proc_tree'
 
+    # TODO : use Rails callback thing (:callback)
+
     tree = RuotePlugin.ruote_engine.get_def_parser.parse(pdef)
 
     render(
@@ -94,7 +96,8 @@ class DefinitionsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @definition }
+      format.xml { render :xml => @definition.to_xml(:request => request) }
+      format.json { render :json => @definition.to_json(:request => request) }
     end
   end
 
@@ -117,15 +120,38 @@ class DefinitionsController < ApplicationController
     @definition = Definition.new(params[:definition])
 
     respond_to do |format|
+
       if @definition.save
+
         flash[:notice] = 'Definition was successfully created.'
-        format.html { redirect_to(@definition) }
-        format.xml  { render :xml => @definition, :status => :created, :location => @definition }
-        format.json  { render :json => @definition, :status => :created, :location => @definition }
+
+        format.html {
+          redirect_to(@definition)
+        }
+        format.xml {
+          render(
+            :xml => @definition.to_xml(:request => request),
+            :status => :created,
+            :location => @definition)
+        }
+        format.json {
+          render(
+            :json => @definition.to_json(:request => request),
+            :status => :created,
+            :location => @definition)
+        }
+
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @definition.errors, :status => :unprocessable_entity }
-        format.json  { render :json => @definition.errors, :status => :unprocessable_entity }
+
+        format.html {
+          render(:action => 'new')
+        }
+        format.xml {
+          render(:xml => @definition.errors, :status => :unprocessable_entity)
+        }
+        format.json {
+          render(:json => @definition.errors, :status => :unprocessable_entity)
+        }
       end
     end
   end
@@ -138,15 +164,25 @@ class DefinitionsController < ApplicationController
     @definition = Definition.find(params[:id])
 
     respond_to do |format|
+
       if @definition.update_attributes(params[:definition])
+
         flash[:notice] = 'Definition was successfully updated.'
         format.html { redirect_to(@definition) }
-        format.xml  { head :ok }
-        format.json  { head :ok }
+        format.xml { head :ok }
+        format.json { head :ok }
+
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @definition.errors, :status => :unprocessable_entity }
-        format.json  { render :json => @definition.errors, :status => :unprocessable_entity }
+
+        format.html {
+          render(:action => 'edit')
+        }
+        format.xml {
+          render(:xml => @definition.errors, :status => :unprocessable_entity)
+        }
+        format.json {
+          render(:json => @definition.errors, :status => :unprocessable_entity)
+        }
       end
     end
   end
@@ -161,8 +197,8 @@ class DefinitionsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(definitions_url) }
-      format.xml  { head :ok }
-      format.json  { head :ok }
+      format.xml { head :ok }
+      format.json { head :ok }
     end
   end
 
