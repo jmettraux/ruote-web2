@@ -1,62 +1,83 @@
 
 body {
-  color: #888;
-  font-family: Helvetica, sans-serif;
-  font-size: 16px;
-  margin: 20px 49px;
+  font-size: 87%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-a, a:visited {
-  color: black;
-  text-decoration: none;
+
+.CodeRay {
+  margin-bottom: 1em;
 }
+
+/* Headings
+ * --------------------------------------------------------------------- */
+h1,h2,h3,h4,h5,h6 { color: #111; }
+
+/* Text Elements
+ * --------------------------------------------------------------------- */
+a                 { color: #125AA7; }
+a:hover           { color: #000; }
+blockquote        { color: #666; }
+
+pre {
+  background: #eee;
+  border:     1px solid #ddd;
+  margin-bottom: 1em;
+}
+
+hr {
+  background: #ddd;
+  color:      #ddd;
+}
+
+/* Tables
+ * --------------------------------------------------------------------- */
 table {
+  /*
+  border-top:     1px solid #ddd;
+  border-left:    1px solid #ddd;
   border-spacing: 0px;
+  border: 0px;
+  */
   padding: 0px;
 }
 tr:hover {
   background-color: #E3E3E3;
 }
-.nhover:hover {
-  background-color: white;
-}
 th {
   font-weight: normal;
 }
-
-.header {
-  padding-bottom: 9px;
-  border-bottom: 1px #888 solid;
+th,td {
+  /* top right bottom left */
+  padding: 3px 0px 3px 0px;
+  border: 0px;
+  line-height: 1.0em;
 }
-.footer {
-  margin-top: 21px;
+
+.nhover:hover {
+  background-color: white;
+}
+
+/* Default Classes
+ * --------------------------------------------------------------------- */
+
+p.quiet { color: #666; }
+.alt    { color: #666; }
+
+
+#ruote_web2 {
+  font-size: 2.0em;
+  color: #bbbbbb;
+  margin-left: 4px;
+}
+#user_control {
+  line-height: 3.7em;
+}
+#subheader {
   border-top: 1px #888 solid;
-  padding-top: 3px;
-}
-.subheader {
-  margin-top: 4px;
 }
 
-.notice {
-  /*border: 1px #888 solid;
-  background-color: #EAF2F5;*/
-  border: 1px #E6DB55 solid;
-  background-color: #FFFBCC;
-  text-align: center;
-  font-style: italic;
-  color: black;
-  padding: 10px;
-  margin: 10px 0px;
-}
-.error {
-  border: 1px red solid;
-  background-color: #FD4848;
-}
-
-h2 {
-  font-size: 100%;
-}
-.errorExplanation {
-  font-size: 100%;
+#footer {
+  border-top: 1px #888 solid;
 }
 
 .content {
@@ -64,7 +85,8 @@ h2 {
   margin-bottom: 1em;
 }
 .content_title {
-  font-size: 1.3em;
+  font-size: 1.77em;
+  color: #bbbbbb;
   margin-bottom: 14px;
 }
 
@@ -85,30 +107,4 @@ h2 {
   background-color: white;
 }
 
-/* well ... */
-.left { float: left; }
-.right { float: right; }
-.clear { clear: both; }
-
-.left_pane {
-  width: 48%;
-  float: left;
-}
-.right_pane {
-  width: 48%;
-  float: right;
-}
-
-.one_third_pane {
-  width: 32%;
-  float: left;
-}
-.two_third_pane {
-  width: 32%;
-  float: left;
-}
-.three_third_pane {
-  width: 32%;
-  float: right;
-}
-
+/* EOF */
