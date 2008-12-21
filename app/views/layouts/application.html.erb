@@ -22,45 +22,49 @@
 
   <body>
 
-    <div id="header" class="column span-22 prepend-2 first last">
+    <div class="container">
 
-      <div class="column span-11 first">
-        <img src="/images/openwfe-logo.png" align="left" />
-        <span id="ruote_web2" onclick="location.href = '/'; return true;">ruote-web2</span>
-      </div>
-      <div id="user_control" class="column span-11 last align-right">
-        <%= current_user ? render_log_menu : '' %>
-      </div>
+      <div id="header" class="column span-24 first last">
 
-      <div id="subheader" class="column span-22 first last">
-        <div class="column span-11 first">
-          open source ruby workflow and bpm engine
+        <div class="column span-12 first">
+          <img src="/images/openwfe-logo.png" align="left" />
+          <span id="ruote_web2" onclick="location.href = '/'; return true;">ruote-web2</span>
         </div>
-        <div class="column span-11 last align-right">
-          <%= current_user ? render_res_menu : 'please log in' %>
+        <div id="user_control" class="column span-12 last align-right">
+          <%= current_user ? render_log_menu : '' %>
+        </div>
+
+        <div id="subheader" class="column span-24 first last">
+          <div class="column span-12 first">
+            open source ruby workflow and bpm engine
+          </div>
+          <div class="column span-12 last align-right">
+            <%= current_user ? render_res_menu : 'please log in' %>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="content column span-22 prepend-2 first last">
-      <%= content_tag(
-        'div', h(flash[:notice]), :class => 'notice', :id => 'notice'
-        ) if flash[:notice] %>
+      <div class="content column span-24 first last">
+        <%= content_tag(
+          'div', h(flash[:notice]), :class => 'notice', :id => 'notice'
+          ) if flash[:notice] %>
 
-      <%= content_tag(
-        'div', h(flash[:error]), :class => 'notice error', :id => 'error'
-        ) if flash[:error] %>
+        <%= content_tag(
+          'div', h(flash[:error]), :class => 'notice error', :id => 'error'
+          ) if flash[:error] %>
 
-      <%= yield :layout %>
-    </div>
-
-    <div class="column span-22 prepend-2 first last align-right">
-      <div id="footer" class="column span-22 first last">
-        <% if current_user %>
-        <a href="<%= as_x_href(:xml) %>" title="show raw XML (may not yet be implemented)">as xml</a> |
-        <a href="<%= as_x_href(:json) %>" title="show raw JSON (may not yet be implemented)">as json</a>
-        <% end %>
+        <%= yield :layout %>
       </div>
+
+      <div class="column span-24 first last align-right">
+        <div id="footer" class="column span-24 first last">
+          <% if current_user %>
+          <a href="<%= as_x_href(:xml) %>" title="show raw XML (may not yet be implemented)">as xml</a> |
+          <a href="<%= as_x_href(:json) %>" title="show raw JSON (may not yet be implemented)">as json</a>
+          <% end %>
+        </div>
+      </div>
+
     </div>
 
   </body>
