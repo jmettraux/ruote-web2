@@ -1,5 +1,5 @@
 
-<div class='left_pane'>
+<div class="column span-12 first">
 
   <div class='content_title'>/processes/<%= h @process.wfid %>/edit</div>
 
@@ -19,11 +19,9 @@
 
 </div>
 
-<div class='right_pane' style="text-align: right;">
+<div class="column span-12 last align-right">
 
   <%= render_fluo :process => @process, :workitems => @process.expressions.collect { |exp| exp.fei.expid } %>
 
 </div>
-
-<div class='clear'></div>
 

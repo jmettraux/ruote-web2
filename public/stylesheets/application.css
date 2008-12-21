@@ -48,7 +48,7 @@ th {
 }
 th,td {
   /* top right bottom left */
-  padding: 3px 0px 3px 0px;
+  padding: 3px 2px 3px 0px;
   border: 0px;
   line-height: 1.0em;
 }

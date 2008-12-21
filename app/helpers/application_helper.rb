@@ -8,7 +8,7 @@ module ApplicationHelper
 
   def render_res_menu
 
-    items = %w{ processes workitems definitions }
+    items = %w{ processes workitems definitions history }
     items = %w{ users groups } + items if current_user.is_admin?
 
     items.collect { |i| "<a href='/#{i}'>#{i}</a>" }.join(' | ')

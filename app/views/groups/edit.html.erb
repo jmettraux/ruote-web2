@@ -1,7 +1,7 @@
 
 <div class='content_title'>/groups/<%= h @group.name %></div>
 
-<div class='left_pane'>
+<div class="column span-12 first">
 
   <% form_for(@group) do |f| %>
     <%= f.error_messages %>
@@ -19,9 +19,7 @@
 
 </div>
 
-<div class='right_pane'>
+<div class="column span-12 last align-right">
   <%= render :partial => 'shared/group_users', :locals => @ug_locals %>
 </div>
-
-<div class='clear'></div>
 

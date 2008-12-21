@@ -1,5 +1,5 @@
 
-<div class='left_pane'>
+<div class="column span-12 first">
 
   <div class='content_title'>/workitems/<%= h @workitem.id %></div>
 
@@ -19,11 +19,9 @@
 
 </div>
 
-<div class='right_pane' style="text-align: right;">
+<div class="column span-12 last align-right">
 
   <%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.expid ] %>
 
 </div>
-
-<div class='clear'></div>
 
