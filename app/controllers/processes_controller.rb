@@ -176,7 +176,7 @@ class ProcessesController < ApplicationController
         return OpenWFE::Xml::launchitem_from_xml(request.body.read) \
           if ct.match(/xml$/)
 
-        return OpenWFE::Json.launchitem_from_json(request.body.read) \
+        return OpenWFE::Json.launchitem_from_h(request.body.read) \
           if ct.match(/json$/)
 
         #
@@ -196,6 +196,7 @@ class ProcessesController < ApplicationController
       rescue Exception => e
 
         logger.warn "failed to parse launchitem : #{e}"
+        #p e
 
         nil
       end

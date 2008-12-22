@@ -3,6 +3,7 @@ one:
   id: 1
   fei: (fei 0.9.20 s_engine /Users/mettraux/ruote-web2/public/defs/truck_sell_0.rb TruckSell 0 20081003-gajoyususo participant 0.6.0)
   wfid: 20081003-gajoyususo
+  expid: 0.0.1
   wf_name: test
   wf_revision: 0
   participant_name: alpha

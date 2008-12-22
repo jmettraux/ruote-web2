@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(:version => 20080926082146) do
   add_index "fields", ["fkey"], :name => "index_fields_on_fkey"
   add_index "fields", ["svalue"], :name => "index_fields_on_svalue"
   add_index "fields", ["vclass"], :name => "index_fields_on_vclass"
-  add_index "fields", ["workitem_id", "fkey"], :name => "index_fields_on_workitem_id_and_fkey", :unique => true
 
   create_table "group_definitions", :force => true do |t|
     t.integer  "group_id"

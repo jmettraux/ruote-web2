@@ -46,6 +46,7 @@ module ApplicationHelper
   end
 
   def comma_list (objects, accessor=:name)
+
     objects.collect { |o|
       name = o.send(accessor)
       path = send "#{o.class.to_s.downcase}_path", o
@@ -53,13 +54,24 @@ module ApplicationHelper
     }.join(', ')
   end
 
+  #
+  # given a view, returns the link to the same view in another content type
+  # (xml / json)
+  #
   def as_x_href (format)
+
     href = [
       :protocol, :host, ':', :port,
       #:script_name
       :path_info, ".#{format}?plain=true"
     ].inject('') do |s, elt|
-      s << (elt.is_a?(String) ? elt : request.send(elt).to_s)
+      s << if elt.is_a?(String)
+        elt
+      elsif request.respond_to?(elt)
+        request.send(elt).to_s
+      else # shouldn't happen, so let's be verbose
+        elt.inspect
+      end
     end
     href << "&#{request.query_string}" if request.query_string.length > 0
     href

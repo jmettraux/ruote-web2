@@ -31,8 +31,18 @@ class ProcessesControllerTest < ActionController::TestCase
     @request.env['HTTP_ACCEPT'] = 'application/xml'
     get :index
     assert_response :success
+    #puts @response.body
     assert_match(/href="http:\/\/test.host:80\/processes"/, @response.body)
     assert_match(/count="0"/, @response.body)
+    assert_equal(
+      %{
+<?xml version="1.0" encoding="UTF-8"?>
+<processes count="0">
+  <link href="http://test.host:80/" rel="via"/>
+  <link href="http://test.host:80/processes" rel="self"/>
+</processes>
+      }.strip,
+      @response.body.strip)
   end
 
   def test_empty_process_list_json
@@ -40,7 +50,7 @@ class ProcessesControllerTest < ActionController::TestCase
     @request.env['HTTP_ACCEPT'] = 'application/json'
     get :index
     assert_response :success
-    assert_equal '[]', @response.body
+    assert_equal '{"elements": []}', @response.body
   end
 
   def test_launch_process_form

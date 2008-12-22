@@ -14,7 +14,7 @@ end
 class WorkitemsControllerTest < ActionController::TestCase
 
   fixtures :users, :groups
-  fixtures :workitems
+  #fixtures :workitems
 
   def test_should_not_get_index
     get :index
@@ -29,13 +29,17 @@ class WorkitemsControllerTest < ActionController::TestCase
 
   def test_should_show_workitem
     login_as :admin
-    get :show, :id => 1
+    get :show, :wfid => '20081003-gajoyususo', :expid => '0.0.1'
     assert_response :success
   end
 
   def test_should_save_workitem
     login_as :admin
-    put :update, { 'id' => 1, 'fields' => '{ "type": "petit bateau" }' }
+    put(
+      :update,
+      { :wfid => '20081003-gajoyususo',
+        :expid => '0.0.1',
+        :fields => '{ "type": "petit bateau" }' })
     assert_response 302
     assert_equal 'http://test.host/workitems', @response.headers['Location']
     wi = OpenWFE::Extras::Workitem.find(1).as_owfe_workitem
@@ -58,18 +62,38 @@ class WorkitemsControllerTest < ActionController::TestCase
 
     workitems = ActiveSupport::JSON.decode(@response.body)
 
-    wi = workitems.find { |wi|
+    wi = workitems['elements'].find { |wi|
       wi['flow_expression_id']['workflow_instance_id'] == fei.wfid }
 
-    assert_not_nil wi['href']
+    assert_not_nil wi['links']
 
     assert_equal 'alice', wi['participant_name']
 
     atts = wi['attributes']
     atts['girl'] = 'Ukifune'
 
-    put :update, { 'state' => 'proceeded', 'fields' => atts }
+    p wi['flow_expression_id']['expression_id']
+
+    wfei = wi['flow_expression_id']
+
+    # timeout occurs during this put :
+    put(
+      :update,
+      { :wfid => wfei['workflow_instance_id'], :expid => wfei['expression_id'],
+        'state' => 'proceeded', 'fields' => atts })
+
     sleep 0.350
+
+    @request.env['HTTP_ACCEPT'] = 'application/json'
+    get :index
+    assert_response :success
+
+    workitems = ActiveSupport::JSON.decode(@response.body)
+
+    wi = workitems['elements'].find { |wi|
+      wi['flow_expression_id']['workflow_instance_id'] == fei.wfid }
+
+    assert_not_nil wi
   end
 end
 

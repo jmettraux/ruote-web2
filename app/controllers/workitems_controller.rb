@@ -40,19 +40,24 @@ class WorkitemsController < ApplicationController
 
   # GET /workitems
   #  or
-  # GET /workitems?wfid=:wfid
+  # GET /workitems?q=:q || GET /workitems?query=:q
   #  or
-  # GET /workitems?q=:q || GET /workitems?query=:query
+  # GET /workitems?p=:p || GET /workitems?participant=:p
+  #
+  # handles as well index_wfid()
   #
   def index
 
     @wfid = params[:wfid]
     @query = params[:q] || params[:query]
+    @participant = params[:p] || params[:participant]
 
-    @workitems = if @wfid
-      OpenWFE::Extras::Workitem.find_all_by_wfid(@wfid)
+    @workitems = if @participant
+      OpenWFE::Extras::Workitem.find_all_by_participant_name(@participant)
     elsif @query
       OpenWFE::Extras::Workitem.search(@query)
+    elsif @wfid
+      OpenWFE::Extras::Workitem.find_all_by_wfid(@wfdi)
     else
       OpenWFE::Extras::Workitem.find(:all)
     end
@@ -74,20 +79,27 @@ class WorkitemsController < ApplicationController
     end
   end
 
-  # GET /workitems/:id/edit
+  # GET /workitems/:wfid
+  #
+  def index_wfid
+
+    index
+  end
+
+  # GET /workitems/:wfid/:expid/edit
   #
   def edit
 
-    @workitem = OpenWFE::Extras::Workitem.find(params[:id])
+    @workitem = find_workitem
 
     # only responds in HTML...
   end
 
-  # GET /workitems/:id
+  # GET /workitems/:wfid/:expid
   #
   def show
 
-    @workitem = OpenWFE::Extras::Workitem.find(params[:id])
+    @workitem = find_workitem
 
     respond_to do |format|
       format.html # => app/views/show.html.erb
@@ -98,11 +110,11 @@ class WorkitemsController < ApplicationController
     end
   end
 
-  # PUT /workitems/:id
+  # PUT /workitems/:wfid/:expid
   #
   def update
 
-    wi = OpenWFE::Extras::Workitem.find(params[:id])
+    wi = find_workitem
     owi = wi.to_owfe_workitem
 
     wi1 = parse_workitem
@@ -138,6 +150,17 @@ class WorkitemsController < ApplicationController
       return true if %w{ show index }.include?(action)
 
       current_user.is_admin?
+    end
+
+    #
+    # assumes params :wfid and :expid are set and returns the corresponding
+    # workitem
+    #
+    def find_workitem
+
+      wfid = params[:wfid]
+      expid = params[:expid]
+      OpenWFE::Extras::Workitem.find_by_wfid_and_expid(wfid, expid)
     end
 
     #
@@ -177,7 +200,7 @@ class WorkitemsController < ApplicationController
 
       rescue Exception => e
 
-        logger.warn "failed to parse workitem : #{e}"
+        logger.warn("failed to parse workitem : #{e}")
 
         nil
       end
