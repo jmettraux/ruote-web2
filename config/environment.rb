@@ -73,5 +73,12 @@ Rails::Initializer.run do |config|
   # Please note that observers generated using script/generate observer need to have an _observer suffix
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 
-  $:.unshift('~/ruote/lib') # using the local 'ruote'
+  RUOTE_ENV = {}
+    # passing a hash of parameters (application context) to the ruote engine
+    # (well via the ruote_plugin)
+
+  $:.unshift('~/ruote/lib')
+    # using the local 'ruote', comment that out if you're using ruote as a gem
+
 end
+
