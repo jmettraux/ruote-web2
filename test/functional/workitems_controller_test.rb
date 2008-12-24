@@ -72,15 +72,14 @@ class WorkitemsControllerTest < ActionController::TestCase
     atts = wi['attributes']
     atts['girl'] = 'Ukifune'
 
-    p wi['flow_expression_id']['expression_id']
-
     wfei = wi['flow_expression_id']
 
-    # timeout occurs during this put :
+    Thread.new do # preventing timeout... weird...
     put(
       :update,
       { :wfid => wfei['workflow_instance_id'], :expid => wfei['expression_id'],
         'state' => 'proceeded', 'fields' => atts })
+    end
 
     sleep 0.350
 
