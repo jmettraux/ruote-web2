@@ -3,6 +3,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class DefinitionsControllerTest < ActionController::TestCase
 
+  fixtures :users, :definitions
+
   def test_should_get_index
     login_as :admin
     get :index

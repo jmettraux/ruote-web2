@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class UserGroupsControllerTest < ActionController::TestCase
 
-  fixtures :user_groups, :groups
+  fixtures :users, :user_groups, :groups
 
   def test_should_get_index
     login_as :admin

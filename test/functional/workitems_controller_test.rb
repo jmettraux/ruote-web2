@@ -13,8 +13,7 @@ end
 
 class WorkitemsControllerTest < ActionController::TestCase
 
-  fixtures :users, :groups
-  #fixtures :workitems
+  fixtures :users, :groups, :workitems
 
   def test_should_not_get_index
     get :index
@@ -60,6 +59,9 @@ class WorkitemsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
 
+    puts @response.body
+    puts fei.wfid
+
     workitems = ActiveSupport::JSON.decode(@response.body)
 
     wi = workitems['elements'].find { |wi|
@@ -74,7 +76,9 @@ class WorkitemsControllerTest < ActionController::TestCase
 
     wfei = wi['flow_expression_id']
 
-    Thread.new do # preventing timeout... weird...
+    Thread.new do
+      # preventing timeout... weird...
+      # another thread means another connection... Rails 2.2
     put(
       :update,
       { :wfid => wfei['workflow_instance_id'], :expid => wfei['expression_id'],
@@ -92,7 +96,10 @@ class WorkitemsControllerTest < ActionController::TestCase
     wi = workitems['elements'].find { |wi|
       wi['flow_expression_id']['workflow_instance_id'] == fei.wfid }
 
+    p wi
+
     assert_not_nil wi
+    assert_equal 'Ukifune', wi['attributes']['girl']
   end
 end
 
