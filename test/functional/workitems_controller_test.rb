@@ -59,8 +59,8 @@ class WorkitemsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
 
-    puts @response.body
-    puts fei.wfid
+    #puts @response.body
+    #puts fei.wfid
 
     workitems = ActiveSupport::JSON.decode(@response.body)
 
@@ -76,14 +76,10 @@ class WorkitemsControllerTest < ActionController::TestCase
 
     wfei = wi['flow_expression_id']
 
-    Thread.new do
-      # preventing timeout... weird...
-      # another thread means another connection... Rails 2.2
     put(
       :update,
       { :wfid => wfei['workflow_instance_id'], :expid => wfei['expression_id'],
         'state' => 'proceeded', 'fields' => atts })
-    end
 
     sleep 0.350
 
@@ -96,7 +92,7 @@ class WorkitemsControllerTest < ActionController::TestCase
     wi = workitems['elements'].find { |wi|
       wi['flow_expression_id']['workflow_instance_id'] == fei.wfid }
 
-    p wi
+    #p wi
 
     assert_not_nil wi
     assert_equal 'Ukifune', wi['attributes']['girl']

@@ -123,9 +123,10 @@ class WorkitemsController < ApplicationController
 
     if params[:state] == 'proceeded'
 
+      wi.destroy
+
       owi.attributes = wi1.attributes
       RuotePlugin.ruote_engine.reply(owi)
-      wi.destroy
 
       flash[:notice] = "workitem #{wid} proceeded"
 
