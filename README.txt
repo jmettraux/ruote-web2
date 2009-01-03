@@ -18,6 +18,7 @@ This sequence of commands will install ruote-web2 in your current directory (und
   git clone git://github.com/jmettraux/ruote-web2.git
   cd ruote-web2
   rake submodule:update
+  sudo rake gems:install
   rake ruote:install
   
   mysql -u root -e 'create database rw2_development'

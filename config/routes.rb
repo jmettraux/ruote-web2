@@ -62,6 +62,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :processes
   map.connect 'processes/:id/tree.js', :controller => 'processes', :action => 'tree'
 
+  map.resources :history
+
   #map.root :controller => 'sessions', :action => 'new'
   map.root :controller => 'processes', :action => 'index'
 

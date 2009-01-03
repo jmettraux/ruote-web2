@@ -1,0 +1,47 @@
+
+<div class='content_title'>/history</div>
+
+<table class="history">
+
+  <thead class="history_head">
+    <th>date</th>
+    <th><!--since--></th>
+    <th>source</th>
+    <th>event</th>
+    <th>wfid</th>
+    <th>fei</th>
+    <th>participant</th>
+    <th>message</th>
+  </thead>
+
+  <tbody>
+  <% @entries.each do |entry|
+
+       fei = entry.full_fei
+       sfei = fei ? "#{fei.sub_instance_id} #{fei.expname} #{fei.expid}" : ''
+
+       wfid = entry.wfid ? "<a href='#{request.href('history', entry.wfid)}'>#{entry.wfid}</a>" : ''
+
+       event = "<a href='/history?event=#{entry.event}'>#{entry.event}</a>"
+  %>
+    <tr class="history_entry">
+      <td class="created_at"><%= entry.created_at %></td>
+      <td class="since"><%= display_since(entry, :created_at) %></td>
+      <td class="source"><%= entry.source %></td>
+      <td class="event"><%= event %></td>
+      <td class="wfid"><%= wfid %></td>
+      <td class="fei"><%= sfei %></td>
+      <td class="participant"><%= entry.participant %></td>
+      <td class="message"><%= entry.message %></td>
+    </tr>
+  <% end %>
+  </tbody>
+
+  <tfoot>
+  </tfoot>
+</table>
+
+<div class="history_nav align-right">
+  <%= will_paginate(@entries) %>
+</div>
+
