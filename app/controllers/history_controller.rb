@@ -38,8 +38,21 @@ class HistoryController < ApplicationController
   #
   def index
 
-    @entries = OpenWFE::Extras::HistoryEntry.paginate(
-      :page => params[:page], :order => 'created_at DESC')
+    opts = { :page => params[:page], :order => 'created_at DESC' }
+
+    cs = [ :wfid, :event, :participant ].inject([[]]) do |a, p|
+      if v = params[p]
+        a.first << "#{p} = ?"
+        a << v
+      end
+      a
+    end
+
+    opts[:conditions] = [ cs.first.join(' AND ') ] + cs[1..-1] \
+      unless cs.first.empty?
+
+    @all = (opts[:conditions] == nil)
+    @entries = OpenWFE::Extras::HistoryEntry.paginate(opts)
   end
 end
 
