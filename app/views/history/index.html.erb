@@ -19,20 +19,15 @@
 
        fei = entry.full_fei
        sfei = fei ? "#{fei.sub_instance_id} #{fei.expname} #{fei.expid}" : ''
-
-       wfid = entry.wfid ? "<a href='/history?wfid=#{entry.wfid}'>#{entry.wfid}</a>" : ''
-       participant = entry.participant ? "<a href='/history?participant=#{entry.participant}'>#{entry.participant}</a>" : ''
-
-       event = "<a href='/history?event=#{entry.event}'>#{entry.event}</a>"
   %>
     <tr class="history_entry">
       <td class="created_at"><%= entry.created_at %></td>
       <td class="since"><%= display_since(entry, :created_at) %></td>
       <td class="source"><%= entry.source %></td>
-      <td class="event"><%= event %></td>
-      <td class="wfid"><%= wfid %></td>
+      <td class="event"><%= view_link(entry, :event) %></td>
+      <td class="wfid"><%= view_link(entry, :wfid) %></td>
       <td class="fei"><%= sfei %></td>
-      <td class="participant"><%= participant %></td>
+      <td class="participant"><%= view_link(entry, :participant) %></td>
       <td class="message"><%= entry.message %></td>
     </tr>
   <% end %>
@@ -44,7 +39,7 @@
 
 <div class="history_nav align-right">
   <% unless @all %>
-    <a href="/history">all</a>
+    <a href="<%= url_for(:controller => 'history') %>">all</a>
   <% end %>
   <%= will_paginate(@entries) %>
 </div>

@@ -47,10 +47,14 @@ Feedback
 Misc
 ----
 
+
 Tools
 -----
+
+(many thanks to the authors and the contributors)
 
 - Ruby on Rails             http://rubyonrails.org
 - the Styler rails plugin   http://the.railsi.st
 - blueprint css             http://www.blueprintcss.org
+- will_paginate             http://github.com/mislav/will_paginate
 
