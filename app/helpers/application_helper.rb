@@ -94,9 +94,9 @@ module ApplicationHelper
 
     href = [
       :protocol, :host, ':', :port,
-      #:script_name
-      :path_info, ".#{format}?plain=true"
+      :request_uri, ".#{format}?plain=true"
     ].inject('') do |s, elt|
+      p [ s, elt ]
       s << if elt.is_a?(String)
         elt
       elsif request.respond_to?(elt)
@@ -104,6 +104,7 @@ module ApplicationHelper
       else # shouldn't happen, so let's be verbose
         elt.inspect
       end
+      s
     end
     href << "&#{request.query_string}" if request.query_string.length > 0
     href
