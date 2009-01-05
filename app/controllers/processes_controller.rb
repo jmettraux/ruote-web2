@@ -42,11 +42,11 @@ class ProcessesController < ApplicationController
   #
   def index
 
-    @all_processes = ruote_engine.process_statuses
+    all_processes = ruote_engine.process_statuses
 
     # TODO : params[:workflow] to restrict to 1 workflow (whatever the version)
 
-    @processes = @all_processes.values.sort_by { |ps|
+    @processes = all_processes.values.sort_by { |ps|
       ps.launch_time
     }.reverse.paginate(:page => params[:page])
 
@@ -58,13 +58,13 @@ class ProcessesController < ApplicationController
 
       format.json do
         render(:json => OpenWFE::Json.processes_to_h(
-          @all_processes, :linkgen => LinkGenerator.new(request)).to_json)
+          all_processes, :linkgen => LinkGenerator.new(request)).to_json)
       end
 
       format.xml do
         render(
           :xml => OpenWFE::Xml.processes_to_xml(
-            @all_processes, :linkgen => LinkGenerator.new(request), :indent => 2))
+            all_processes, :linkgen => LinkGenerator.new(request), :indent => 2))
       end
     end
   end

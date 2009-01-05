@@ -9,7 +9,7 @@
     <th>launcher</th>
     <th>br</th>
     <th>err</th>
-    <th style='text-align: right;'><%= @all_processes.size %> instances</th>
+    <th style='text-align: right;'><%= @processes.total_entries %> instances</th>
   </tr>
 <% for ps in @processes
      launcher = ps.variables['launcher'] %>
