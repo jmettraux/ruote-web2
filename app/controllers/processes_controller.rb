@@ -1,6 +1,6 @@
 #
 #--
-# Copyright (c) 2008, John Mettraux, OpenWFE.org
+# Copyright (c) 2008-2009, John Mettraux, OpenWFE.org
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -42,21 +42,29 @@ class ProcessesController < ApplicationController
   #
   def index
 
-    @processes = ruote_engine.process_statuses
+    @all_processes = ruote_engine.process_statuses
+
+    # TODO : params[:workflow] to restrict to 1 workflow (whatever the version)
+
+    @processes = @all_processes.values.sort_by { |ps|
+      ps.launch_time
+    }.reverse.paginate(:page => params[:page])
 
     respond_to do |format|
 
-      format.html # => app/views/processes.html.erb
+      format.html # => app/views/processes/index.html.erb
+
+      # NOTE : for now, there is no paging for .json and .xml
 
       format.json do
         render(:json => OpenWFE::Json.processes_to_h(
-          @processes, :linkgen => LinkGenerator.new(request)).to_json)
+          @all_processes, :linkgen => LinkGenerator.new(request)).to_json)
       end
 
       format.xml do
         render(
           :xml => OpenWFE::Xml.processes_to_xml(
-            @processes, :linkgen => LinkGenerator.new(request), :indent => 2))
+            @all_processes, :linkgen => LinkGenerator.new(request), :indent => 2))
       end
     end
   end
