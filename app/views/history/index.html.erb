@@ -23,7 +23,7 @@
     <tr class="history_entry">
       <td class="created_at"><%= entry.created_at %></td>
       <td class="since"><%= display_since(entry, :created_at) %></td>
-      <td class="source"><%= entry.source %></td>
+      <td class="source"><%= view_link(entry, :source) %></td>
       <td class="event"><%= view_link(entry, :event) %></td>
       <td class="wfid"><%= view_link(entry, :wfid) %></td>
       <td class="fei"><%= sfei %></td>
@@ -38,9 +38,7 @@
 </table>
 
 <div class="history_nav align-right">
-  <% unless @all %>
-    <a href="<%= url_for(:controller => 'history') %>">all</a>
-  <% end %>
+  <%= @all ? '' : link_to('all', :controller => 'history') %>
   <%= will_paginate(@entries) %>
 </div>
 

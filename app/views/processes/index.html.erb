@@ -11,13 +11,15 @@
     <th>err</th>
     <th style='text-align: right;'><%= @processes.total_entries %> instances</th>
   </tr>
-<% for ps in @processes
-     launcher = ps.variables['launcher'] %>
+<% for ps in @processes %>
   <tr class="process">
     <td><%= link_to(h(ps.wfid), process_path(ps.wfid)) %></td>
-    <td><%= h "#{ps.wfname} #{ps.wfrevision}" %></td>
+    <td>
+      <%= link_to(h(ps.wfname), processes_path(:workflow => ps.wfname)) %>
+      <%= h ps.wfrevision %>
+    </td>
     <td><%= h display_time(ps.launch_time) %></td>
-    <td><%= h(launcher || '-') %></td>
+    <td><%= ps.launcher ? link_to(h(ps.launcher), processes_path(:launcher => ps.launcher)) : '-' %></td>
     <td><%= h ps.branches %></td>
     <td><%= h ps.errors.size %></td>
     <td class="coll_buttons">
@@ -30,6 +32,7 @@
 </table>
 
 <div class="processes_nav align-right">
+  <%= (params[:workflow] or params[:launcher]) ? link_to('all', processes_path) : '' %>
   <%= will_paginate(@processes) %>
 </div>
 

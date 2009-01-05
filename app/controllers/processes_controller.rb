@@ -42,29 +42,34 @@ class ProcessesController < ApplicationController
   #
   def index
 
-    all_processes = ruote_engine.process_statuses
-
-    # TODO : params[:workflow] to restrict to 1 workflow (whatever the version)
-
-    @processes = all_processes.values.sort_by { |ps|
+    all_processes = ruote_engine.process_statuses.values.sort_by { |ps|
       ps.launch_time
-    }.reverse.paginate(:page => params[:page])
+    }.reverse
+
+    if wf = params[:workflow]
+      all_processes = all_processes.select { |ps| ps.wfname == wf }
+    end
+    if l = params[:launcher]
+      all_processes = all_processes.select { |ps| ps.launcher == l }
+    end
+
+    @processes = all_processes.paginate(:page => params[:page])
 
     respond_to do |format|
 
       format.html # => app/views/processes/index.html.erb
 
-      # NOTE : for now, there is no paging for .json and .xml
-
       format.json do
         render(:json => OpenWFE::Json.processes_to_h(
-          all_processes, :linkgen => LinkGenerator.new(request)).to_json)
+          params[:page] ? @processes : all_processes,
+          :linkgen => LinkGenerator.new(request)).to_json)
       end
 
       format.xml do
         render(
           :xml => OpenWFE::Xml.processes_to_xml(
-            all_processes, :linkgen => LinkGenerator.new(request), :indent => 2))
+            params[:page] ? @processes : all_processes,
+            :linkgen => LinkGenerator.new(request), :indent => 2))
       end
     end
   end

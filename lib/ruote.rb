@@ -1,6 +1,6 @@
 #
 #--
-# Copyright (c) 2008, John Mettraux, OpenWFE.org
+# Copyright (c) 2008-2009, John Mettraux, OpenWFE.org
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -58,6 +58,17 @@ module OpenWFE
 
       OpenWFE::Extras::ActiveStoreParticipant.new(store_name)
         # returns an 'on the fly' participant
+    end
+  end
+
+  class ProcessStatus
+
+    #
+    # Returning the launcher of this process instance (if set)
+    #
+    def launcher
+
+      self.variables['launcher']
     end
   end
 

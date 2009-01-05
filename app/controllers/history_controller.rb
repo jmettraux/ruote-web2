@@ -40,7 +40,7 @@ class HistoryController < ApplicationController
 
     opts = { :page => params[:page], :order => 'created_at DESC' }
 
-    cs = [ :wfid, :event, :participant ].inject([[]]) do |a, p|
+    cs = [ :source, :wfid, :event, :participant ].inject([[]]) do |a, p|
       if v = params[p]
         a.first << "#{p} = ?"
         a << v
