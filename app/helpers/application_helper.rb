@@ -96,7 +96,6 @@ module ApplicationHelper
       :protocol, :host, ':', :port,
       :request_uri, ".#{format}?plain=true"
     ].inject('') do |s, elt|
-      p [ s, elt ]
       s << if elt.is_a?(String)
         elt
       elsif request.respond_to?(elt)
