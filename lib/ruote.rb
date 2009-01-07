@@ -119,6 +119,12 @@ class ActionController::Routing::RouteSet::Mapper
       :action => 'show',
       :conditions => { :method => :get })
 
+    connect(
+      "#{controller_name}/:wfid/:expid/edit",
+      :controller => controller_name,
+      :action => 'edit',
+      :conditions => { :method => :get })
+
     # (no POST)
 
     # PUT

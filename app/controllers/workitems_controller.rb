@@ -1,4 +1,3 @@
-
 #
 #--
 # Copyright (c) 2008-2009, John Mettraux, OpenWFE.org
@@ -100,7 +99,7 @@ class WorkitemsController < ApplicationController
   def edit
 
     @workitem = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
-      params[:wfid], params[:expid])
+      params[:wfid], swapdots(params[:expid]))
 
     # only responds in HTML...
   end
@@ -110,7 +109,7 @@ class WorkitemsController < ApplicationController
   def show
 
     @workitem = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
-      params[:wfid], params[:expid])
+      params[:wfid], swapdots(params[:expid]))
 
     respond_to do |format|
       format.html # => app/views/show.html.erb
@@ -126,7 +125,7 @@ class WorkitemsController < ApplicationController
   def update
 
     wi = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
-      params[:wfid], params[:expid])
+      params[:wfid], swapdots(params[:expid]))
 
     owi = wi.to_owfe_workitem
 

@@ -1,7 +1,7 @@
 
 <div class="column span-12 first">
 
-  <div class='content_title'>/workitems/<%= h @workitem.id %></div>
+  <div class='content_title'><%= workitem_path(@workitem) %></div>
 
   <table>
     <%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem } %>
