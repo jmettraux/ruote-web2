@@ -49,8 +49,14 @@ class ProcessesControllerTest < ActionController::TestCase
     set_basic_authentication 'admin:admin'
     @request.env['HTTP_ACCEPT'] = 'application/json'
     get :index
+    #puts @response.body
     assert_response :success
-    assert_equal '{"elements": []}', @response.body
+    assert_equal(
+      {'elements' => [],
+       'links' => [
+         {'href' => 'http://test.host:80/', 'rel' => 'via'},
+         {'href' => 'http://test.host:80/processes', 'rel' => 'self'}]},
+      ActiveSupport::JSON.decode(@response.body))
   end
 
   def test_launch_process_form
