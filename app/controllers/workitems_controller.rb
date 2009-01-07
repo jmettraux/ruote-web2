@@ -49,27 +49,25 @@ class WorkitemsController < ApplicationController
   #
   def index
 
-    @wfid = params[:wfid]
-    @workflow = params[:workflow]
-    @store = params[:store]
     @query = params[:q] || params[:query]
-    @participant = params[:p] || params[:participant]
 
-    @workitems = if @participant
-      OpenWFE::Extras::Workitem.find_all_by_participant_name(@participant)
-    elsif @query
+    @workitems = if @query
       OpenWFE::Extras::Workitem.search(@query)
-    elsif @wfid
-      OpenWFE::Extras::Workitem.find_all_by_wfid(@wfid)
-    elsif @workflow
-      OpenWFE::Extras::Workitem.find_all_by_wf_name(@workflow)
-    elsif @store
-      OpenWFE::Extras::Workitem.find_all_by_store_name(@store)
+      # TODO : paginate that !
     else
-      OpenWFE::Extras::Workitem.find(:all)
+      OpenWFE::Extras::Workitem.paginate_by_params(
+        [
+          # parameter_name[, column_name]
+          'wfid',
+          [ 'workflow', 'wf_name' ],
+          [ 'store', 'store_name' ],
+          [ 'participant', 'participant_name' ]
+        ],
+        params,
+        :order => 'dispatch_time DESC')
     end
 
-    # TODO : paginate here
+    # TODO : escape pagination for XML and JSON ??
 
     respond_to do |format|
 
@@ -78,12 +76,14 @@ class WorkitemsController < ApplicationController
 
       format.json do
         render(:json => OpenWFE::Json.workitems_to_h(
-          @workitems, :linkgen => linkgen).to_json)
+          @workitems,
+          :linkgen => linkgen).to_json)
       end
 
       format.xml do
         render(:xml => OpenWFE::Xml.workitems_to_xml(
-          @workitems, :indent => 2, :linkgen => linkgen))
+          @workitems,
+          :indent => 2, :linkgen => linkgen))
       end
     end
   end
@@ -99,7 +99,8 @@ class WorkitemsController < ApplicationController
   #
   def edit
 
-    @workitem = find_workitem
+    @workitem = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
+      params[:wfid], params[:expid])
 
     # only responds in HTML...
   end
@@ -108,7 +109,8 @@ class WorkitemsController < ApplicationController
   #
   def show
 
-    @workitem = find_workitem
+    @workitem = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
+      params[:wfid], params[:expid])
 
     respond_to do |format|
       format.html # => app/views/show.html.erb
@@ -123,7 +125,9 @@ class WorkitemsController < ApplicationController
   #
   def update
 
-    wi = find_workitem
+    wi = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
+      params[:wfid], params[:expid])
+
     owi = wi.to_owfe_workitem
 
     wi1 = parse_workitem
@@ -160,17 +164,6 @@ class WorkitemsController < ApplicationController
       return true if %w{ show index }.include?(action)
 
       current_user.is_admin?
-    end
-
-    #
-    # assumes params :wfid and :expid are set and returns the corresponding
-    # workitem
-    #
-    def find_workitem
-
-      wfid = params[:wfid]
-      expid = params[:expid]
-      OpenWFE::Extras::Workitem.find_by_wfid_and_expid(wfid, expid)
     end
 
     #

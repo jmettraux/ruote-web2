@@ -38,6 +38,8 @@
 require 'openwfe/participants/participantmap'
 require 'openwfe/extras/participants/activeparticipants'
 
+require 'pagination'
+
 
 module OpenWFE
 

@@ -171,6 +171,7 @@ module ApplicationHelper
   # /processes?workflow=cheeseburger_order
   #
   def link_to_slice (item, accessor, param_name=nil)
+
     v = h(item.send(accessor))
     link_to(v, (param_name || accessor) => v)
   end
