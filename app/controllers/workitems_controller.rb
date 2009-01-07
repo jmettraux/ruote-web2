@@ -50,6 +50,8 @@ class WorkitemsController < ApplicationController
   def index
 
     @wfid = params[:wfid]
+    @workflow = params[:workflow]
+    @store = params[:store]
     @query = params[:q] || params[:query]
     @participant = params[:p] || params[:participant]
 
@@ -58,10 +60,16 @@ class WorkitemsController < ApplicationController
     elsif @query
       OpenWFE::Extras::Workitem.search(@query)
     elsif @wfid
-      OpenWFE::Extras::Workitem.find_all_by_wfid(@wfdi)
+      OpenWFE::Extras::Workitem.find_all_by_wfid(@wfid)
+    elsif @workflow
+      OpenWFE::Extras::Workitem.find_all_by_wf_name(@workflow)
+    elsif @store
+      OpenWFE::Extras::Workitem.find_all_by_store_name(@store)
     else
       OpenWFE::Extras::Workitem.find(:all)
     end
+
+    # TODO : paginate here
 
     respond_to do |format|
 
