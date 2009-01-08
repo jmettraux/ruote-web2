@@ -116,7 +116,7 @@ class WorkitemsController < ApplicationController
       format.json { render :json => OpenWFE::Json.workitem_to_h(
         @workitem, :linkgen => linkgen).to_json }
       format.xml { render :xml => OpenWFE::Xml.workitem_to_xml(
-        @workitem, :linkgen => linkgen) }
+        @workitem, :indent => 2, :linkgen => linkgen) }
     end
   end
 

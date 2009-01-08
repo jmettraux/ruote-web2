@@ -26,10 +26,33 @@ class WorkitemsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_should_get_index_xml
+    login_as :admin
+    get :index, :format => 'xml'
+    assert_response :success
+    assert_equal 'application/xml', @response.content_type
+  end
+
+  def test_should_get_index_json
+    login_as :admin
+    get :index, :format => 'json'
+    assert_response :success
+    assert_equal 'application/json', @response.content_type
+  end
+
   def test_should_show_workitem
     login_as :admin
     get :show, :wfid => '20081003-gajoyususo', :expid => '0_0_1'
     assert_response :success
+  end
+
+  def test_should_show_xml
+    login_as :admin
+    get(
+      :show,
+      :wfid => '20081003-gajoyususo', :expid => '0_0_1', :format => 'xml')
+    assert_response :success
+    assert_equal 'application/xml', @response.content_type
   end
 
   def test_should_save_workitem

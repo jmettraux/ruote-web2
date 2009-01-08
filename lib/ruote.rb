@@ -99,8 +99,6 @@ class ActionController::Routing::RouteSet::Mapper
 
     controller_name = controller_name.to_s
 
-    # TODO :format ?
-
     # GET
     #
     connect(
@@ -109,12 +107,24 @@ class ActionController::Routing::RouteSet::Mapper
       :action => 'index',
       :conditions => { :method => :get })
     connect(
+      "#{controller_name}.:format",
+      :controller => controller_name,
+      :action => 'index',
+      :conditions => { :method => :get })
+
+    connect(
       "#{controller_name}/:wfid",
       :controller => controller_name,
       :action => 'index_wfid',
       :conditions => { :method => :get })
+
     connect(
       "#{controller_name}/:wfid/:expid",
+      :controller => controller_name,
+      :action => 'show',
+      :conditions => { :method => :get })
+    connect(
+      "#{controller_name}/:wfid/:expid.:format",
       :controller => controller_name,
       :action => 'show',
       :conditions => { :method => :get })

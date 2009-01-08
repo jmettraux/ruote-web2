@@ -9,7 +9,7 @@
   }
 </script>
 
-<div class="column span-12 first">
+<div style="float: left;">
   <div class='content_title'><%= workitem_path(@workitem) %></div>
 
   <% form_tag(
@@ -38,7 +38,7 @@
 
 </div>
 
-<div class="column span-12 last align-right">
+<div class="align-right">
 
   <%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.expid ] %>
 
