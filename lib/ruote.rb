@@ -43,6 +43,14 @@ require 'pagination'
 
 module OpenWFE
 
+  #
+  # Reopening the ParticipantMap to change the lookup_participant rules
+  #
+  # If no formally registered participant is found, the system will
+  # put the workitem in a store. If the participant corresponds to a user name
+  # or a user group, the store name will be that user or group name.
+  # Else, the store name will be 'unknown' (workitems that have gone astray).
+  #
   class ParticipantMap
 
     alias :old_lookup_participant :lookup_participant

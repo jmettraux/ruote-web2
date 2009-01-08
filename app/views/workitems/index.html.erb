@@ -29,9 +29,10 @@
 <% end -%>
 </table>
 
+<% if request.query_string.size > 0 %>
 <div class="workitems_nav align-right">
-  <% if request.query_string.size > 0 %>
-    <%= link_to 'all', :controller => 'workitems' %>
-  <% end %>
+  <%= link_to_if(
+    request.query_string.size > 0,  'all', :controller => 'workitems') %>
 </div>
+<% end %>
 

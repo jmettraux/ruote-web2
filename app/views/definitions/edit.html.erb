@@ -1,7 +1,7 @@
 
 <div class='content_title'>/definitions/<%= h @definition.name %></div>
 
-<div class='one_third_pane'>
+<div style='float: left;'>
 
   <% form_for(@definition) do |f| %>
     <%= f.error_messages %>
@@ -25,13 +25,11 @@
   <% end %>
 </div>
 
-<div class='two_third_pane'>
+<div style='float: left; margin-left: 28px;'>
   <%= render :partial => 'shared/definition_groups', :locals => @dg_locals %>
 </div>
 
-<div class='three_third_pane' style='text-align: right;'>
+<div class='align-right'>
   <%= render_fluo :definition => @definition %>
 </div>
-
-<div class='clear'></div>
 
