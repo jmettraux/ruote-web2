@@ -109,8 +109,7 @@ class WorkitemsController < ApplicationController
 
     @workitem = find_workitem
 
-    return head(:not_found) unless @workitem
-    return head(@workitem) if @workitem.is_a?(Fixnum)
+    return error_reply('no workitem', 404) unless @workitem
 
     # only responds in HTML...
   end
@@ -120,6 +119,8 @@ class WorkitemsController < ApplicationController
   def show
 
     @workitem = find_workitem
+
+    return error_reply('no workitem', 404) unless @workitem
 
     respond_to do |format|
       format.html # => app/views/show.html.erb
@@ -135,6 +136,8 @@ class WorkitemsController < ApplicationController
   def update
 
     wi = find_workitem
+
+    return error_reply('no workitem', 404) unless wi
 
     owi = wi.to_owfe_workitem
 
@@ -183,9 +186,7 @@ class WorkitemsController < ApplicationController
       workitem = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
         params[:wfid], swapdots(params[:expid]))
 
-      return 403 unless current_user.may_see(workitem)
-
-      workitem
+      current_user.may_see(workitem) ? workitem : nil
     end
 
     #

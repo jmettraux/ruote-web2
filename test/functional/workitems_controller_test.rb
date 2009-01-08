@@ -63,8 +63,11 @@ class WorkitemsControllerTest < ActionController::TestCase
 
   def test_should_not_show_workitem
     login_as :aaron
-    get :show, :wfid => '20081003-gajoyususo', :expid => '0_0_1'
-    assert_response :forbidden
+    get(
+      :show,
+      :wfid => '20081003-gajoyususo', :expid => '0_0_1', :format => 'xml')
+    assert_response :not_found
+      # well... at least prevents probes...
   end
 
   def test_should_show_xml
