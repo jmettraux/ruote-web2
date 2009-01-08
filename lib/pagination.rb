@@ -53,25 +53,18 @@ module WillPaginate::Finder::ClassMethods
   #
   def paginate_by_params (parcol_array, params, paginate_options={})
 
-    cols, vals = parcol_array.inject([[], []]) do |a, k|
+    conditions = paginate_options[:conditions] || {}
+
+    conditions = parcol_array.inject(conditions) do |h, k|
       k = Array(k)
       key = k[0]
       col = k[1] || key
       val = params[key]
-      if val
-        a.first << col
-        a.last << val
-      end
-      a
+      h[col] = val if val
+      h
     end
 
-    unless cols.empty?
-
-      conditions = cols.collect { |col| "#{col} = ?" }.join(' AND ')
-      conditions = [ conditions ] + vals
-
-      paginate_options[:conditions] = conditions
-    end
+    paginate_options[:conditions] = conditions
 
     paginate_options[:page] = params[:page]
 
