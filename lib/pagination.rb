@@ -65,13 +65,17 @@ module WillPaginate::Finder::ClassMethods
       a
     end
 
-    conditions = cols.collect { |col| "#{col} = ?" }.join(' AND ')
-    conditions = [ conditions ] + vals
+    unless cols.empty?
 
-    paginate_options[:conditions] = conditions
+      conditions = cols.collect { |col| "#{col} = ?" }.join(' AND ')
+      conditions = [ conditions ] + vals
+
+      paginate_options[:conditions] = conditions
+    end
+
     paginate_options[:page] = params[:page]
 
-    p paginate_options
+    #p paginate_options
 
     paginate(paginate_options)
   end

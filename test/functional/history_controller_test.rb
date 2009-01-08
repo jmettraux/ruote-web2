@@ -1,5 +1,5 @@
 
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class HistoryControllerTest < ActionController::TestCase
   # Replace this with your real tests.
@@ -7,3 +7,4 @@ class HistoryControllerTest < ActionController::TestCase
     assert true
   end
 end
+

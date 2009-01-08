@@ -28,7 +28,7 @@ class WorkitemsControllerTest < ActionController::TestCase
 
   def test_should_show_workitem
     login_as :admin
-    get :show, :wfid => '20081003-gajoyususo', :expid => '0.0.1'
+    get :show, :wfid => '20081003-gajoyususo', :expid => '0_0_1'
     assert_response :success
   end
 
@@ -37,7 +37,7 @@ class WorkitemsControllerTest < ActionController::TestCase
     put(
       :update,
       { :wfid => '20081003-gajoyususo',
-        :expid => '0.0.1',
+        :expid => '0_0_1',
         :fields => '{ "type": "petit bateau" }' })
     assert_response 302
     assert_equal 'http://test.host/workitems', @response.headers['Location']
@@ -78,8 +78,10 @@ class WorkitemsControllerTest < ActionController::TestCase
 
     put(
       :update,
-      { :wfid => wfei['workflow_instance_id'], :expid => wfei['expression_id'],
-        'state' => 'proceeded', 'fields' => atts })
+      { :wfid => wfei['workflow_instance_id'],
+        :expid => swapdots(wfei['expression_id']),
+        'state' => 'proceeded',
+        'fields' => atts })
 
     sleep 0.350
 

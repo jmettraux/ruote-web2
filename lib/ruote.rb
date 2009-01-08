@@ -189,6 +189,13 @@ def swapdots (s)
 end
 
 #
+# '_' --> '.'
+#
+def swap_to_dots (s)
+  (s.index('.') != nil) ? s : s.gsub(/_/, '.')
+end
+
+#
 # adding Links to models' to_xml / to_json
 #
 module LinksMixin
