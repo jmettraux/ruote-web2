@@ -13,5 +13,9 @@ class GroupTest < ActiveSupport::TestCase
   def test_is_not_admin
     assert (not users(:quentin).is_admin?)
   end
+
+  def test_store_names
+    assert_equal [ 'admin', 'unknown', 'admins' ], users(:admin).store_names
+  end
 end
 

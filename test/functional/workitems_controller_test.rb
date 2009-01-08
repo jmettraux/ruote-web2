@@ -33,17 +33,38 @@ class WorkitemsControllerTest < ActionController::TestCase
     assert_equal 'application/xml', @response.content_type
   end
 
+  def test_should_get_empty_index
+    #
+    # aaron can't see any workitems (since there is only one in a weirdo
+    # store)
+    # (admin can see all the workitems)
+    #
+    login_as :aaron
+    get :index, :format => 'json'
+    assert_response :success
+    json = ActiveSupport::JSON.decode(@response.body)
+    assert_equal [], json['elements']
+  end
+
   def test_should_get_index_json
     login_as :admin
     get :index, :format => 'json'
     assert_response :success
     assert_equal 'application/json', @response.content_type
+    json = ActiveSupport::JSON.decode(@response.body)
+    assert_equal 1, json['elements'].size
   end
 
   def test_should_show_workitem
     login_as :admin
     get :show, :wfid => '20081003-gajoyususo', :expid => '0_0_1'
     assert_response :success
+  end
+
+  def test_should_not_show_workitem
+    login_as :aaron
+    get :show, :wfid => '20081003-gajoyususo', :expid => '0_0_1'
+    assert_response :forbidden
   end
 
   def test_should_show_xml

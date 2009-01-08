@@ -1,6 +1,6 @@
 #
 #--
-# Copyright (c) 2008, John Mettraux, OpenWFE.org
+# Copyright (c) 2008-2009, John Mettraux, OpenWFE.org
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -129,13 +129,26 @@ class User < ActiveRecord::Base
   end
 
   #
+  # Returns the list of store names this user has access to
+  #
+  def store_names
+    [ system_name, 'unknown' ] + group_names
+  end
+
+  #
   # User and Group share this method, which returns login and name respectively
   #
   def system_name
     self.login
   end
 
-  protected
+  #
+  # Returns true if the workitem is in a store the user has access to.
+  # (always returns true for an admin).
+  #
+  def may_see (workitem)
+    is_admin? || store_names.include?(workitem.store_name)
+  end
 
 end
 

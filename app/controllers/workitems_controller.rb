@@ -51,9 +51,18 @@ class WorkitemsController < ApplicationController
     @query = params[:q] || params[:query]
 
     @workitems = if @query
+
       OpenWFE::Extras::Workitem.search(@query)
+
       # TODO : paginate that !
+
     else
+
+      opts = { :order => 'dispatch_time DESC' }
+
+      opts[:conditions] = { :store_name => current_user.store_names } \
+        unless current_user.is_admin?
+
       OpenWFE::Extras::Workitem.paginate_by_params(
         [
           # parameter_name[, column_name]
@@ -63,7 +72,7 @@ class WorkitemsController < ApplicationController
           [ 'participant', 'participant_name' ]
         ],
         params,
-        :order => 'dispatch_time DESC')
+        opts)
     end
 
     # TODO : escape pagination for XML and JSON ??
@@ -98,8 +107,10 @@ class WorkitemsController < ApplicationController
   #
   def edit
 
-    @workitem = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
-      params[:wfid], swapdots(params[:expid]))
+    @workitem = find_workitem
+
+    return head(:not_found) unless @workitem
+    return head(@workitem) if @workitem.is_a?(Fixnum)
 
     # only responds in HTML...
   end
@@ -108,8 +119,7 @@ class WorkitemsController < ApplicationController
   #
   def show
 
-    @workitem = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
-      params[:wfid], swapdots(params[:expid]))
+    @workitem = find_workitem
 
     respond_to do |format|
       format.html # => app/views/show.html.erb
@@ -124,8 +134,7 @@ class WorkitemsController < ApplicationController
   #
   def update
 
-    wi = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
-      params[:wfid], swapdots(params[:expid]))
+    wi = find_workitem
 
     owi = wi.to_owfe_workitem
 
@@ -163,6 +172,20 @@ class WorkitemsController < ApplicationController
       return true if %w{ show index }.include?(action)
 
       current_user.is_admin?
+    end
+
+    #
+    # find workitem, says 'unauthorized' if the user is attempting to
+    # see / update an off-limit workitem
+    #
+    def find_workitem
+
+      workitem = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
+        params[:wfid], swapdots(params[:expid]))
+
+      return 403 unless current_user.may_see(workitem)
+
+      workitem
     end
 
     #
