@@ -1,4 +1,12 @@
 
+<script>
+  function pick (workitemPath) {
+    var form = document.getElementById('workitem_delegation_form');
+    form.action = workitemPath;
+    form.submit();
+  }
+</script>
+
 <div class='content_title'>/workitems</div>
 
 <table class='coll' style="width: 100%;">
@@ -22,8 +30,8 @@
     <td><%= h workitem.activity %></td>
     <td class="coll_buttons">
       <%= link_to 'show', workitem_url(workitem) %> |
-      <%= link_to_if current_user.may_edit?(workitem), 'edit', edit_workitem_url(workitem) %> |
-      pick
+      <%= link_to 'edit', edit_workitem_url(workitem) %> |
+      <%= link_to_function 'pick', "pick('#{workitem_url(workitem)}');" %>
     </td>
   </tr>
 <% end -%>
@@ -34,5 +42,14 @@
   <%= link_to_if(
     request.query_string.size > 0,  'all', :controller => 'workitems') %>
 </div>
+<% end %>
+
+<% form_tag(
+  '/none',
+  :id => 'workitem_delegation_form',
+  :method => :put,
+  :multipart => true) do -%>
+
+  <input type="hidden" name="store_name" id="store_name" value="<%= current_user.login %>" />
 <% end %>
 

@@ -111,15 +111,16 @@ class User < ActiveRecord::Base
     is_admin? or (self.groups & definition.groups).size > 0
   end
 
-  #
+  #--
   # Returns true if the user is in the admin group, or the given workitem
   # is in his 'inbox' or his group inbox
   #
-  def may_edit? (workitem)
-    (is_admin? or
-     workitem.store_name == self.login or
-     self.group_names.include?(workitem.store_name))
-  end
+  #def may_edit? (workitem)
+  #  (is_admin? or
+  #   workitem.store_name == self.login or
+  #   self.group_names.include?(workitem.store_name))
+  #end
+  #++
 
   #
   # Returns the array of group names the user belongs to.
@@ -146,7 +147,7 @@ class User < ActiveRecord::Base
   # Returns true if the workitem is in a store the user has access to.
   # (always returns true for an admin).
   #
-  def may_see (workitem)
+  def may_see? (workitem)
     is_admin? || store_names.include?(workitem.store_name)
   end
 

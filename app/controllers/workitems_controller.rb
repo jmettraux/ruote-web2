@@ -143,9 +143,17 @@ class WorkitemsController < ApplicationController
 
     wi1 = parse_workitem
 
-    wid = "#{wi.id} (#{owi.fei.wfid} #{owi.fei.expid})"
+    wid = "#{owi.fei.wfid}/#{swapdots(owi.fei.expid)}"
 
-    if params[:state] == 'proceeded'
+    if store_name = params[:store_name]
+
+      wi.store_name = store_name
+
+      wi.save!
+
+      flash[:notice] = "workitem #{wid} delegated to store '#{store_name}'"
+
+    elsif params[:state] == 'proceeded'
 
       wi.destroy
 
@@ -186,7 +194,7 @@ class WorkitemsController < ApplicationController
       workitem = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
         params[:wfid], swapdots(params[:expid]))
 
-      current_user.may_see(workitem) ? workitem : nil
+      current_user.may_see?(workitem) ? workitem : nil
     end
 
     #

@@ -146,5 +146,18 @@ class WorkitemsControllerTest < ActionController::TestCase
     assert_not_nil wi
     assert_equal 'Ukifune', wi['attributes']['girl']
   end
+
+  def test_should_delegate_workitem
+    login_as :admin
+    put(
+      :update,
+      { :wfid => '20081003-gajoyususo',
+        :expid => '0_0_1',
+        :store_name => 'el_cheapo' })
+    assert_response 302
+    assert_equal 'http://test.host/workitems', @response.headers['Location']
+    wi = OpenWFE::Extras::Workitem.find(1)
+    assert_equal 'el_cheapo', wi.store_name
+  end
 end
 

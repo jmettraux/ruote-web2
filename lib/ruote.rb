@@ -152,11 +152,21 @@ class ActionController::Routing::RouteSet::Mapper
       :controller => controller_name,
       :action => 'update',
       :conditions => { :method => :put })
+    connect(
+      "#{controller_name}/:wfid/:expid.:format",
+      :controller => controller_name,
+      :action => 'update',
+      :conditions => { :method => :put })
 
     # DELETE
     #
     connect(
       "#{controller_name}/:wfid/:expid",
+      :controller => controller_name,
+      :action => 'destroy',
+      :conditions => { :method => :delete })
+    connect(
+      "#{controller_name}/:wfid/:expid.:format",
       :controller => controller_name,
       :action => 'destroy',
       :conditions => { :method => :delete })
