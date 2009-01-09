@@ -173,7 +173,7 @@ class ProcessesController < ApplicationController
 
       return false unless current_user
 
-      return true if %w{ show index }.include?(action)
+      return true if %w{ show index tree }.include?(action)
 
       current_user.is_admin?
     end
