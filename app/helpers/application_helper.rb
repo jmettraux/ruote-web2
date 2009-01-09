@@ -40,10 +40,14 @@ module ApplicationHelper
 
   def render_res_menu
 
-    items = %w{ processes workitems definitions history }
-    items = %w{ users groups errors } + items if current_user.is_admin?
+    b = lambda { |a|
+      a.collect { |i| link_to(i, :controller => i) rescue i }.join(' | ')
+    }
 
-    items.collect { |i| "<a href='/#{i}'>#{i}</a>" }.join(' | ')
+    s = current_user.is_admin? ?
+      b.call(%w{ users groups }) + '&nbsp;&nbsp;.&nbsp;&nbsp;' : ''
+
+    s + b.call(%w{ definitions participants processes workitems errors history })
   end
 
   #
