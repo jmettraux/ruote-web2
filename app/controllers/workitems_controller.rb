@@ -153,6 +153,10 @@ class WorkitemsController < ApplicationController
 
       flash[:notice] = "workitem #{wid} delegated to store '#{store_name}'"
 
+      history_log(
+        'delegated',
+        :fei => owi.fei, :message => "wi delegated to '#{store_name}'")
+
     elsif params[:state] == 'proceeded'
 
       wi.destroy
@@ -162,11 +166,15 @@ class WorkitemsController < ApplicationController
 
       flash[:notice] = "workitem #{wid} proceeded"
 
+      history_log('proceeded', :fei => owi.fei)
+
     else
 
       wi.replace_fields(wi1.attributes)
 
       flash[:notice] = "workitem #{wid} modified"
+
+      history_log('saved', :fei => owi.fei, :message => 'wi saved')
     end
 
     redirect_to :action => 'index'

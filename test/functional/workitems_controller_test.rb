@@ -80,16 +80,24 @@ class WorkitemsControllerTest < ActionController::TestCase
   end
 
   def test_should_save_workitem
+
     login_as :admin
+
     put(
       :update,
       { :wfid => '20081003-gajoyususo',
         :expid => '0_0_1',
         :fields => '{ "type": "petit bateau" }' })
+
     assert_response 302
     assert_equal 'http://test.host/workitems', @response.headers['Location']
     wi = OpenWFE::Extras::Workitem.find(1).as_owfe_workitem
     assert_equal 'petit bateau', wi.attributes['type']
+
+    hes = OpenWFE::Extras::HistoryEntry.find_all_by_wfid(wi.fei.wfid)
+    assert_equal 1, hes.size
+    assert_equal 'saved', hes.first.event
+    assert_equal 'admin', hes.first.source
   end
 
   def test_should_proceed_workitem
@@ -145,19 +153,31 @@ class WorkitemsControllerTest < ActionController::TestCase
 
     assert_not_nil wi
     assert_equal 'Ukifune', wi['attributes']['girl']
+
+    hes = OpenWFE::Extras::HistoryEntry.find_all_by_wfid(fei.wfid)
+    assert_equal 5, hes.size
+    hes = hes.select { |he| he.event == 'proceeded' }
+    assert_equal 1, hes.size
   end
 
   def test_should_delegate_workitem
+
     login_as :admin
+
     put(
       :update,
       { :wfid => '20081003-gajoyususo',
         :expid => '0_0_1',
         :store_name => 'el_cheapo' })
+
     assert_response 302
     assert_equal 'http://test.host/workitems', @response.headers['Location']
     wi = OpenWFE::Extras::Workitem.find(1)
     assert_equal 'el_cheapo', wi.store_name
+
+    hes = OpenWFE::Extras::HistoryEntry.find_all_by_wfid(wi.wfid)
+    assert_equal 1, hes.size
+    assert_equal 'delegated', hes.first.event
   end
 end
 

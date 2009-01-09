@@ -45,6 +45,16 @@ class ApplicationController < ActionController::Base
 
     LinkGenerator.new(request)
   end
+
+  #
+  # Creates an HistoryEntry record
+  #
+  def history_log (event, options={})
+
+    source = options.delete(:source) || current_user.login
+
+    OpenWFE::Extras::HistoryEntry.log!(source, event, options)
+  end
 end
 
 #
