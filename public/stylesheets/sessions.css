@@ -1,9 +1,5 @@
 
-.ltext {
-  width: 60%;
-  float: left;
+.login_text {
+  font-size: 80%;
 }
-.lform {
-  float: left;
-  text-align: right;
-}
+
