@@ -34,6 +34,8 @@
 
 class HistoryController < ApplicationController
 
+  before_filter :login_required
+
   # GET /history
   #
   def index
@@ -54,5 +56,12 @@ class HistoryController < ApplicationController
     @all = (opts[:conditions] == nil)
     @entries = OpenWFE::Extras::HistoryEntry.paginate(opts)
   end
+
+  protected
+
+    def authorized? (action=action_name, resource=nil)
+
+      (current_user != nil) # do I really need that ?...
+    end
 end
 

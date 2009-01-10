@@ -1,14 +1,16 @@
 
 <div style="float: left;">
 
-  <div class='content_title'>/processes/<%= h @process.wfid %></div>
+  <div class='content_title'><%= process_path(@process.wfid) %></div>
 
   <table>
     <%= render :partial => 'shared/process_header', :locals => { :process => @process } %>
+    <!--
     <tr>
       <td>0</td>
       <td>1</td>
     </tr>
+    -->
     <tr>
       <td colspan='2'>
         <%= link_to_if current_user.is_admin?, 'edit', edit_process_path(@process.wfid) %> |

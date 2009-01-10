@@ -1,6 +1,6 @@
 #
 #--
-# Copyright (c) 2008, John Mettraux, OpenWFE.org
+# Copyright (c) 2008-2009, John Mettraux, OpenWFE.org
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -139,8 +139,6 @@ class UserGroupsController < ApplicationController
     #
     def authorized? #(action = action_name, resource = nil)
 
-      return false unless current_user
-
-      current_user.is_admin?
+      current_user && current_user.is_admin?
     end
 end

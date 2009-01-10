@@ -188,9 +188,7 @@ class WorkitemsController < ApplicationController
 
       return false unless current_user
 
-      return true if %w{ show index }.include?(action)
-
-      current_user.is_admin?
+      %w{ show index }.include?(action) || current_user.is_admin?
     end
 
     #

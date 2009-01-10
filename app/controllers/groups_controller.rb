@@ -1,6 +1,6 @@
 #
 #--
-# Copyright (c) 2008, John Mettraux, OpenWFE.org
+# Copyright (c) 2008-2009, John Mettraux, OpenWFE.org
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -143,9 +143,7 @@ class GroupsController < ApplicationController
 
       return false unless current_user
 
-      return true if [ 'show', 'index' ].include?(action)
-
-      current_user.is_admin?
+      %w{ show index }.include?(action) || current_user.is_admin?
     end
 end
 
