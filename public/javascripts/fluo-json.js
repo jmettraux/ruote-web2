@@ -156,7 +156,18 @@ function fluoToJson (o, quotes) {
   if (o == null) return 'null';
   var t = (typeof o);
   if (t == 'undefined') return 'null' // really ?
-  if (t == 'string') return quotes ? '"' + o + '"' : o;
+  if (t == 'number') return o;
+  if (t == 'string') {
+    //return quotes ? '"' + o + '"' : o;
+    if ( ! quotes) return o;
+    return '"' +
+      o
+        .replace(/"/g, '\\"')
+        .replace(/\r/g, '')
+        .replace(/\n/g, '\\n') + 
+      '"';
+      // this global replace works with safari (webkit) and ffox
+  }
   if (o.constructor.toString().indexOf(' Array()') == 8) {
     var a = [];
     for (var i = 0; i < o.length; i++) a.push(fluoToJson(o[i]));
