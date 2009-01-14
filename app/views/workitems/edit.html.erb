@@ -3,6 +3,8 @@
 
 <script>
 
+  loadCss('rforms');
+
   // TODO : move that out to a .js file
 
   function swapForm () {
@@ -27,11 +29,11 @@
     }
   }
 
-  function save_wi () {
+  function saveWi () {
     swapForm();
     byId('edition_form').submit();
   }
-  function proceed_wi () {
+  function proceedWi () {
     swapForm();
     byId('state').value = 'proceeded';
     byId('edition_form').submit();
@@ -51,32 +53,36 @@
   <input type="hidden" name="state" id="state" value="" /><!-- :( -->
 
   <table>
+
     <%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem } %>
-    <tr class="nhover">
-      <td class="fieldhead-left">
-        fields (<a href="" onclick="swapForm(); return false;">swap</a>)
-      </td>
-      <td class="fieldhead-right">
-        <span id="rf_buttons">
-          <a href="" onclick="RuoteForms.resetForm('rform'); return false;">reset</a> |
-          <a href="" onclick="RuoteForms.undo('rform'); return false;">undo</a>
-        </span></td>
-    </tr>
+
     <tr class="nhover">
       <td colspan="2">
+
+        <div class="fieldhead">
+          <span class="fh_left">
+            fields (<a href="" onclick="swapForm(); return false;">swap</a>)
+          </span>
+          <span id="rf_buttons" class="fh_right">
+            <a href="" onclick="RuoteForms.resetForm('rform'); return false;">reset</a> |
+            <a href="" onclick="RuoteForms.undo('rform'); return false;">undo</a>
+          </span>
+        </div>
+
         <div id="fields_ta" style="display: none;">
           <textarea id='fields' name='fields'><%= h @workitem.field_hash.to_json -%></textarea>
         </div>
         <div id="fields_rf">
           <div id="rform"></div>
         </div>
+
       </td>
     </tr>
     <tr>
       <td colspan='2' class='nhover'>
-        <%= link_to_function('save', 'save_wi(); return true;') %> |
+        <%= link_to_function('save', 'saveWi(); return true;') %> |
         delegate |
-        <%= link_to_function('proceed', 'proceed_wi(); return true;') %> |
+        <%= link_to_function('proceed', 'proceedWi(); return true;') %> |
         <%= link_to('back', :back) %>
       <td>
     </tr>

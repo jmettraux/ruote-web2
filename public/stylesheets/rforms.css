@@ -1,0 +1,103 @@
+
+/* tb rl */
+/* t r b l */
+
+/*
+ * ruote-forms
+ */
+
+input, textarea {
+  /*
+  border-color:-moz-use-text-color -moz-use-text-color #DDDDDD;
+  border-style:none none dotted;
+  width: 186px;
+  */
+  background-color: #eeeeee;
+  border:1px solid #BBBBBB;
+  font-family: "Helvetica Neue Light", Helvetica, Arial, sans-serif;
+  font-size: 1em;
+}
+#rform {
+  clear: both;
+}
+.rform_item {
+  clear: both;
+}
+.rform_entry {
+  clear: both;
+}
+.rform_key {
+  /*
+  padding: 2px 2px 2px 0px;
+  margin: 2px 2px 2px 0px;
+  */
+  float: left;
+}
+.rform_key input {
+  width: 150px;
+}
+.rform_value {
+  /*
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border: 1px black solid;
+  padding: 2px;
+  */
+  margin-left: 2px;
+  float: left;
+}
+.rform_value input {
+  width: 300px;
+}
+.rform_number input {
+  width: 100px;
+  text-align: right;
+}
+.rform_new_type {
+  margin-left: 5px;
+}
+.rform_buttons img {
+  margin-top: 4px;
+  margin-left: 2px;
+  cursor: pointer;
+}
+.rform_buttons {
+  height: 23px;
+  margin-bottom: 1px;
+  float: left;
+}
+.rform_hash > .rform_buttons {
+  clear: both;
+}
+.rform_item > .rform_buttons {
+}
+.rform_item > * {
+  float: left;
+}
+
+#rf_buttons {
+  text-align: right;
+}
+
+/*
+ * /workitems/x/y/edit
+ */
+textarea#fields {
+  width: 500px;
+  height: 70px;
+  margin: 0px;
+}
+.fieldhead {
+  clear: both;
+}
+.fieldhead span {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+.fh_left {
+  float: left;
+}
+.fh_right {
+  float: right;
+}
+

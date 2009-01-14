@@ -10,3 +10,13 @@ function byId (i) { return document.getElementById(i); }
   //
   // fail :(
 
+function loadCss (href) {
+  var e = document.createElement('link');
+  e.setAttribute('href', '/stylesheets/' + href + '.css');
+  e.setAttribute('media', 'screen');
+  e.setAttribute('rel', 'stylesheet');
+  e.setAttribute('type', 'text/css');
+  document.getElementsByTagName('head')[0].appendChild(e);
+  alert('added');
+}
+
