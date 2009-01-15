@@ -1,46 +1,4 @@
 
-<script src="/javascripts/ruote-forms.js"></script>
-
-<script>
-
-  loadCss('rforms');
-
-  // TODO : move that out to a .js file
-
-  function swapForm () {
-
-    var fta = byId('fields_ta');
-    var ffl = byId('fields');
-
-    var frf = byId('fields_rf');
-    var brf = byId('rf_buttons');
-
-    if (fta.style.display == 'block') {
-      RuoteForms.renderForm('rform', fluoFromJson(ffl.value));
-      fta.style.display = 'none';
-      frf.style.display = 'block';
-      brf.style.display = 'inline';
-    }
-    else {
-      ffl.value = RuoteForms.toJson('rform');
-      fta.style.display = 'block';
-      frf.style.display = 'none';
-      brf.style.display = 'none';
-    }
-  }
-
-  function saveWi () {
-    swapForm();
-    byId('edition_form').submit();
-  }
-  function proceedWi () {
-    swapForm();
-    byId('state').value = 'proceeded';
-    byId('edition_form').submit();
-  }
-
-</script>
-
 <div style="float: left;">
   <div class='content_title'><%= workitem_path(@workitem) %></div>
 
@@ -59,22 +17,7 @@
     <tr class="nhover">
       <td colspan="2">
 
-        <div class="fieldhead">
-          <span class="fh_left">
-            fields (<a href="" onclick="swapForm(); return false;">swap</a>)
-          </span>
-          <span id="rf_buttons" class="fh_right">
-            <a href="" onclick="RuoteForms.resetForm('rform'); return false;">reset</a> |
-            <a href="" onclick="RuoteForms.undo('rform'); return false;">undo</a>
-          </span>
-        </div>
-
-        <div id="fields_ta" style="display: none;">
-          <textarea id='fields' name='fields'><%= h @workitem.field_hash.to_json -%></textarea>
-        </div>
-        <div id="fields_rf">
-          <div id="rform"></div>
-        </div>
+        <%= render :partial => @payload_partial, :locals => { :workitem => @workitem } %>
 
       </td>
     </tr>
@@ -96,8 +39,4 @@
   <%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.expid ] %>
 
 </div>
-
-<script>
-  RuoteForms.renderForm('rform', <%= @workitem.field_hash.to_json %>);
-</script>
 

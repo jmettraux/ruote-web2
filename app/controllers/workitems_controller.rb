@@ -108,6 +108,7 @@ class WorkitemsController < ApplicationController
   def edit
 
     @workitem = find_workitem
+    @payload_partial = determine_payload_partial(@workitem)
 
     return error_reply('no workitem', 404) unless @workitem
 
@@ -119,6 +120,7 @@ class WorkitemsController < ApplicationController
   def show
 
     @workitem = find_workitem
+    @payload_partial = determine_payload_partial(@workitem)
 
     return error_reply('no workitem', 404) unless @workitem
 
@@ -244,6 +246,17 @@ class WorkitemsController < ApplicationController
 
         nil
       end
+    end
+
+    #
+    # Should return the path to the partial in charge of rendering the
+    # workitem payload.
+    #
+    # This initial implementation is rather, plain. Rewrite at will.
+    #
+    def determine_payload_partial (workitem)
+
+      'shared/ruote_forms'
     end
 end
 
