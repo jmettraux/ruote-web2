@@ -56,6 +56,15 @@ class Definition < ActiveRecord::Base
     u[0, 1] == '/' ? "#{RAILS_ROOT}/public#{u}" : u
   end
 
+  #
+  # Returns the initial workitem payload at launch time (launchitem)
+  #
+  def launch_fields_hash
+
+    launch_fields ?
+      ActiveSupport::JSON.decode(launch_fields) : { 'key0' => 'value0' }
+  end
+
   protected
 
     def links (opts={})

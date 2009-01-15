@@ -258,9 +258,8 @@ var RuoteForms = function() {
 
   function addToCollection (elt) {
     //elt.stack();
-    var ebuttons = elt.parentNode;
-    var ecollection = ebuttons.parentNode;
-    ecollection.insertBefore(elt, ebuttons);
+    var ecollection = elt.parentNode;
+    ecollection.insertBefore(elt, elt.previousSibling);
     return false;
   }
 
@@ -268,7 +267,7 @@ var RuoteForms = function() {
     var e = create(elt, 'div', { 'class': 'rform_buttons', });
     var ea = create(e, 'img', { 'src': CONFIG.img_add });
     ea.onclick = function () {
-      return addToCollection(render_item(this, EmptyItem, {}));
+      return addToCollection(render_item(e.parentNode, EmptyItem, {}));
     }
   }
 
@@ -292,7 +291,7 @@ var RuoteForms = function() {
     var e = create(elt, 'div', { 'class': 'rform_buttons', });
     var ea = create(e, 'img', { 'src': CONFIG.img_add });
     ea.onclick = function () {
-      return addToCollection(render_entry(this, [ '', EmptyItem ], {}));
+      return addToCollection(render_entry(e.parentNode, [ '', EmptyItem ], {}));
     }
   }
 

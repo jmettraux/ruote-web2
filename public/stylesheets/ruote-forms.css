@@ -6,16 +6,13 @@
  * ruote-forms
  */
 
-input, textarea {
-  /*
-  border-color:-moz-use-text-color -moz-use-text-color #DDDDDD;
-  border-style:none none dotted;
-  width: 186px;
-  */
+input[type="text"], input[type="radio"], textarea {
   background-color: #eeeeee;
   border:1px solid #BBBBBB;
   font-family: "Helvetica Neue Light", Helvetica, Arial, sans-serif;
   font-size: 1em;
+  padding: 2px;
+  vertical-align: bottom;
 }
 #rform {
   clear: both;
@@ -27,22 +24,12 @@ input, textarea {
   clear: both;
 }
 .rform_key {
-  /*
-  padding: 2px 2px 2px 0px;
-  margin: 2px 2px 2px 0px;
-  */
   float: left;
 }
 .rform_key input {
   width: 150px;
 }
 .rform_value {
-  /*
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border: 1px black solid;
-  padding: 2px;
-  */
   margin-left: 2px;
   float: left;
 }

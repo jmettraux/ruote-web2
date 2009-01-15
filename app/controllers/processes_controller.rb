@@ -123,6 +123,7 @@ class ProcessesController < ApplicationController
   def new
 
     @definition = Definition.find(params[:definition])
+    @payload_partial = determine_payload_partial(@definition)
   end
 
   # POST /processes
@@ -198,8 +199,8 @@ class ProcessesController < ApplicationController
           params[:definition_url] = definition.local_uri if definition
         end
 
-        if attributes = params[:attributes]
-          params[:attributes] = ActiveSupport::JSON::decode(attributes)
+        if fields = params[:fields]
+          params[:fields] = ActiveSupport::JSON::decode(fields)
         end
 
         OpenWFE::LaunchItem.from_h(params)

@@ -1,4 +1,16 @@
 
+<script>
+
+  function saveWi () {
+    byId('workitem_form').submit();
+  }
+  function proceedWi () {
+    byId('state').value = 'proceeded';
+    byId('workitem_form').submit();
+  }
+
+</script>
+
 <div style="float: left;">
   <div class='content_title'><%= workitem_path(@workitem) %></div>
 
@@ -17,7 +29,7 @@
     <tr class="nhover">
       <td colspan="2">
 
-        <%= render :partial => @payload_partial, :locals => { :workitem => @workitem } %>
+        <%= render :partial => @payload_partial, :locals => { :fields => @workitem.field_hash } %>
 
       </td>
     </tr>

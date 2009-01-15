@@ -21,6 +21,10 @@
       <td><%= h @definition.updated_at %></td>
     </tr>
     <tr>
+      <td>launch_fields</td>
+      <td><%= h @definition.launch_fields %></td>
+    </tr>
+    <tr>
       <td class='col_buttons nhover' colspan='2'>
         <%= link_to_if current_user.may_launch?(@definition), 'launch', new_process_path(:definition => @definition.id) %> |
         <%= link_to_if current_user.is_admin?, 'edit', edit_definition_path(@definition) %> |

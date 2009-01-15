@@ -1,5 +1,5 @@
 
-<div class='content_title'>/definitions/<%= h @definition.name %></div>
+<div class='content_title'>/definitions/<%= h @definition.id %></div>
 
 <div style='float: left;'>
 
@@ -13,6 +13,17 @@
       <tr>
         <td>uri</td>
         <td><%= f.text_field :uri %></td>
+      </tr>
+      <tr>
+        <td>launch_fields</td>
+        <td><%= f.text_field :launch_fields %></td>
+        <!--
+        <td colspan="2">
+
+          <%= render(:partial => @payload_partial, :locals => { :fields => @definition.launch_fields_hash }) %>
+
+        </td>
+        -->
       </tr>
       <tr>
         <td class='coll_buttons' colspan='2'>

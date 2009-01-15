@@ -106,10 +106,13 @@ class DefinitionsController < ApplicationController
   def edit
 
     @definition = Definition.find(params[:id])
+
     @dg_locals = {
       :in_groups => @definition.group_definitions,
       :out_groups => Group.find(:all) - @definition.groups
     }
+
+    @payload_partial = determine_payload_partial(@definition)
   end
 
   # POST /definitions

@@ -3,21 +3,22 @@
 
   <div class="content_title">/processes/new</div>
 
-  <% form_tag '/processes', :multipart => true do |f| %>
+  <% form_tag '/processes', :id => 'workitem_form', :multipart => true do |f| %>
     <%= hidden_field_tag 'definition_id', @definition.id %>
     <table>
       <tr>
         <td>uri</td>
-        <td><%= @definition.uri %></td>
+        <td><%= h @definition.uri %></td>
       </tr>
       <tr>
-        <td>attributes / fields</td>
-        <td><%= text_area_tag(
-          'attributes',
-          { 'key0' => 'value0', 'key1' => 'value1' }.to_json) -%></td>
+        <td colspan="2" class="nhover">
+
+          <%= render(:partial => @payload_partial, :locals => { :fields => @definition.launch_fields_hash }) %>
+
+        </td>
       </tr>
       <tr>
-        <td colspan='2'>
+        <td colspan="2" class="nhover">
           <%= submit_tag 'launch new process instance' %>
           <%= link_to 'back', :back %>
         </td>

@@ -20,16 +20,6 @@ class LeaveRequest1 < OpenWFE::ProcessDefinition
   set :v => "assistant", :value => "bob"
 
   #
-  # those are the fields to be filled by the employee
-  # for his request to be considered.
-
-  set :f => "employee", :value => "${launcher}"
-  set :f => "from_date", :value => ""
-  set :f => "to_date", :value => ""
-  set :f => "reason", :value => ""
-
-
-  #
   # the 'body' of the process definition
   #
   sequence do

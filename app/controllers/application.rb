@@ -55,6 +55,17 @@ class ApplicationController < ActionController::Base
 
     OpenWFE::Extras::HistoryEntry.log!(source, event, options)
   end
+
+  #
+  # Should return the path to the partial in charge of rendering the
+  # workitem payload.
+  #
+  # This initial implementation is rather, plain. Rewrite at will.
+  #
+  def determine_payload_partial (workitem)
+
+    'shared/ruote_forms'
+  end
 end
 
 #

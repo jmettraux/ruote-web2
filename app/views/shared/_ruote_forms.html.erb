@@ -2,6 +2,7 @@
 <script src="/javascripts/ruote-forms.js"></script>
 
 <script>
+
   linkToCss('ruote-forms');
 
   // TODO : move that out to a .js file
@@ -28,15 +29,6 @@
     }
   }
 
-  function saveWi () {
-    swapForm();
-    byId('edition_form').submit();
-  }
-  function proceedWi () {
-    swapForm();
-    byId('state').value = 'proceeded';
-    byId('edition_form').submit();
-  }
 </script>
 
 <div class="fieldhead">
@@ -50,7 +42,7 @@
 </div>
 
 <div id="fields_ta" style="display: none;">
-  <textarea id='fields' name='fields'><%= h workitem.field_hash.to_json -%></textarea>
+  <textarea id='fields' name='fields'><%= fields.to_json -%></textarea>
 </div>
 
 <div id="fields_rf">
@@ -58,6 +50,12 @@
 </div>
 
 <script>
-  RuoteForms.renderForm('rform', <%= workitem.field_hash.to_json %>);
+
+  RuoteForms.renderForm('rform', <%= fields.to_json %>);
+
+  byId('workitem_form').onsubmit = function () {
+    swapForm();
+    return true;
+  };
 </script>
 

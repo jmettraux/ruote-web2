@@ -8,4 +8,5 @@ two:
   id: 2
   name: leave request
   uri: leave_request1.rb
+  launch_fields: "{\"employee\":\"\",\"from_date\":\"\",\"to_date\":\"\",\"reason\":\"\"}"
 

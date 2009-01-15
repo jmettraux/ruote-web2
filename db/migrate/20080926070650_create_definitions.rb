@@ -5,6 +5,7 @@ class CreateDefinitions < ActiveRecord::Migration
     create_table :definitions do |t|
       t.string :name
       t.string :uri
+      t.text :launch_fields
       t.timestamps
     end
     add_index :definitions, :name, :unique => true
