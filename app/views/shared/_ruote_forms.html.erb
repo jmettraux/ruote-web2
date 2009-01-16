@@ -51,8 +51,6 @@
 
   RuoteForms.renderForm('rform', <%= fields.to_json %>);
 
-  <% p self.class.name %>
-
   byId('<%= form_id ||= 'workitem_form' %>').onsubmit = function () {
     swapForm();
     return true;
