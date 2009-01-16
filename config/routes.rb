@@ -1,4 +1,7 @@
 
+require "#{File.dirname(__FILE__)}/initializers/ruote_routing"
+
+
 ActionController::Routing::Routes.draw do |map|
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
