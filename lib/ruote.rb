@@ -98,19 +98,6 @@ module OpenWFE
         h['params']['activity'] || h['params']['description'] || '-'
       end
     end
-
-    class HistoryEntry
-
-      #
-      # making sure that the message isn't too long
-      #
-      def short_message (max_length = 40)
-
-        message && message.length > max_length ?
-          message[0, max_length - 3] + '...' :
-          message
-      end
-    end
   end
 end
 

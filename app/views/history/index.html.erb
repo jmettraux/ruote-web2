@@ -28,7 +28,7 @@
       <td class="wfid"><%= view_link(entry, :wfid) %></td>
       <td class="fei"><%= sfei %></td>
       <td class="participant"><%= view_link(entry, :participant) %></td>
-      <td class="message" title="<%= h entry.message %>"><%= h entry.short_message(40) %></td>
+      <td class="message" title="<%= h entry.message %>"><%= h truncate(entry.message) %></td>
     </tr>
   <% end %>
   </tbody>
