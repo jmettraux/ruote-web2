@@ -3,30 +3,31 @@
 
 <div style='float: left;'>
 
-  <% form_for(@definition) do |f| %>
+  <% form_for(@definition, :html => { :id => 'definition_form' }) do |f| %>
     <%= f.error_messages %>
     <table>
-      <tr>
+      <tr class="nhover">
         <td>name</td>
         <td><%= f.text_field :name %></td>
       </tr>
-      <tr>
+      <tr class="nhover">
         <td>uri</td>
         <td><%= f.text_field :uri %></td>
       </tr>
-      <tr>
-        <td>launch_fields</td>
-        <td><%= f.text_field :launch_fields %></td>
-        <!--
+      <tr class="nhover">
         <td colspan="2">
 
-          <%= render(:partial => @payload_partial, :locals => { :fields => @definition.launch_fields_hash }) %>
+          <%= render(
+            :partial => @payload_partial,
+            :locals => {
+              :fields => @definition.launch_fields_hash,
+              :form_id => 'definition_form',
+              :textarea_name => 'definition[launch_fields]' }) %>
 
         </td>
-        -->
       </tr>
       <tr>
-        <td class='coll_buttons' colspan='2'>
+        <td class='nhover' colspan='2'>
           <%= f.submit 'update' %>
           <%= link_to 'show', @definition %> |
           <%= link_to 'back', definitions_path %>

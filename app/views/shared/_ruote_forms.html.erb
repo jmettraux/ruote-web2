@@ -5,8 +5,6 @@
 
   linkToCss('ruote-forms');
 
-  // TODO : move that out to a .js file
-
   function swapForm () {
 
     var fta = byId('fields_ta');
@@ -42,7 +40,7 @@
 </div>
 
 <div id="fields_ta" style="display: none;">
-  <textarea id='fields' name='fields'><%= fields.to_json -%></textarea>
+  <textarea id="fields" name="<%= textarea_name ||= 'fields' %>"><%= fields.to_json -%></textarea>
 </div>
 
 <div id="fields_rf">
@@ -53,9 +51,12 @@
 
   RuoteForms.renderForm('rform', <%= fields.to_json %>);
 
-  byId('workitem_form').onsubmit = function () {
+  <% p self.class.name %>
+
+  byId('<%= form_id ||= 'workitem_form' %>').onsubmit = function () {
     swapForm();
     return true;
   };
+
 </script>
 
