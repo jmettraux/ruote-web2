@@ -1,5 +1,5 @@
 
-require "#{File.dirname(__FILE__)}/initializers/ruote_routing"
+require "#{File.dirname(__FILE__)}/../lib/ruote_routing"
 
 
 ActionController::Routing::Routes.draw do |map|
