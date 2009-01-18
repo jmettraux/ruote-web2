@@ -5,16 +5,17 @@
 
   <% form_for(@definition, :html => { :id => 'definition_form' }) do |f| %>
     <%= f.error_messages %>
-    <table>
-      <tr class="nhover">
-        <td>name</td>
+
+    <table class="nhover">
+      <tr>
+        <td class="wide-first-col">name</td>
         <td><%= f.text_field :name %></td>
       </tr>
-      <tr class="nhover">
+      <tr>
         <td>uri</td>
         <td><%= f.text_field :uri %></td>
       </tr>
-      <tr class="nhover">
+      <tr>
         <td colspan="2">
 
           <%= render(
@@ -26,8 +27,8 @@
 
         </td>
       </tr>
-      <tr>
-        <td class='nhover' colspan='2'>
+      <tr class="button-row">
+        <td>
           <%= f.submit 'update' %>
           <%= link_to 'show', @definition %> |
           <%= link_to 'back', definitions_path %>
@@ -38,6 +39,8 @@
 </div>
 
 <div style='float: left; margin-left: 28px;'>
+  groups that may launch<br/>
+  <br/>
   <%= render :partial => 'shared/definition_groups', :locals => @dg_locals %>
 </div>
 

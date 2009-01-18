@@ -7,7 +7,7 @@
     <%= f.error_messages %>
     <table>
       <tr>
-        <td>login</td>
+        <td class="wide-first-col">login</td>
         <td><%= f.text_field :login %></td>
       </tr>
       <tr>
@@ -26,7 +26,7 @@
         <td>password (2)</td>
         <td><%= f.password_field :password_confirmation %></td>
       </tr>
-      <tr>
+      <tr class="button-row">
         <td colspan='2'>
           <%= f.submit 'update' %>
           <%= link_to 'show', @user %> |

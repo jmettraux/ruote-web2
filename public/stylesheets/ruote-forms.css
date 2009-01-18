@@ -6,14 +6,6 @@
  * ruote-forms
  */
 
-input[type="text"], input[type="radio"], textarea {
-  background-color: #eeeeee;
-  border:1px solid #BBBBBB;
-  font-family: "Helvetica Neue Light", Helvetica, Arial, sans-serif;
-  font-size: 1em;
-  padding: 2px;
-  vertical-align: bottom;
-}
 #rform {
   clear: both;
 }

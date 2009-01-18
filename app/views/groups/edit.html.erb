@@ -5,16 +5,19 @@
 
   <% form_for(@group) do |f| %>
     <%= f.error_messages %>
-
-    <div>
-      <%= f.label :name %>
-      name <%= f.text_field :name %>
-    </div>
-    <div>
-      <%= f.submit 'update' %>
-      <%= link_to 'show', @group %> |
-      <%= link_to 'back', groups_path %>
-    </div>
+    <table>
+      <tr>
+        <td class="wide-first-col">name</td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr class="button-row">
+        <td colspan='2'>
+          <%= f.submit 'update' %>
+          <%= link_to 'show', @group %> |
+          <%= link_to 'back', groups_path %>
+        </td>
+      </tr>
+    </table>
   <% end -%>
 
 </div>

@@ -4,12 +4,6 @@ body {
   font-family: "Helvetica Neue Light", Helvetica, Arial, sans-serif;
 }
 
-/*
-.CodeRay {
-  margin-bottom: 1em;
-}
-*/
-
 /* Headings
  * --------------------------------------------------------------------- */
 h1,h2,h3,h4,h5,h6 { color: #111; }
@@ -31,8 +25,21 @@ hr {
   color:      #ddd;
 }
 
+/* Forms
+ * --------------------------------------------------------------------- */
+
+input[type="text"], input[type="radio"], input[type="password"], textarea {
+  background-color: #eeeeee;
+  border:1px solid #BBBBBB;
+  font-family: "Helvetica Neue Light", Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  padding: 2px;
+  vertical-align: bottom;
+}
+
 /* Tables
  * --------------------------------------------------------------------- */
+
 table {
   /*
   border-top:     1px solid #ddd;
@@ -53,9 +60,24 @@ th,td {
   padding: 3px 2px 3px 0px;
   border: 0px;
   line-height: 1.0em;
+  vertical-align: bottom;
+}
+
+td.wide-first-col {
+  /*width: 150px;*/
+  padding-right: 7em;
+}
+tr.button-row td {
+  padding-top: 1.5em;
 }
 
 .nhover:hover {
+  background-color: white;
+}
+table.nhover:hover tr:hover {
+  background-color: white;
+}
+tr.button-row:hover {
   background-color: white;
 }
 
