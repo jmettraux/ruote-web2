@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080926082146) do
+ActiveRecord::Schema.define(:version => 20090119093821) do
 
   create_table "definitions", :force => true do |t|
     t.string   "name"
@@ -63,6 +63,15 @@ ActiveRecord::Schema.define(:version => 20080926082146) do
   add_index "history", ["participant"], :name => "index_history_on_participant"
   add_index "history", ["source"], :name => "index_history_on_source"
   add_index "history", ["wfid"], :name => "index_history_on_wfid"
+
+  create_table "process_errors", :force => true do |t|
+    t.string "wfid",   :null => false
+    t.string "expid",  :null => false
+    t.text   "svalue", :null => false
+  end
+
+  add_index "process_errors", ["expid"], :name => "index_process_errors_on_expid"
+  add_index "process_errors", ["wfid"], :name => "index_process_errors_on_wfid"
 
   create_table "user_groups", :force => true do |t|
     t.integer "user_id",  :null => false

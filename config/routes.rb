@@ -58,6 +58,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.wfid_resources :workitems
   map.wfid_resources :expressions
+  map.wfid_resources :errors
 
   map.resources :definitions
   map.connect 'definitions/:id/tree.js', :controller => 'definitions', :action => 'tree'

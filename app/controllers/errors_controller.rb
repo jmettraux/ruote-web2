@@ -1,6 +1,6 @@
 #
 #--
-# Copyright (c) 2008-2009, John Mettraux, OpenWFE.org
+# Copyright (c) 2009, John Mettraux, OpenWFE.org
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,18 +31,25 @@
 #++
 #
 
-#
-# "made in Japan"
-#
-# John Mettraux at openwfe.org
-#
+class ErrorsController < ApplicationController
 
-require 'openwfe/extras/expool/db_history'
+  before_filter :login_required
 
+  # GET /errors
+  #
+  def index
 
-class CreateHistory < OpenWFE::Extras::HistoryTables
+    @errors = ruote_engine.get_error_journal.get_error_logs.values
+    @errors = @errors.inject
 
-  # The migration itself is found in the 'ruote' gem.
-  # Extending it to make it happen.
+    # TODO : paginate
+  end
+
+  protected
+
+    def authorized? (action=action_name, resource=nil)
+
+      (current_user != nil) # do I really need that ?...
+    end
 end
 

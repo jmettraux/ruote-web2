@@ -1,0 +1,25 @@
+
+<div class='content_title'>/errors</div>
+
+<table>
+
+  <thead>
+    <th>error</th>
+  </thead>
+
+  <tbody>
+  <% @errors.each do |error| %>
+    <tr>
+      <td><%= error.inspect %></td>
+    </tr>
+  <% end %>
+  </tbody>
+
+  <tfoot>
+  </tfoot>
+</table>
+
+<div class="history_nav align-right">
+  <!-- TODO : all and paginate -->
+</div>
+

@@ -17,8 +17,8 @@ Tomaso Tosolini - database persisted engine implementation and patches
 Contributors
 ------------
 
+Torsten Schoenebaum - better engine.stop for Mongrel, general QA
 Scott Conrad (bootstrap_dev_db.rake enhancements)
-Torsten Schoenebaum - better engine.stop for Mongrel
 Scott Sproule (form action issue on Glassfish)
 Arjan van Bentem (patches)
 Amedeo Paglione (patches)

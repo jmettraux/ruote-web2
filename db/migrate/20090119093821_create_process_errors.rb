@@ -1,6 +1,6 @@
 #
 #--
-# Copyright (c) 2008-2009, John Mettraux, OpenWFE.org
+# Copyright (c) 2007-2009, John Mettraux, OpenWFE.org
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -37,10 +37,10 @@
 # John Mettraux at openwfe.org
 #
 
-require 'openwfe/extras/expool/db_history'
+require 'openwfe/extras/expool/db_errorjournal'
 
 
-class CreateHistory < OpenWFE::Extras::HistoryTables
+class CreateProcessErrors < OpenWFE::Extras::ProcessErrorTables
 
   # The migration itself is found in the 'ruote' gem.
   # Extending it to make it happen.

@@ -115,6 +115,8 @@ p.quiet { color: #666; }
   margin-bottom: 14px;
 }
 
+/* TODO : nuke those coll classes */
+
 .coll {
   border-spacing: 0px;
   padding: 0px;

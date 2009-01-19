@@ -1,4 +1,6 @@
+
 class CreateGroupDefinitions < ActiveRecord::Migration
+
   def self.up
     create_table :group_definitions do |t|
       t.integer :group_id
@@ -12,3 +14,4 @@ class CreateGroupDefinitions < ActiveRecord::Migration
     drop_table :group_definitions
   end
 end
+

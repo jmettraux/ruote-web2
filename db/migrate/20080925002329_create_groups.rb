@@ -13,3 +13,4 @@ class CreateGroups < ActiveRecord::Migration
     drop_table :groups
   end
 end
+
