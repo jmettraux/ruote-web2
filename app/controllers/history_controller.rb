@@ -54,6 +54,8 @@ class HistoryController < ApplicationController
 
     @all = (opts[:conditions] == nil)
     @entries = OpenWFE::Extras::HistoryEntry.paginate(opts)
+
+    # TODO : XML and JSON
   end
 
   protected

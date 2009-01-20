@@ -65,11 +65,13 @@ ActiveRecord::Schema.define(:version => 20090119093821) do
   add_index "history", ["wfid"], :name => "index_history_on_wfid"
 
   create_table "process_errors", :force => true do |t|
-    t.string "wfid",   :null => false
-    t.string "expid",  :null => false
-    t.text   "svalue", :null => false
+    t.datetime "created_at"
+    t.string   "wfid",       :null => false
+    t.string   "expid",      :null => false
+    t.text     "svalue",     :null => false
   end
 
+  add_index "process_errors", ["created_at"], :name => "index_process_errors_on_created_at"
   add_index "process_errors", ["expid"], :name => "index_process_errors_on_expid"
   add_index "process_errors", ["wfid"], :name => "index_process_errors_on_wfid"
 

@@ -31,6 +31,11 @@
 #++
 #
 
+# "Made in Japan" as opposed to "Swiss Made"
+
+#
+# ruote-web2 uses db_error_journal, so tapping directly into the db is OK
+#
 class ErrorsController < ApplicationController
 
   before_filter :login_required
@@ -39,15 +44,35 @@ class ErrorsController < ApplicationController
   #
   def index
 
-    @errors = ruote_engine.get_error_journal.get_error_logs.values
-    @errors = @errors.inject
+    opts = { :page => params[:page], :order => 'created_at DESC' }
 
-    # TODO : paginate
+    @all = (opts[:conditions] == nil)
+    @errors = OpenWFE::Extras::ProcessError.paginate(opts)
+
+    respond_to do |format|
+
+      format.html # => app/views/errors/index.html.erb
+
+      format.json do
+        render(:json => OpenWFE::Json.errors_to_h(
+          @errors,
+          :linkgen => LinkGenerator.new(request)).to_json)
+      end
+
+      format.xml do
+        render(
+          :xml => OpenWFE::Xml.errors_to_xml(
+            @errors,
+            :linkgen => LinkGenerator.new(request), :indent => 2))
+      end
+    end
   end
 
   protected
 
     def authorized? (action=action_name, resource=nil)
+
+      # TODO : restrict to admins !
 
       (current_user != nil) # do I really need that ?...
     end

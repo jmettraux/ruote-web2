@@ -1,0 +1,19 @@
+
+one:
+  wfid: 20090120-bipajorugo
+  id: 1
+  expid: 0.0.0
+  svalue: !ruby/object:OpenWFE::ProcessError 
+    date: 2009-01-20 10:43:05.633164 +09:00
+    error_class: OpenWFE::ForcedError
+    fei: &id001 !ruby/OpenWFE::FlowExpressionId 
+      s: (fei 0.9.20 engine field:__definition NoName 0 20090120-bipajorugo error 0.0.0)
+    message: :apply
+    stacktrace: FAIL!
+    workitem: !ruby/object:OpenWFE::InFlowWorkItem 
+      attributes: 
+        __result__: FAIL!
+      flow_expression_id: *id001
+      last_modified: 
+  created_at: 2009-01-20 01:43:05 Z
+
