@@ -36,11 +36,27 @@ class UsersController < ApplicationController
   before_filter :login_required
 
   def index
+
     @users = User.find(:all)
+
+    # TODO : paginate ?
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml { render :xml => @users }
+      format.json { render :json => @users }
+    end
   end
 
   def show
+
     load_user
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @user }
+      format.json  { render :json => @user }
+    end
   end
 
   def edit

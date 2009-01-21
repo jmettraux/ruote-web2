@@ -44,7 +44,8 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @groups }
+      format.xml { render :xml => @groups }
+      format.json { render :json => @groups }
     end
   end
 
@@ -58,6 +59,7 @@ class GroupsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @group }
+      format.json  { render :json => @group }
     end
   end
 
@@ -71,6 +73,7 @@ class GroupsController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @group }
+      format.json  { render :json => @group }
     end
   end
 

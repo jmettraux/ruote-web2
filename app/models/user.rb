@@ -80,6 +80,20 @@ class User < ActiveRecord::Base
     u && u.authenticated?(password) ? u : nil
   end
 
+  #
+  # Preventing salt and crypted_password from appearing...
+  #
+  def to_xml (opts={})
+    super(opts.merge(:except => [ :salt, :crypted_password ]))
+  end
+
+  #
+  # Preventing salt and crypted_password from appearing...
+  #
+  def to_json (opts={})
+    super(opts.merge(:except => [ :salt, :crypted_password ]))
+  end
+
   def login=(value)
     write_attribute :login, (value ? value.downcase : nil)
   end
