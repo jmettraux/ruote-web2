@@ -14,7 +14,7 @@
     <td>members</td>
     <td><%= comma_list(@group.users, :login) %></td>
   </tr>
-  <tr>
+  <tr class="nhover">
     <td colspan="2">
       <%= link_to 'edit', edit_group_path(@group) %> |
       <%= link_to 'back', groups_path %>

@@ -53,17 +53,44 @@ class ErrorsController < ApplicationController
 
       format.html # => app/views/errors/index.html.erb
 
-      format.json do
-        render(:json => OpenWFE::Json.errors_to_h(
-          @errors,
-          :linkgen => LinkGenerator.new(request)).to_json)
-      end
-
       format.xml do
         render(
           :xml => OpenWFE::Xml.errors_to_xml(
             @errors,
             :linkgen => LinkGenerator.new(request), :indent => 2))
+      end
+
+      format.json do
+        render(:json => OpenWFE::Json.errors_to_h(
+          @errors,
+          :linkgen => LinkGenerator.new(request)).to_json)
+      end
+    end
+  end
+
+  # DELETE /errors/:wfid/:expid
+  #
+  def destroy
+
+    e = OpenWFE::Extras::ProcessError.find_by_wfid_and_expid(
+      params[:wfid], swapdots(params[:expid]))
+
+    return error_reply("no error at #{request.request_uri}", 404) unless e
+
+    RuotePlugin.ruote_engine.replay_at_error(e)
+
+    msg = "replayed /errors/#{e.wfid}/#{e.expid}"
+
+    respond_to do |format|
+      format.html do
+        flash[:notice] = msg
+        redirect_to :action => 'index'
+      end
+      format.xml do
+        render :text => msg
+      end
+      format.json do
+        render :text => msg
       end
     end
   end

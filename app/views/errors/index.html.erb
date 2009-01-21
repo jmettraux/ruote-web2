@@ -1,5 +1,20 @@
 
+<script>
+
+  function replayError (errorUri) {
+    if ( ! confirm("really replay this error ?")) return false;
+    var form = document.getElementById('replay_form');
+    form.action = errorUri;
+    form.submit();
+    return true;
+  }
+
+</script>
+
 <div class='content_title'>/errors</div>
+
+<% form_tag('', :id => 'replay_form', :method => :delete) do -%>
+<% end %>
 
 <table class="coll">
 
@@ -22,9 +37,10 @@
       <td><%= h e.wfid %></td>
       <td><%= h e.fei.expid %></td>
       <td><%= h e.message %></td>
-      <td><%= h e.stacktrace %></td>
+      <td title="<%= h e.stacktrace %>"><%= h truncate(e.stacktrace, 40) %></td>
       <td class="coll_buttons">
-        <%= link_to_function 'replay/discard', "alert('not yet wired');" %>
+        <%= link_to_function(
+          'replay', "return replayError('#{error_path(error)}');") %>
       </td>
     </tr>
   <% end %>

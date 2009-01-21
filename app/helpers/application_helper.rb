@@ -45,9 +45,9 @@ module ApplicationHelper
     }
 
     s = current_user.is_admin? ?
-      b.call(%w{ users groups }) + '&nbsp;&nbsp;.&nbsp;&nbsp;' : ''
+      b.call(%w{ users groups errors }) + '&nbsp;&nbsp;.&nbsp;&nbsp;' : ''
 
-    s + b.call(%w{ definitions participants processes workitems errors history })
+    s + b.call(%w{ definitions participants processes workitems history })
   end
 
   #
