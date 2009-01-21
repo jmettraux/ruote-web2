@@ -1,16 +1,20 @@
 
 <div class='content_title'>/processes</div>
 
-<table class='coll' style="width: 100%;">
-  <tr class="nhover">
-    <th>id</th>
-    <th>workflow</th>
-    <th>since</th>
-    <th>launcher</th>
-    <th>br</th>
-    <th>err</th>
-    <th style='text-align: right;'><%= @processes.total_entries %> instances</th>
-  </tr>
+<table class='coll'>
+
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>workflow</th>
+      <th>since</th>
+      <th>launcher</th>
+      <th>br</th>
+      <th>err</th>
+      <th class='align-right'><%= @processes.total_entries %> instances</th>
+    </tr>
+  </thead>
+
 <% for ps in @processes %>
   <tr class="process">
     <td><%= link_to_slice(ps, :wfid) %></td>

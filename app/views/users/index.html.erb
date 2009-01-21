@@ -1,12 +1,16 @@
 
 <div class='content_title'>/users</div>
 
-<table class='coll' style='width: 100%;'>
-  <tr class='nhover'>
-    <th>login</th>
-    <th>name</th>
-    <th>groups</th>
-  </tr>
+<table class='coll'>
+
+  <thead>
+    <tr>
+      <th>login</th>
+      <th>name</th>
+      <th>groups</th>
+    </tr>
+  </thead>
+
 <% for user in @users %>
   <tr>
     <td><%= link_to h(user.login), user_path(user) %></td>

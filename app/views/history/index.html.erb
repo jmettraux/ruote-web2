@@ -1,17 +1,19 @@
 
 <div class='content_title'>/history</div>
 
-<table class="history">
+<table class="coll">
 
-  <thead class="history_head">
-    <th>date</th>
-    <th><!--since--></th>
-    <th>source</th>
-    <th>event</th>
-    <th>wfid</th>
-    <th>fei</th>
-    <th>participant</th>
-    <th>message</th>
+  <thead>
+    <tr>
+      <th>date</th>
+      <th><!--since--></th>
+      <th>source</th>
+      <th>event</th>
+      <th>wfid</th>
+      <th>fei</th>
+      <th>participant</th>
+      <th>message</th>
+    </tr>
   </thead>
 
   <tbody>
@@ -20,7 +22,7 @@
        fei = entry.full_fei
        sfei = fei ? "#{fei.sub_instance_id} #{fei.expname} #{fei.expid}" : ''
   %>
-    <tr class="history_entry">
+    <tr>
       <td class="created_at"><%= entry.created_at %></td>
       <td class="since"><%= display_since(entry, :created_at) %></td>
       <td class="source"><%= view_link(entry, :source) %></td>
@@ -37,7 +39,7 @@
   </tfoot>
 </table>
 
-<div class="history_nav align-right">
+<div class="align-right">
   <%= @all ? '' : link_to('all', :controller => 'history') %>
   <%= will_paginate(@entries) %>
 </div>

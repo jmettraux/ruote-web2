@@ -9,16 +9,18 @@
 
 <div class='content_title'>/workitems</div>
 
-<table class='coll' style="width: 100%;">
-  <tr class="nhover">
-    <th>wfid</th>
-    <th>workflow</th>
-    <th>since</th>
-    <th>expid</th>
-    <th>store</th>
-    <th>participant</th>
-    <th>activity</th>
-  </tr>
+<table class='coll'>
+  <thead>
+    <tr>
+      <th>wfid</th>
+      <th>workflow</th>
+      <th>since</th>
+      <th>expid</th>
+      <th>store</th>
+      <th>participant</th>
+      <th>activity</th>
+    </tr>
+  </thead>
 <% for workitem in @workitems %>
   <tr class="workitem">
     <td><%= link_to_slice(workitem, :wfid) %></td>

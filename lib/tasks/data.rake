@@ -11,8 +11,6 @@ namespace :data do
   #
   task :populate => :environment do
 
-    ActiveRecord::Base.establish_connection :development
-
     Fixtures.create_fixtures(
       'db/dev_fixtures',
       %w{ users groups user_groups definitions group_definitions })

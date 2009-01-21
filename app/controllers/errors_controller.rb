@@ -72,9 +72,9 @@ class ErrorsController < ApplicationController
 
     def authorized? (action=action_name, resource=nil)
 
-      # TODO : restrict to admins !
+      return false unless current_user
 
-      (current_user != nil) # do I really need that ?...
+      %w{ index }.include?(action) || current_user.is_admin?
     end
 end
 

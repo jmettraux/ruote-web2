@@ -24,6 +24,20 @@ class ErrorsControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal 'application/xml', @response.content_type
 
-    puts @response.body
+    #puts @response.body
+    assert_match /errors count="1"/, @response.body
+  end
+
+  def test_should_get_index_json
+
+    login_as :admin
+    get :index, :format => 'json'
+    assert_response :success
+    assert_equal 'application/json', @response.content_type
+
+    #puts @response.body
+    json = ActiveSupport::JSON.decode(@response.body)
+    assert_equal 1, json['elements'].size
+    assert_equal 2, json['elements'].first['links'].size
   end
 end

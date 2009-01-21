@@ -1,16 +1,31 @@
 
 <div class='content_title'>/errors</div>
 
-<table>
+<table class="coll">
 
   <thead>
-    <th>error</th>
+    <tr>
+      <th>date</th>
+      <th>wfid</th>
+      <th>expid</th>
+      <th>call</th>
+      <th>trace</th>
+      <th><!-- buttons --></th>
+    </tr>
   </thead>
 
   <tbody>
-  <% @errors.each do |error| %>
+  <% @errors.each do |error|
+       e = error.as_owfe_error -%>
     <tr>
-      <td><%= error.inspect %></td>
+      <td><%= h display_time(e.date) %> .<%= h e.date.usec.to_s[0, 3] %></td>
+      <td><%= h e.wfid %></td>
+      <td><%= h e.fei.expid %></td>
+      <td><%= h e.message %></td>
+      <td><%= h e.stacktrace %></td>
+      <td class="coll_buttons">
+        <%= link_to_function 'replay/discard', "alert('not yet wired');" %>
+      </td>
     </tr>
   <% end %>
   </tbody>
@@ -19,7 +34,8 @@
   </tfoot>
 </table>
 
-<div class="history_nav align-right">
-  <!-- TODO : all and paginate -->
+<div class="align-right">
+  <%= @all ? '' : link_to('all', :controller => 'errors') %>
+  <%= will_paginate(@errors) %>
 </div>
 

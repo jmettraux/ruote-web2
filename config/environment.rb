@@ -88,3 +88,11 @@ Rails::Initializer.run do |config|
 
 end
 
+
+class Logger
+  def format_message(severity, timestamp, progname, msg)
+    #"#{timestamp} (#{$$}) #{msg}\n"
+    "#{timestamp.strftime('%Y/%m/%d %H:%M:%S')}.#{timestamp.usec.to_s[0, 3]} (#{$$}) #{msg}\n"
+  end
+end
+
