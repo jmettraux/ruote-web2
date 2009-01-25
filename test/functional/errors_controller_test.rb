@@ -10,13 +10,6 @@ class ErrorsControllerTest < ActionController::TestCase
 
   fixtures :users, :groups, :process_errors
 
-  #def test_whatever
-  #  fei = RuotePlugin.ruote_engine.launch(
-  #    [ 'sequence', {}, [
-  #      [ 'error', {}, [ 'FAIL!' ] ],
-  #      [ 'participant', { 'ref' => 'bob' }, [] ] ] ])
-  #end
-
   def test_should_get_index_xml
 
     login_as :admin
@@ -40,4 +33,17 @@ class ErrorsControllerTest < ActionController::TestCase
     assert_equal 1, json['elements'].size
     assert_equal 2, json['elements'].first['links'].size
   end
+
+  #def test_whatever
+  #  fei = RuotePlugin.ruote_engine.launch(
+  #    [ 'sequence', {}, [
+  #      [ 'error', {}, [ 'FAIL!' ] ],
+  #      [ 'participant', { 'ref' => 'bob' }, [] ] ] ])
+  #end
+
+  def test_should_replay_error
+
+    flunk 'implement me !'
+  end
 end
+

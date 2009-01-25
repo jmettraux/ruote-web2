@@ -21,12 +21,17 @@ This sequence of commands will install ruote-web2 in your current directory (und
   sudo rake gems:install
   rake ruote:install
   
-  mysql -u root -e 'create database rw2_development'
+  mysql -u root -e 'create database rw2_development CHARACTER SET utf8 COLLATE utf8_general_ci'
   rake db:migrate
   rake data:populate
 
 Note that "rake ruote:install" will install the source of Ruote and its dependencies under vendor/plugins/ruote_plugin/lib_ruote/ (and try to sudo install two gems (will ask for your password)).
 You could run "rake ruote:gem_install" instead to install Ruote and its dependencies as gems.
+
+
+If you have trouble with rubygems 1.3.1 on debian/ubuntu, the comments there might help :
+
+  http://intertwingly.net/blog/2008/11/23/RubyGems-1-3-1-on-Ubuntu-8-10
 
 
 == running it
