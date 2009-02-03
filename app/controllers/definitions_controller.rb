@@ -207,14 +207,14 @@ class DefinitionsController < ApplicationController
 
   protected
 
-    #
-    # Only an admin can add or remove definitions
-    #
-    def authorized? (action=action_name, resource=nil)
+  #
+  # Only an admin can add or remove definitions
+  #
+  def authorized?
 
-      return false unless current_user
+    return false unless current_user
 
-      %w{ show index tree }.include?(action) || current_user.is_admin?
-    end
+    %w{ show index tree }.include?(action_name) || current_user.is_admin?
+  end
 end
 

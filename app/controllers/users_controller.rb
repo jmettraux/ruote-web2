@@ -115,30 +115,30 @@ class UsersController < ApplicationController
 
   protected
 
-    #
-    # Only an admin can create or delete a user.
-    #
-    def authorized? (action=action_name, resource=nil)
+  #
+  # Only an admin can create or delete a user.
+  #
+  def authorized?
 
-      return false unless current_user
+    return false unless current_user
 
-      %w{ show index }.include?(action) || current_user.is_admin?
-    end
+    %w{ show index }.include?(action_name) || current_user.is_admin?
+  end
 
-    #
-    # TODO : is it worth it ? what about a redirection to /users/1 ?
-    #
-    def load_user
-      i = params[:id].to_i
-      @user = i == 0 ? User.find_by_login(params[:id]) : User.find(i)
-    end
+  #
+  # TODO : is it worth it ? what about a redirection to /users/1 ?
+  #
+  def load_user
+    i = params[:id].to_i
+    @user = i == 0 ? User.find_by_login(params[:id]) : User.find(i)
+  end
 
-    def load_user_and_groups
-      load_user
-      @ug_locals = {
-        :in_elements => @user.user_groups,
-        :out_elements => Group.find(:all) - @user.groups
-      }
-    end
+  def load_user_and_groups
+    load_user
+    @ug_locals = {
+      :in_elements => @user.user_groups,
+      :out_elements => Group.find(:all) - @user.groups
+    }
+  end
 end
 

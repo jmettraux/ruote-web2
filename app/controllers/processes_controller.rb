@@ -170,48 +170,48 @@ class ProcessesController < ApplicationController
 
   protected
 
-    def authorized? (action=action_name, resource=nil)
+  def authorized?
 
-      return false unless current_user
+    return false unless current_user
 
-      %w{ show index tree }.include?(action) || current_user.is_admin?
-    end
+    %w{ show index tree }.include?(action_name) || current_user.is_admin?
+  end
 
-    def parse_launchitem
+  def parse_launchitem
 
-      begin
+    begin
 
-        ct = request.content_type.to_s
+      ct = request.content_type.to_s
 
-        # TODO : deal with Atom[Pub]
+      # TODO : deal with Atom[Pub]
 
-        return OpenWFE::Xml::launchitem_from_xml(request.body.read) \
-          if ct.match(/xml$/)
+      return OpenWFE::Xml::launchitem_from_xml(request.body.read) \
+        if ct.match(/xml$/)
 
-        return OpenWFE::Json.launchitem_from_h(request.body.read) \
-          if ct.match(/json$/)
+      return OpenWFE::Json.launchitem_from_h(request.body.read) \
+        if ct.match(/json$/)
 
-        #
-        # then we have a form...
+      #
+      # then we have a form...
 
-        if definition_id = params[:definition_id]
-          definition = Definition.find(definition_id)
-          params[:definition_url] = definition.local_uri if definition
-        end
-
-        if fields = params[:fields]
-          params[:fields] = ActiveSupport::JSON::decode(fields)
-        end
-
-        OpenWFE::LaunchItem.from_h(params)
-
-      rescue Exception => e
-
-        logger.warn "failed to parse launchitem : #{e}"
-        #p e
-
-        nil
+      if definition_id = params[:definition_id]
+        definition = Definition.find(definition_id)
+        params[:definition_url] = definition.local_uri if definition
       end
+
+      if fields = params[:fields]
+        params[:fields] = ActiveSupport::JSON::decode(fields)
+      end
+
+      OpenWFE::LaunchItem.from_h(params)
+
+    rescue Exception => e
+
+      logger.warn "failed to parse launchitem : #{e}"
+      #p e
+
+      nil
     end
+  end
 end
 

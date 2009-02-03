@@ -142,11 +142,11 @@ class GroupsController < ApplicationController
 
   protected
 
-    def authorized? (action=action_name, resource=nil)
+  def authorized?
 
-      return false unless current_user
+    return false unless current_user
 
-      %w{ show index }.include?(action) || current_user.is_admin?
-    end
+    %w{ show index }.include?(action_name) || current_user.is_admin?
+  end
 end
 

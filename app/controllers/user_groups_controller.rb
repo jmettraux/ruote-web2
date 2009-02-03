@@ -134,11 +134,11 @@ class UserGroupsController < ApplicationController
 
   protected
 
-    #
-    # Only an admin can create or delete a user-group association.
-    #
-    def authorized? #(action = action_name, resource = nil)
+  #
+  # Only an admin can create or delete a user-group association.
+  #
+  def authorized?
 
-      current_user && current_user.is_admin?
-    end
+    current_user && current_user.is_admin?
+  end
 end

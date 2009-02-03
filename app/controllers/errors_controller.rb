@@ -97,11 +97,11 @@ class ErrorsController < ApplicationController
 
   protected
 
-    def authorized? (action=action_name, resource=nil)
+  def authorized?
 
-      return false unless current_user
+    return false unless current_user
 
-      %w{ index }.include?(action) || current_user.is_admin?
-    end
+    %w{ index }.include?(action_name) || current_user.is_admin?
+  end
 end
 

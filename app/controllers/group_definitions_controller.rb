@@ -121,13 +121,11 @@ class GroupDefinitionsController < ApplicationController
 
   protected
 
-    #
-    # Only an admin can create or delete a user.
-    #
-    def authorized? #(action = action_name, resource = nil)
+  #
+  # Only an admin can create or delete a user.
+  #
+  def authorized?
 
-      return false unless current_user
-
-      current_user.is_admin?
-    end
+    current_user && current_user.is_admin?
+  end
 end

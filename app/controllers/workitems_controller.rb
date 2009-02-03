@@ -186,66 +186,64 @@ class WorkitemsController < ApplicationController
 
   protected
 
-    def authorized? (action=action_name, resource=nil)
+  def authorized?
 
-      return false unless current_user
+    current_user || false
+  end
 
-      %w{ show index }.include?(action) || current_user.is_admin?
+  #
+  # find workitem, says 'unauthorized' if the user is attempting to
+  # see / update an off-limit workitem
+  #
+  def find_workitem
+
+    workitem = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
+      params[:wfid], swapdots(params[:expid]))
+
+    current_user.may_see?(workitem) ? workitem : nil
+  end
+
+  #
+  # parsing incoming workitems
+  #
+  def parse_workitem
+
+    begin
+
+      ct = request.content_type.to_s
+
+      # TODO : deal with Atom[Pub]
+
+      return OpenWFE::Xml::workitem_from_xml(request.body.read) \
+        if ct.match(/xml$/)
+
+      return OpenWFE::Json.workitem_from_json(request.body.read) \
+        if ct.match(/json$/)
+
+      #
+      # then we have a form...
+
+      #if definition_id = params[:definition_id]
+      #  definition = Definition.find(definition_id)
+      #  params[:definition_url] = definition.local_uri if definition
+      #end
+      #if attributes = params[:attributes]
+      #  params[:attributes] = ActiveSupport::JSON::decode(attributes)
+      #end
+
+      wi = OpenWFE::WorkItem.from_h(params)
+
+      wi.attributes = ActiveSupport::JSON.decode(wi.attributes) \
+        if wi.attributes.is_a?(String)
+
+      wi
+
+    rescue Exception => e
+
+      logger.warn("failed to parse workitem : #{e}")
+
+      nil
     end
-
-    #
-    # find workitem, says 'unauthorized' if the user is attempting to
-    # see / update an off-limit workitem
-    #
-    def find_workitem
-
-      workitem = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
-        params[:wfid], swapdots(params[:expid]))
-
-      current_user.may_see?(workitem) ? workitem : nil
-    end
-
-    #
-    # parsing incoming workitems
-    #
-    def parse_workitem
-
-      begin
-
-        ct = request.content_type.to_s
-
-        # TODO : deal with Atom[Pub]
-
-        return OpenWFE::Xml::workitem_from_xml(request.body.read) \
-          if ct.match(/xml$/)
-
-        return OpenWFE::Json.workitem_from_json(request.body.read) \
-          if ct.match(/json$/)
-
-        #
-        # then we have a form...
-
-        #if definition_id = params[:definition_id]
-        #  definition = Definition.find(definition_id)
-        #  params[:definition_url] = definition.local_uri if definition
-        #end
-        #if attributes = params[:attributes]
-        #  params[:attributes] = ActiveSupport::JSON::decode(attributes)
-        #end
-
-        wi = OpenWFE::WorkItem.from_h(params)
-
-        wi.attributes = ActiveSupport::JSON.decode(wi.attributes) \
-          if wi.attributes.is_a?(String)
-
-        wi
-
-      rescue Exception => e
-
-        logger.warn("failed to parse workitem : #{e}")
-
-        nil
-      end
-    end
+  end
 end
 

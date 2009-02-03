@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
     redirect_back_or_default('/')
   end
 
-protected
+  protected
 
   # Track failed login attempts
   def note_failed_signin
