@@ -98,6 +98,7 @@ p.quiet { color: #666; }
   line-height: 3.7em;
 }
 #subheader {
+  padding-top: 3px;
   border-top: 1px #888 solid;
 }
 

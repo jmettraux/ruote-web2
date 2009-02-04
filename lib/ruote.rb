@@ -37,7 +37,7 @@
 #
 
 require 'openwfe/participants/participantmap'
-require 'openwfe/extras/participants/activeparticipants'
+require 'openwfe/extras/participants/active_participants'
 
 require 'pagination'
 
