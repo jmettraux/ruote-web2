@@ -1,9 +1,12 @@
+# definitions
 
 one:
+  id: 1
   name: def1
   uri: flow1.xml
 
 two:
+  id: 2
   name: def2
   uri: flow2.rb
 

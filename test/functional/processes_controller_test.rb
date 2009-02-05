@@ -7,7 +7,7 @@ class ProcessesController; def rescue_action(e) raise e end; end
 
 class ProcessesControllerTest < ActionController::TestCase
 
-  fixtures :users
+  fixtures :users, :groups, :group_definitions, :definitions
 
   def test_no_access
     get :index
@@ -27,7 +27,7 @@ class ProcessesControllerTest < ActionController::TestCase
   end
 
   def test_empty_process_list_xml
-    set_basic_authentication "admin:admin"
+    set_basic_authentication 'admin:admin'
     @request.env['HTTP_ACCEPT'] = 'application/xml'
     get :index
     assert_response :success
@@ -104,6 +104,18 @@ class ProcessesControllerTest < ActionController::TestCase
     rpost :create, '', :format => :json
     assert_response 400
     assert_equal 'text/plain', @response.content_type
+  end
+
+  def test_aaron_may_not_see_launch_form
+    login_as :aaron
+    get :new, :definition_id => 1
+    assert_equal 'you are not allowed to launch this process', flash[:error]
+  end
+
+  def test_quentin_may_see_launch_form
+    login_as :quentin
+    get :new, :definition_id => 1
+    assert_response :success
   end
 end
 

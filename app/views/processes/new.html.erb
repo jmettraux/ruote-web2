@@ -3,7 +3,7 @@
 
   <div class="content_title">/processes/new</div>
 
-  <% form_tag '/processes', :id => 'workitem_form', :multipart => true do |f| %>
+  <% form_tag('/processes', { :id => 'workitem_form', :multipart => true }) do %>
     <%= hidden_field_tag 'definition_id', @definition.id %>
     <table>
       <tr>

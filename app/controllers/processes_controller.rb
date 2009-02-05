@@ -122,7 +122,11 @@ class ProcessesController < ApplicationController
   #
   def new
 
-    @definition = Definition.find(params[:definition])
+    @definition = Definition.find(params[:definition_id])
+
+    return error_reply('you are not allowed to launch this process', 403) \
+      unless current_user.may_launch?(@definition)
+
     @payload_partial = determine_payload_partial(@definition)
   end
 
@@ -157,7 +161,7 @@ class ProcessesController < ApplicationController
     end
   end
 
-  # DELETE /processes/1
+  # DELETE /processes/:id
   #
   def destroy
 
@@ -174,7 +178,7 @@ class ProcessesController < ApplicationController
 
     return false unless current_user
 
-    %w{ show index tree }.include?(action_name) || current_user.is_admin?
+    %w{ show index tree new }.include?(action_name) || current_user.is_admin?
   end
 
   def parse_launchitem
@@ -184,6 +188,7 @@ class ProcessesController < ApplicationController
       ct = request.content_type.to_s
 
       # TODO : deal with Atom[Pub]
+      # TODO : sec checks !!!
 
       return OpenWFE::Xml::launchitem_from_xml(request.body.read) \
         if ct.match(/xml$/)

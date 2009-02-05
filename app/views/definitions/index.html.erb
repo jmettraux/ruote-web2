@@ -20,7 +20,7 @@
       <%= link_to 'show', definition %> |
       <%= link_to_if current_user.is_admin?, 'edit', edit_definition_path(definition) %> |
       <%= link_to_if current_user.is_admin?, 'remove', definition, :confirm => 'Are you sure ?', :method => :delete %> |
-      <%= link_to_if current_user.may_launch?(definition), 'launch', new_process_path(:definition => definition.id) %>
+      <%= link_to_if current_user.may_launch?(definition), 'launch', new_process_path(:definition_id => definition.id) %>
     </td>
   </tr>
 <% end %>
