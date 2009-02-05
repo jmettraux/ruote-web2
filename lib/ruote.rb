@@ -42,6 +42,18 @@ require 'openwfe/extras/participants/active_participants'
 require 'pagination'
 
 
+class ActiveRecord::ConnectionAdapters::AbstractAdapter
+  # original :
+  #
+  #def decrement_open_transactions
+  #  @open_transactions -= 1
+  #end
+  def decrement_open_transactions
+    @open_transactions && @open_transactions -= 1
+  end
+end
+
+
 module OpenWFE
 
   #
@@ -62,10 +74,20 @@ module OpenWFE
 
       return part if part
 
-      store_name =
+      #store_name =
+      #  User.find_by_login(participant_name) ||
+      #  Group.find_by_name(participant_name)
+      #store_name = store_name ? store_name.system_name : 'unknown'
+
+      target =
         User.find_by_login(participant_name) ||
         Group.find_by_name(participant_name)
-      store_name = store_name ? store_name.system_name : 'unknown'
+
+      store_name = case target
+        when User then target.login
+        when Group then target.name
+        else 'unknown'
+      end
 
       OpenWFE::Extras::ActiveStoreParticipant.new(store_name)
         # returns an 'on the fly' participant

@@ -50,6 +50,8 @@ Rails::Initializer.run do |config|
   # in the database in UTC, and return them converted to the specified local zone.
   # Run "rake -D time" for a list of tasks for finding time zone names. Comment line to use default local time.
   config.time_zone = 'UTC'
+  #config.active_record.default_timezone = :utc
+
 
   # The internationalization framework can be changed to have another default locale (standard is :en) or more load paths.
   # All files from config/locales/*.rb,yml are added automatically.
@@ -88,6 +90,7 @@ Rails::Initializer.run do |config|
 
 end
 
+#require 'lib/cleanup_connection_patch'
 
 class Logger
   def format_message(severity, timestamp, progname, msg)
