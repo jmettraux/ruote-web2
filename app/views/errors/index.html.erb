@@ -37,7 +37,7 @@
       <td><%= h e.wfid %></td>
       <td><%= h e.fei.expid %></td>
       <td><%= h e.message %></td>
-      <td title="<%= h e.stacktrace %>"><%= h truncate(e.stacktrace, 40) %></td>
+      <td title="<%= h e.stacktrace %>"><%= h truncate(e.stacktrace, :length => 40) %></td>
       <td class="coll_buttons">
         <%= link_to_function(
           'replay', "return replayError('#{error_path(error)}');") %>

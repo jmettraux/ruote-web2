@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'processes_controller'
 
 # Re-raise errors caught by the controller.
-class ProcessesController; def rescue_action(e) raise e end; end
+#class ProcessesController; def rescue_action(e) raise e end; end
 
 class ProcessesControllerTest < ActionController::TestCase
 

@@ -1,12 +1,24 @@
 
-one:
+embedded:
   id: 1
+  name: "*embedded*"
+  description: the right to start processes embedded in launch items
+
+untracked:
+  id: 2
+  name: "*untracked*"
+  description: the right to launch processes from any URI
+
+simple:
+  id: 3
   name: simple sequence
   uri: sequence1.rb
+  description: a simple sequence
 
-two:
-  id: 2
+leave:
+  id: 4
   name: leave request
   uri: leave_request1.rb
+  description: "may I leave the office ?"
   launch_fields: "{\"employee\":\"\",\"from_date\":\"\",\"to_date\":\"\",\"reason\":\"\"}"
 

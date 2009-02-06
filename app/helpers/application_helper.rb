@@ -144,6 +144,11 @@ module ApplicationHelper
   <script src="/javascripts/fluo-json.js"></script>
   <script src="/javascripts/fluo-can.js"></script>
 
+  <script>
+    var proc_tree = null;
+      // initial default value (overriden by following scripts)
+  </script>
+
   <a id='dataurl_link'>
     <canvas id="fluo" width="50" height="50"></canvas>
   </a>
@@ -152,20 +157,25 @@ module ApplicationHelper
   #{tree}
 
   <script>
-    FluoCan.renderFlow('fluo', proc_tree, {'workitems': #{workitems.inspect}});
-    FluoCan.toggleMinor('fluo');
-    FluoCan.crop('fluo');#{hl}
+    if (proc_tree) {
 
-    var a = document.getElementById('dataurl_link');
-    a.href = document.getElementById('fluo').toDataURL();
+      FluoCan.renderFlow(
+        'fluo', proc_tree, { 'workitems': #{workitems.inspect} });
 
-    var toggle = document.getElementById('fluo_minor_toggle');
-    toggle.onclick = function () {
       FluoCan.toggleMinor('fluo');
-      FluoCan.crop('fluo');
-      if (toggle.innerHTML == 'more') toggle.innerHTML = 'less'
-      else toggle.innerHTML = 'more';
-    };
+      FluoCan.crop('fluo');#{hl}
+
+      var a = document.getElementById('dataurl_link');
+      a.href = document.getElementById('fluo').toDataURL();
+
+      var toggle = document.getElementById('fluo_minor_toggle');
+      toggle.onclick = function () {
+        FluoCan.toggleMinor('fluo');
+        FluoCan.crop('fluo');
+        if (toggle.innerHTML == 'more') toggle.innerHTML = 'less'
+        else toggle.innerHTML = 'more';
+      };
+    }
   </script>
     }
   end

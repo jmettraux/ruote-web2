@@ -122,7 +122,25 @@ class User < ActiveRecord::Base
   # a process instance of the given definition
   #
   def may_launch? (definition)
+    return false if [ '*embedded*', '*untracked*' ].include?(definition.name)
     is_admin? or (self.groups & definition.groups).size > 0
+  end
+
+  #
+  # Preventing non-admin users from removing process definitions and
+  # preventing admins from removing *embedded* and *untracked*
+  #
+  def may_remove? (definition)
+    return false if [ '*embedded*', '*untracked*' ].include?(definition.name)
+    is_admin?
+  end
+
+  def may_launch_untracked_process?
+    self.groups.detect { |g| g.may_launch_untracked_process? }
+  end
+
+  def may_launch_embedded_process?
+    self.groups.detect { |g| g.may_launch_embedded_process? }
   end
 
   #--

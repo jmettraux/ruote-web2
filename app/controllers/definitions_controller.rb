@@ -63,8 +63,8 @@ class DefinitionsController < ApplicationController
     end
   end
 
-  # GET /definitions/1/tree
-  # GET /definitions/1/tree.js
+  # GET /definitions/:id/tree
+  # GET /definitions/:id/tree.js
   #
   def tree
 
@@ -74,13 +74,15 @@ class DefinitionsController < ApplicationController
 
     # TODO : reject outside definitions ?
 
-    pdef = open(uri).read
+    pdef = (open(uri).read rescue nil)
 
     var = params[:var] || 'proc_tree'
 
     # TODO : use Rails callback thing (:callback)
 
-    tree = RuotePlugin.ruote_engine.get_def_parser.parse(pdef)
+    tree = pdef ?
+      RuotePlugin.ruote_engine.get_def_parser.parse(pdef) :
+      nil
 
     render(
       :text => "var #{var} = #{tree.to_json};",
@@ -171,7 +173,7 @@ class DefinitionsController < ApplicationController
       if @definition.update_attributes(params[:definition])
 
         flash[:notice] = 'Definition was successfully updated.'
-        format.html { redirect_to(@definition) }
+        format.html { redirect_to :action => 'index' }
         format.xml { head :ok }
         format.json { head :ok }
 

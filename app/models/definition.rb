@@ -42,9 +42,41 @@ class Definition < ActiveRecord::Base
   include LinksMixin
 
   #
+  # validations
+
+  validates_presence_of :name, :uri
+
+  def validate
+    super
+    validate_uri
+  end
+
+  def validate_uri
+
+    content = (open(local_uri).read rescue nil)
+
+    errors.add_to_base(
+      "#{local_uri} points to nothing") unless content
+
+    @_tree = (RuotePlugin.ruote_engine.get_def_parser.parse(content) rescue nil)
+
+    errors.add_to_base(
+      "#{local_uri} seems not to contain a process definition") unless content
+  end
+
+  #
+  # Fetching the process description
+  #
+  def before_save
+
+    self.description ||= OpenWFE::ExpressionTree.get_description(@_tree)
+  end
+
+  #
   # The URI for web links
   #
   def full_uri
+    return nil unless self.uri
     self.uri.index('/') ? self.uri : "/defs/#{self.uri}"
   end
 
@@ -52,7 +84,8 @@ class Definition < ActiveRecord::Base
   # The URI for launching
   #
   def local_uri
-    u = self.full_uri
+    return nil unless self.uri
+    u = full_uri
     u[0, 1] == '/' ? "#{RAILS_ROOT}/public#{u}" : u
   end
 

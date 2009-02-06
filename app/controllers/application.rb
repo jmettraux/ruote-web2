@@ -1,6 +1,16 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
+class ErrorReply < Exception
+
+  attr_reader :status
+
+  def initialize (msg, status=400)
+    super(msg)
+    @status = status
+  end
+end
+
 
 class ApplicationController < ActionController::Base
 
@@ -22,6 +32,11 @@ class ApplicationController < ActionController::Base
 
   def error_reply (error_message, status=400)
 
+    if error_message.is_a?(ErrorReply)
+      status = error_message.status
+      error_message = error_message.message
+    end
+
     flash[:error] = error_message
 
     plain_reply = lambda() {
@@ -37,6 +52,8 @@ class ApplicationController < ActionController::Base
       format.xml &plain_reply
     end
   end
+
+  rescue_from(ErrorReply) { |e| error_reply(e) }
 
   #
   # Returns a new LinkGenerator wrapping the current request.

@@ -13,6 +13,7 @@ ActiveRecord::Schema.define(:version => 20090119093821) do
 
   create_table "definitions", :force => true do |t|
     t.string   "name"
+    t.string   "description"
     t.string   "uri"
     t.text     "launch_fields"
     t.datetime "created_at"

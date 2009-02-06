@@ -4,6 +4,7 @@ class CreateDefinitions < ActiveRecord::Migration
   def self.up
     create_table :definitions do |t|
       t.string :name
+      t.string :description
       t.string :uri
       t.text :launch_fields
       t.timestamps

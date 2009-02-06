@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>name</th>
+      <th>description</th>
       <th>uri</th>
       <th>groups</th>
     </tr>
@@ -14,18 +15,19 @@
 <% for definition in @definitions %>
   <tr>
     <td><%= link_to h(definition.name), definition %></td>
+    <td title="<%= h definition.description %>"><%= h truncate(definition.description, :length => 40) %></td>
     <td><%= link_to h(definition.uri), definition.full_uri %></td>
     <td><%= comma_list(definition.groups) %></td>
     <td class='coll_buttons'>
       <%= link_to 'show', definition %> |
       <%= link_to_if current_user.is_admin?, 'edit', edit_definition_path(definition) %> |
-      <%= link_to_if current_user.is_admin?, 'remove', definition, :confirm => 'Are you sure ?', :method => :delete %> |
+      <%= link_to_if current_user.may_remove?(definition), 'remove', definition, :confirm => 'Are you sure ?', :method => :delete %> |
       <%= link_to_if current_user.may_launch?(definition), 'launch', new_process_path(:definition_id => definition.id) %>
     </td>
   </tr>
 <% end %>
   <tr>
-    <td class='coll_new_button' colspan='4'>
+    <td class='coll_new_button' colspan='5'>
       <%= link_to 'add process definition', new_definition_path %>
     </td>
   </tr>

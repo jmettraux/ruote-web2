@@ -10,3 +10,11 @@ two:
   name: def2
   uri: flow2.rb
 
+embedded:
+  id: 3
+  name: "*embedded*"
+
+untracked:
+  id: 4
+  name: "*untracked*"
+

@@ -97,7 +97,7 @@ class ProcessesController < ApplicationController
     end
   end
 
-  # GET /processes/:wfid/edit
+  # GET /processes/:id/edit
   #
   def edit
 
@@ -106,6 +106,8 @@ class ProcessesController < ApplicationController
     # only replying in HTML ...
   end
 
+  # GET /processes/:id/tree
+  #
   def tree
 
     process = ruote_engine.process_status(params[:id])
@@ -136,11 +138,7 @@ class ProcessesController < ApplicationController
 
     li = parse_launchitem
 
-    return error_reply('no suitable launchitem found') unless li
-
-    options = {
-      :variables => { 'launcher' => current_user.login }
-    }
+    options = { :variables => { 'launcher' => current_user.login } }
 
     fei = ruote_engine.launch(li, options)
 
@@ -174,21 +172,20 @@ class ProcessesController < ApplicationController
 
   protected
 
-  def authorized?
-
-    return false unless current_user
-
-    %w{ show index tree new }.include?(action_name) || current_user.is_admin?
-  end
+  #def authorized?
+  #  return false unless current_user
+  #  %w{ show index tree new }.include?(action_name) || current_user.is_admin?
+  #end
+    # :login_required is sufficient
 
   def parse_launchitem
 
+    ct = request.content_type.to_s
+
+    # TODO : deal with Atom[Pub]
+    # TODO : sec checks !!!
+
     begin
-
-      ct = request.content_type.to_s
-
-      # TODO : deal with Atom[Pub]
-      # TODO : sec checks !!!
 
       return OpenWFE::Xml::launchitem_from_xml(request.body.read) \
         if ct.match(/xml$/)
@@ -196,27 +193,52 @@ class ProcessesController < ApplicationController
       return OpenWFE::Json.launchitem_from_h(request.body.read) \
         if ct.match(/json$/)
 
-      #
-      # then we have a form...
-
-      if definition_id = params[:definition_id]
-        definition = Definition.find(definition_id)
-        params[:definition_url] = definition.local_uri if definition
-      end
-
-      if fields = params[:fields]
-        params[:fields] = ActiveSupport::JSON::decode(fields)
-      end
-
-      OpenWFE::LaunchItem.from_h(params)
-
     rescue Exception => e
 
-      logger.warn "failed to parse launchitem : #{e}"
-      #p e
-
-      nil
+      raise ErrorReply.new(
+        'failed to parse launchitem from request body', 400)
     end
+
+    #
+    # then we have a form...
+
+    if definition_id = params[:definition_id]
+
+      # is the user allowed to launch that process [definition] ?
+
+      definition = Definition.find(definition_id)
+
+      raise ErrorReply.new(
+        'you are not allowed to launch this process', 403
+      ) unless current_user.may_launch?(definition)
+
+      params[:definition_url] = definition.local_uri if definition
+
+    elsif definition_url = params[:definition_url]
+
+      raise ErrorReply.new(
+        'not allowed to launch process definitions from adhoc URIs', 400
+      ) unless current_user.may_launch_from_adhoc_uri?
+
+    elsif definition = params[:definition]
+
+      # is the user allowed to launch embedded process definitions ?
+
+      raise ErrorReply.new(
+        'not allowed to launch embedded process definitions', 400
+      ) unless current_user.may_launch_embedded_process?
+
+    else
+
+      raise ErrorReply.new(
+        'failed to parse launchitem from request parameters', 400)
+    end
+
+    if fields = params[:fields]
+      params[:fields] = ActiveSupport::JSON::decode(fields)
+    end
+
+    OpenWFE::LaunchItem.from_h(params)
   end
 end
 

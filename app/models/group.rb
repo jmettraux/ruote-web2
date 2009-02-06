@@ -1,6 +1,6 @@
 #
 #--
-# Copyright (c) 2008, John Mettraux, OpenWFE.org
+# Copyright (c) 2008-2009, John Mettraux, OpenWFE.org
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -44,6 +44,14 @@ class Group < ActiveRecord::Base
   #
   def system_name
     self.name
+  end
+
+  def may_launch_untracked_process?
+    self.definitions.detect { |d| d.name == '*untracked*' }
+  end
+
+  def may_launch_embedded_process?
+    self.definitions.detect { |d| d.name == '*embedded*' }
   end
 end
 
