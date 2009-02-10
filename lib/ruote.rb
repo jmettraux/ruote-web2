@@ -74,20 +74,11 @@ module OpenWFE
 
       return part if part
 
-      #store_name =
-      #  User.find_by_login(participant_name) ||
-      #  Group.find_by_name(participant_name)
-      #store_name = store_name ? store_name.system_name : 'unknown'
-
       target =
         User.find_by_login(participant_name) ||
         Group.find_by_name(participant_name)
 
-      store_name = case target
-        when User then target.login
-        when Group then target.name
-        else 'unknown'
-      end
+      store_name = target ? participant_name : 'unknown'
 
       OpenWFE::Extras::ActiveStoreParticipant.new(store_name)
         # returns an 'on the fly' participant
