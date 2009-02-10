@@ -20,6 +20,7 @@ development:
   database: rw2_development
   username: root
   password:
+  reconnect: true
   host: localhost
   pool: 30
 
@@ -32,6 +33,7 @@ test:
   database: rw2_test
   username: root
   password:
+  reconnect: true
   host: localhost
   pool: 30
 
@@ -41,6 +43,7 @@ production:
   database: rw2_production
   username: root
   password: 
+  reconnect: true
   host: localhost
   pool: 30
 

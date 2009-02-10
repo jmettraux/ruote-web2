@@ -9,5 +9,4 @@
                  db_errorjournal
 - todo  #23185 : moved to blueprint
 - todo  #22935 : integrated LinkGenerator
-- todo  #22883 : upgraded to rails 2.2
 
