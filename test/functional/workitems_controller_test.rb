@@ -100,11 +100,37 @@ class WorkitemsControllerTest < ActionController::TestCase
     assert_equal 'admin', hes.first.source
   end
 
+  def test_should_end_in_user_store
+
+    fei = RuotePlugin.ruote_engine.launch(
+      [ 'sequence', {}, [
+        [ 'participant', { 'ref' => 'aaron' }, [] ] ] ])
+    sleep 0.350
+
+    assert_equal 'aaron', OpenWFE::Extras::Workitem.find(:all).last.store_name
+
+    RuotePlugin.ruote_engine.cancel_process(fei)
+    sleep 0.350
+  end
+
+  def test_should_end_in_unknown_store
+
+    fei = RuotePlugin.ruote_engine.launch(
+      [ 'sequence', {}, [
+        [ 'participant', { 'ref' => 'nemo' }, [] ] ] ])
+    sleep 0.350
+
+    assert_equal 'unknown', OpenWFE::Extras::Workitem.find(:all).last.store_name
+
+    RuotePlugin.ruote_engine.cancel_process(fei)
+    sleep 0.350
+  end
+
   def test_should_proceed_workitem
 
     fei = RuotePlugin.ruote_engine.launch(
       [ 'sequence', {}, [
-        [ 'participant', { 'ref' => 'alice' }, [] ],
+        [ 'participant', { 'ref' => 'aaron' }, [] ],
         [ 'participant', { 'ref' => 'bob' }, [] ] ] ])
     sleep 0.350
 
@@ -124,7 +150,7 @@ class WorkitemsControllerTest < ActionController::TestCase
 
     assert_not_nil wi['links']
 
-    assert_equal 'alice', wi['participant_name']
+    assert_equal 'aaron', wi['participant_name']
 
     atts = wi['attributes']
     atts['girl'] = 'Ukifune'
