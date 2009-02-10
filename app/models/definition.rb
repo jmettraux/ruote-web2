@@ -42,6 +42,15 @@ class Definition < ActiveRecord::Base
   include LinksMixin
 
   #
+  # Finds all the definitions the user has the right to see
+  #
+  def self.find_all_for (user)
+
+    all = find(:all)
+    user.is_admin? ? all : all.select { |d| ! d.is_special? }
+  end
+
+  #
   # validations
 
   validates_presence_of :name, :uri
@@ -73,9 +82,19 @@ class Definition < ActiveRecord::Base
   end
 
   #
+  # Returns true if the definition is special (ie it represents the right
+  # to launch an embedded or an untracked definition)
+  #
+  def is_special?
+
+    [ '*embedded*', '*untracked*' ].include?(self.name)
+  end
+
+  #
   # The URI for web links
   #
   def full_uri
+
     return nil unless self.uri
     self.uri.index('/') ? self.uri : "/defs/#{self.uri}"
   end
@@ -84,6 +103,7 @@ class Definition < ActiveRecord::Base
   # The URI for launching
   #
   def local_uri
+
     return nil unless self.uri
     u = full_uri
     u[0, 1] == '/' ? "#{RAILS_ROOT}/public#{u}" : u

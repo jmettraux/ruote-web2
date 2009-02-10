@@ -8,7 +8,7 @@ class GroupDefinitionTest < ActiveSupport::TestCase
 
   def test_admin_launch_rights
     u = users(:admin)
-    assert u.may_launch?(:anything)
+    assert u.may_launch?(definitions(:one))
   end
 
   def test_quentin_launch_rights

@@ -40,7 +40,7 @@ class DefinitionsController < ApplicationController
   #
   def index
 
-    @definitions = Definition.find(:all)
+    @definitions = Definition.find_all_for(current_user)
 
     respond_to do |format|
       format.html # index.html.erb

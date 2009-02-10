@@ -84,6 +84,7 @@ class User < ActiveRecord::Base
   # Preventing salt and crypted_password from appearing...
   #
   def to_xml (opts={})
+
     super(opts.merge(:except => [ :salt, :crypted_password ]))
   end
 
@@ -91,6 +92,7 @@ class User < ActiveRecord::Base
   # Preventing salt and crypted_password from appearing...
   #
   def to_json (opts={})
+
     super(opts.merge(:except => [ :salt, :crypted_password ]))
   end
 
@@ -106,6 +108,7 @@ class User < ActiveRecord::Base
   # Returns true if the user is member of the administrators group
   #
   def is_admin?
+
     group_names.include?(ADMIN_GROUP_NAME)
   end
 
@@ -114,6 +117,7 @@ class User < ActiveRecord::Base
   # user launched the given process instance
   #
   def is_launcher? (process)
+
     is_admin? or login == process.variables['launcher']
   end
 
@@ -122,7 +126,8 @@ class User < ActiveRecord::Base
   # a process instance of the given definition
   #
   def may_launch? (definition)
-    return false if [ '*embedded*', '*untracked*' ].include?(definition.name)
+
+    return false if definition.is_special?
     is_admin? or (self.groups & definition.groups).size > 0
   end
 
@@ -131,7 +136,7 @@ class User < ActiveRecord::Base
   # preventing admins from removing *embedded* and *untracked*
   #
   def may_remove? (definition)
-    return false if [ '*embedded*', '*untracked*' ].include?(definition.name)
+    return false if definition.is_special?
     is_admin?
   end
 
@@ -158,6 +163,7 @@ class User < ActiveRecord::Base
   # Returns the array of group names the user belongs to.
   #
   def group_names
+
     groups.collect { |g| g.name }
   end
 
@@ -165,6 +171,7 @@ class User < ActiveRecord::Base
   # Returns the list of store names this user has access to
   #
   def store_names
+
     [ system_name, 'unknown' ] + group_names
   end
 
@@ -172,6 +179,7 @@ class User < ActiveRecord::Base
   # User and Group share this method, which returns login and name respectively
   #
   def system_name
+
     self.login
   end
 
@@ -180,6 +188,7 @@ class User < ActiveRecord::Base
   # (always returns true for an admin).
   #
   def may_see? (workitem)
+
     is_admin? || store_names.include?(workitem.store_name)
   end
 
