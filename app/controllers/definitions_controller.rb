@@ -177,7 +177,9 @@ class DefinitionsController < ApplicationController
         format.xml { head :ok }
         format.json { head :ok }
 
-      else
+      else # there is an error
+
+        p @definition.errors
 
         format.html {
           render(:action => 'edit')

@@ -3,12 +3,12 @@
 one:
   id: 1
   name: def1
-  uri: flow1.xml
+  uri: ft_flow1.xml
 
 two:
   id: 2
   name: def2
-  uri: flow2.rb
+  uri: ft_flow2.rb
 
 embedded:
   id: 3
