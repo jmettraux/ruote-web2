@@ -3,3 +3,8 @@
   font-size: 80%;
 }
 
+input[type='text'], input[type='password'] {
+  width: 120px;
+  margin-bottom: 6px;
+}
+

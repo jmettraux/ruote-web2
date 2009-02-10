@@ -1,10 +1,14 @@
 
-  <tr>
-    <td>wfid</td>
-    <td><%= h process.wfid %></td>
-  </tr>
-  <tr>
-    <td>workflow</td>
-    <td><%= h process.wfname %> <%= h process.wfrevision %></td>
-  </tr>
+<tr>
+  <td class="wide-first-col">wfid</td>
+  <td><%= h process.wfid %></td>
+</tr>
+<tr>
+  <td>workflow</td>
+  <td><%= h process.wfname %> <%= h process.wfrevision %></td>
+</tr>
+<tr>
+  <td>errors</td>
+  <td><%= process.errors.size %></td>
+</tr>
 

@@ -56,7 +56,7 @@ class ActionController::Routing::RouteSet::Mapper
     connect(
       "#{controller_name}/:wfid",
       :controller => controller_name,
-      :action => 'index_wfid',
+      :action => 'index',
       :conditions => { :method => :get })
 
     connect(
@@ -121,6 +121,7 @@ class ActionController::Routing::RouteSet::Mapper
         "/#{plural}/\#{wfid}"
       end
       def #{singular}_path (o)
+        o = o.fei if o.is_a?(OpenWFE::FlowExpression)
         "/#{plural}/\#{o.wfid}/\#{swapdots(o.expid)}"
       end
       def edit_#{singular}_path (o)

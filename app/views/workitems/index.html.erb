@@ -22,8 +22,9 @@
     </tr>
   </thead>
 <% for workitem in @workitems %>
+  <% fei = workitem.full_fei %>
   <tr class="workitem">
-    <td><%= link_to_slice(workitem, :wfid) %></td>
+    <td><%= link_to h(fei.wfid), workitems_path(fei.wfid) %></td>
     <td><%= link_to_slice(workitem, :wf_name, :workflow) %> <%= h workitem.wf_revision %></td>
     <td><%= display_since(workitem, :dispatch_time) %></td>
     <td><%= h workitem.full_fei.expid %></td>
@@ -39,10 +40,9 @@
 <% end -%>
 </table>
 
-<% if request.query_string.size > 0 %>
+<% if request.query_string.size > 0 or params[:wfid] %>
 <div class="workitems_nav align-right">
-  <%= link_to_if(
-    request.query_string.size > 0,  'all', :controller => 'workitems') %>
+  <%= link_to 'all', :controller => 'workitems' %>
 </div>
 <% end %>
 

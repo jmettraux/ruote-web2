@@ -44,8 +44,6 @@ class WorkitemsController < ApplicationController
   #  or
   # GET /workitems?p=:p || GET /workitems?participant=:p
   #
-  # handles as well index_wfid()
-  #
   def index
 
     @query = params[:q] || params[:query]
@@ -94,13 +92,6 @@ class WorkitemsController < ApplicationController
           :indent => 2, :linkgen => linkgen))
       end
     end
-  end
-
-  # GET /workitems/:wfid
-  #
-  def index_wfid
-
-    index
   end
 
   # GET /workitems/:wfid/:expid/edit

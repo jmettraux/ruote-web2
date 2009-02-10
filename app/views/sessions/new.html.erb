@@ -3,21 +3,29 @@
   &nbsp;
 </div>
 
-<div class="column last span-8 align-right">
+<div class="column last span-12 align-right loginbox">
 
   <% form_tag session_path do -%>
-  <p><%= label_tag 'login' %>
-  <%= text_field_tag 'login', @login %></p>
+
+  <div>
+  username
+  <%= text_field_tag 'login', @login %>
+  </div>
   
-  <p><%= label_tag 'password' %>
-  <%= password_field_tag 'password', nil %></p>
+  <div>
+  password
+  <%= password_field_tag 'password', nil %>
+  </div>
   
   <!-- Uncomment this if you want this functionality
   <p><%= label_tag 'remember_me', 'Remember me' %>
   <%= check_box_tag 'remember_me', '1', @remember_me %></p>
   -->
   
-  <p><%= submit_tag 'Log in' %></p>
+  <div>
+    <%= submit_tag 'Log in' %>
+  </div>
+
   <% end -%>
 </div>
 

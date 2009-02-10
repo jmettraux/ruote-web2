@@ -113,6 +113,27 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+
+    load_user
+
+    raise ErrorReply.new("no user #{params[:id]}", 404) unless @user
+
+    # TODO : clean up that error handling stuff
+
+    respond_to do |format|
+      if @user.destroy
+        flash[:notice] = "User #{@user.login} was removed."
+        format.html { redirect_to users_path }
+        format.xml  { head :ok }
+      else
+        flash[:error] = 'failed to remove user'
+        format.html { render :action => 'edit' }
+        format.xml  { render :text => flash[:error], :status => 500 }
+      end
+    end
+  end
+
   protected
 
   #

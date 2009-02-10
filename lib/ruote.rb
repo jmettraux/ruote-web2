@@ -74,11 +74,12 @@ module OpenWFE
 
       return part if part
 
-      target =
-        User.find_by_login(participant_name) ||
-        Group.find_by_name(participant_name)
+      #target =
+      #  User.find_by_login(participant_name) ||
+      #  Group.find_by_name(participant_name)
+      #store_name = target ? participant_name : 'unknown'
 
-      store_name = target ? participant_name : 'unknown'
+      store_name = participant_name
 
       OpenWFE::Extras::ActiveStoreParticipant.new(store_name)
         # returns an 'on the fly' participant
@@ -93,6 +94,14 @@ module OpenWFE
     def launcher
 
       self.variables['launcher']
+    end
+  end
+
+  class FlowExpressionId
+
+    def to_web_s
+      si = sub_instance_id == '' ? '' : "#{sub_instance_id} "
+      "#{si}#{expid} #{expname}"
     end
   end
 

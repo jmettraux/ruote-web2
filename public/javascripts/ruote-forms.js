@@ -220,6 +220,22 @@ var RuoteForms = function() {
   }
 
   //
+  // focuses in the first input thing found in this element
+  //
+  function focusIn (elt) {
+    if (elt.nodeName.toLowerCase() == 'input') {
+      elt.focus();
+      return true;
+    }
+    for (var i in elt.childNodes) {
+      var n = elt.childNodes[i];
+      if (n.nodeType != 1) continue;
+      if (focusIn(n)) return true;
+    }
+    return false;
+  }
+
+  //
   // render()
 
   function EmptyItem () {} // a kind of 'marker'
@@ -291,7 +307,10 @@ var RuoteForms = function() {
     var e = create(elt, 'div', { 'class': 'rform_buttons', });
     var ea = create(e, 'img', { 'src': CONFIG.img_add });
     ea.onclick = function () {
-      return addToCollection(render_entry(e.parentNode, [ '', EmptyItem ], {}));
+      var ne = render_entry(e.parentNode, [ '', EmptyItem ], {});
+      var r = addToCollection(ne);
+      focusIn(ne);
+      return r;
     }
   }
 
@@ -345,7 +364,9 @@ var RuoteForms = function() {
     e.onclick = function () {
       var enew = this.parentNode;
       var enewp = enew.parentNode;
-      enewp.replaceChild(render(enewp, initialValue, {}), enew);
+      var i = render(enewp, initialValue, {});
+      enewp.replaceChild(i, enew);
+      focusIn(i);
       return false;
     };
   }

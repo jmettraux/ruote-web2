@@ -28,7 +28,7 @@
 <% end %>
   <tr>
     <td class='coll_new_button' colspan='5'>
-      <%= link_to 'add process definition', new_definition_path %>
+      <%= link_to_if current_user.is_admin?, 'add process definition', new_definition_path %>
     </td>
   </tr>
 </table>

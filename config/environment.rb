@@ -5,7 +5,8 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.2.2' unless defined? RAILS_GEM_VERSION
+#RAILS_GEM_VERSION = '2.2.2' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.0' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -88,8 +89,6 @@ Rails::Initializer.run do |config|
     # using the local 'ruote', comment that out if you're using ruote as a gem
 
 end
-
-#require 'lib/cleanup_connection_patch'
 
 class Logger
   def format_message(severity, timestamp, progname, msg)
