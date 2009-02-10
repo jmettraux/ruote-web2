@@ -2,12 +2,14 @@
 <script>
 
   function saveWi () {
-    byId('workitem_form').submit();
+    var f = byId('workitem_form');
+    f.onsubmit.call(); // making sure it happens...
+    f.submit();
   }
-  function proceedWi () {
-    byId('state').value = 'proceeded';
-    byId('workitem_form').submit();
-  }
+  //function proceedWi () {
+  //  byId('state').value = 'proceeded';
+  //  submitWiForm();
+  //}
 
 </script>
 
@@ -34,11 +36,11 @@
 
       </td>
     </tr>
-    <tr>
-      <td colspan='2' class='nhover'>
-        <%= link_to_function('save', 'saveWi(); return true;') %> |
+    <tr class="nhover">
+      <td colspan='2'>
+        <%= link_to_function('save', 'saveWi()') %> |
         delegate |
-        <%= link_to_function('proceed', 'proceedWi(); return true;') %> |
+        <%= submit_tag 'proceed', :onclick => "byId('state').value = 'proceeded'" %> |
         <%= link_to('back', :back) %>
       <td>
     </tr>
