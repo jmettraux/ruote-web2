@@ -10,6 +10,7 @@
       <th>source</th>
       <th>event</th>
       <th>wfid</th>
+      <th>wfname</th>
       <th>fei</th>
       <th>participant</th>
       <th>message</th>
@@ -28,6 +29,7 @@
       <td class="source"><%= view_link(entry, :source) %></td>
       <td class="event"><%= view_link(entry, :event) %></td>
       <td class="wfid"><%= view_link(entry, :wfid) %></td>
+      <td class="wfname"><%= view_link(entry, :wfname) %> <%= h entry.wfrevision %></td>
       <td class="fei"><%= sfei %></td>
       <td class="participant"><%= view_link(entry, :participant) %></td>
       <td class="message" title="<%= h entry.message %>"><%= h truncate(entry.message) %></td>

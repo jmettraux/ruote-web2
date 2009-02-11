@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(:version => 20090119093821) do
     t.string   "source",      :null => false
     t.string   "event",       :null => false
     t.string   "wfid"
+    t.string   "wfname"
+    t.string   "wfrevision"
     t.string   "fei"
     t.string   "participant"
     t.string   "message"
@@ -64,6 +66,8 @@ ActiveRecord::Schema.define(:version => 20090119093821) do
   add_index "history", ["participant"], :name => "index_history_on_participant"
   add_index "history", ["source"], :name => "index_history_on_source"
   add_index "history", ["wfid"], :name => "index_history_on_wfid"
+  add_index "history", ["wfname"], :name => "index_history_on_wfname"
+  add_index "history", ["wfrevision"], :name => "index_history_on_wfrevision"
 
   create_table "process_errors", :force => true do |t|
     t.datetime "created_at"
