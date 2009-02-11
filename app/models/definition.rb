@@ -64,13 +64,16 @@ class Definition < ActiveRecord::Base
 
     content = (open(local_uri).read rescue nil)
 
-    errors.add_to_base(
-      "#{local_uri} points to nothing") unless content
+    unless content
+      errors.add_to_base("#{full_uri} points to nothing")
+      return
+    end
 
     @_tree = (RuotePlugin.ruote_engine.get_def_parser.parse(content) rescue nil)
 
     errors.add_to_base(
-      "#{local_uri} seems not to contain a process definition") unless content
+      "#{full_uri} seems not to contain a process definition"
+    ) unless @_tree
   end
 
   #
@@ -116,6 +119,28 @@ class Definition < ActiveRecord::Base
 
     launch_fields ?
       ActiveSupport::JSON.decode(launch_fields) : { 'key0' => 'value0' }
+  end
+
+  def definition
+    ''
+  end
+  def definition= (s)
+
+    return if s.blank?
+
+    pref = "#{RAILS_ROOT}/public"
+    base = "/defs/#{OpenWFE.ensure_for_filename(self.name)}"
+    i = ''
+    fn = pref + base + i.to_s + '.def'
+
+    while File.exist?(fn)
+      i = (i == '') ? 1 : i + 1
+      fn = pref + base + i.to_s + '.def'
+    end
+
+    File.open(fn, 'w') { |f| f.write(s) }
+
+    self.uri = base + i.to_s + '.def'
   end
 
   protected

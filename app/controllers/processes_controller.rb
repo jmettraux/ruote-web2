@@ -82,17 +82,28 @@ class ProcessesController < ApplicationController
 
     respond_to do |format|
 
-      format.html # => app/views/show.html.erb
+      if @process
+        format.html # => app/views/show.html.erb
 
-      format.json do
-        render(:json => OpenWFE::Json.process_to_h(
-          @process, :linkgen => LinkGenerator.new(request)).to_json)
-      end
+        format.json do
+          render(:json => OpenWFE::Json.process_to_h(
+            @process, :linkgen => LinkGenerator.new(request)).to_json)
+        end
 
-      format.xml do
-        render(
-          :xml => OpenWFE::Xml.process_to_xml(
-            @process, :linkgen => LinkGenerator.new(request), :indent => 2))
+        format.xml do
+          render(
+            :xml => OpenWFE::Xml.process_to_xml(
+              @process, :linkgen => LinkGenerator.new(request), :indent => 2))
+        end
+      else
+
+        flash[:error] = "process launch failed"
+
+        format.html do
+          redirect_to :action => 'index'
+        end
+        format.json { render(:text => flash[:error], :status => 404) }
+        format.xml { render(:text => flash[:error], :status => 404) }
       end
     end
   end

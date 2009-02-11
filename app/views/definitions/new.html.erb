@@ -1,7 +1,15 @@
 
+<script>
+  function showDefinitionBox () {
+    byId('uri_label').innerHTML = 'definition';
+    byId('uri_span').style.display = 'none';
+    byId('definition_span').style.display = 'inline';
+  }
+</script>
+
 <div class="content_title">/definitions/new</div>
 
-<% form_for(@definition) do |f| %>
+<% form_for(@definition, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
   <table>
     <tr>
@@ -9,8 +17,18 @@
       <td><%= f.text_field :name %></td>
     </tr>
     <tr>
-      <td>uri</td>
-      <td><%= f.text_field :uri %></td>
+      <td>
+        <span id="uri_label">uri</span>
+      </td>
+      <td>
+        <span id="uri_span">
+          <%= f.text_field :uri %> or 
+          <%= link_to_function 'paste a definition', 'showDefinitionBox()' %>
+        </span>
+        <span id="definition_span" style="display: none;">
+          <%= f.text_area 'definition' %>
+        </span>
+      </td>
     </tr>
     <tr>
       <td colspan='2'>

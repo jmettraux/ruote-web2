@@ -26,7 +26,7 @@
   float: left;
 }
 .rform_value input {
-  width: 300px;
+  /*width: 300px;*/
 }
 .rform_number input {
   width: 100px;
