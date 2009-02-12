@@ -49,12 +49,12 @@
 
 <script>
 
-  RuoteForms.renderForm('rform', <%= fields.to_json %>);
-
   byId('<%= form_id ||= 'workitem_form' %>').onsubmit = function () {
     swapForm();
     return true;
   };
+
+  RuoteForms.renderForm('rform', <%= fields.to_json %>);
 
 </script>
 

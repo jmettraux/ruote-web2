@@ -340,6 +340,7 @@ var RuoteForms = function() {
 
   function render_object (elt, data, options) {
     var e = rcreate(elt, 'div', { 'class': 'rform_hash' });
+    //var ks = []; for (var kk in data) { ks.push(kk); }; ks = ks.sort();
     for (var k in data) { render_entry(e, [ k, data[k] ], options); }
     addHashButtons(e);
     return e;
@@ -399,7 +400,7 @@ var RuoteForms = function() {
   }
 
   function render (elt, data, options) {
-    if (data == EmptyItem) return render_new(elt, options);
+    if (data == EmptyItem || data == null) return render_new(elt, options);
     var t = data['__class'] || (typeof data);
     if (t == 'object') {
       var l = data.length; 
