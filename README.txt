@@ -13,7 +13,7 @@ Warning : this project is in a really early stage !
 
 prerequesite : Rails 2.3.0
 
-  sudo gem install rails activerecord --source http://gems.rubyonrails.org
+  sudo gem install rails activerecord --no-ri --no-rdoc --source http://gems.rubyonrails.org
 
 
 This sequence of commands will install ruote-web2 in your current directory (under ruote-web2/)

@@ -71,8 +71,6 @@ class UsersController < ApplicationController
 
     # TODO : let it accept XML
 
-    logout_keeping_session!
-
     @user = User.new(params[:user])
 
     success = @user && @user.save
@@ -85,13 +83,13 @@ class UsersController < ApplicationController
       # reset session
       #self.current_user = @user # !! now logged in
 
-      flash[:notice] = "user '#{@user}' created"
-      redirect_back_or_default('/')
+      flash[:notice] = "user '#{@user.login}' created"
+      redirect_to :controller => :users, :action => :index
 
     else
 
-      flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-      render :action => 'new'
+      #flash[:error]  = "failed to set up account"
+      redirect_to :controller => :users, :action => :index
     end
   end
 
