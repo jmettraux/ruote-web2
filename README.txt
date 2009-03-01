@@ -1,12 +1,16 @@
 
 = Ruote-Web2
 
+
+WARNING : ruote, as a workflow engine, currently relies heavily on threading. So a multiprocess deployment target is not OK. Passenger is not OK either.
+
+
 Ruote (OpenWFEru) is an open source Ruby workflow and [incidentally] BPM engine.
 
 Ruote-Web2 is a Ruby on Rails web application wrapping an instance of Ruote and a worklist.
 
 
-Warning : this project is in a really early stage !
+WARNING : this project is in a really early stage !
 
 
 == getting it
