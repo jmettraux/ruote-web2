@@ -1,3 +1,4 @@
+
 module AuthenticatedSystem
   protected
     # Returns true or false if the user is logged in.
