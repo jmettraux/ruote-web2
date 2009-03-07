@@ -120,8 +120,8 @@ module ApplicationHelper
 
     tree = if d = opts[:definition]
       "<script src=\"/definitions/#{d.id}/tree.js?var=proc_tree\"></script>"
-    elsif p = opts[:process]
-      "<script src=\"/processes/#{p.wfid}/tree.js?var=proc_tree\"></script>"
+    elsif pr = opts[:process]
+      "<script src=\"/processes/#{pr.wfid}/tree.js?var=proc_tree\"></script>"
     elsif i = opts[:wfid]
       "<script src=\"/processes/#{i}/tree.js?var=proc_tree\"></script>"
     elsif t = opts[:tree]

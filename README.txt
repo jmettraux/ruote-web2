@@ -15,7 +15,7 @@ WARNING : this project is in a really early stage !
 
 == getting it
 
-prerequesite : Rails 2.3.0
+prerequesite : Rails 2.3.1
 
   sudo gem install rails activerecord --no-ri --no-rdoc --source http://gems.rubyonrails.org
 

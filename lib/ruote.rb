@@ -29,7 +29,8 @@
 #
 
 require 'openwfe/participants/participant_map'
-require 'openwfe/extras/participants/active_participants'
+#require 'openwfe/extras/participants/active_participants'
+require 'openwfe/extras/participants/ar_participants'
 
 require 'pagination'
 
@@ -66,14 +67,15 @@ module OpenWFE
 
       return part if part
 
-      #target =
-      #  User.find_by_login(participant_name) ||
-      #  Group.find_by_name(participant_name)
-      #store_name = target ? participant_name : 'unknown'
+      target =
+        ::User.find_by_login(participant_name) ||
+        ::Group.find_by_name(participant_name)
+      store_name = target ? participant_name : 'unknown'
 
-      store_name = participant_name
+      #store_name = participant_name
 
-      OpenWFE::Extras::ActiveStoreParticipant.new(store_name)
+      #OpenWFE::Extras::ActiveStoreParticipant.new(store_name)
+      OpenWFE::Extras::ArParticipant.new(store_name)
         # returns an 'on the fly' participant
     end
   end
@@ -97,22 +99,17 @@ module OpenWFE
     end
   end
 
-  module Extras
-
-    class Workitem
-
-      #
-      # returns an 'activity' description, if any
-      #
-      def activity
-
-        h = self.field_hash
-
-        return '-' unless h['params']
-
-        h['params']['activity'] || h['params']['description'] || '-'
-      end
-    end
-  end
+  #module Extras
+  #  class Workitem
+  #    #
+  #    # returns an 'activity' description, if any
+  #    #
+  #    def activity
+  #      h = self.field_hash
+  #      return '-' unless h['params']
+  #      h['params']['activity'] || h['params']['description'] || '-'
+  #    end
+  #  end
+  #end
 end
 

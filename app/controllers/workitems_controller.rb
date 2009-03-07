@@ -42,7 +42,7 @@ class WorkitemsController < ApplicationController
 
     @workitems = if @query
 
-      OpenWFE::Extras::Workitem.search(@query)
+      OpenWFE::Extras::ArWorkitem.search(@query)
 
       # TODO : paginate that !
 
@@ -53,7 +53,7 @@ class WorkitemsController < ApplicationController
       opts[:conditions] = { :store_name => current_user.store_names } \
         unless current_user.is_admin?
 
-      OpenWFE::Extras::Workitem.paginate_by_params(
+      OpenWFE::Extras::ArWorkitem.paginate_by_params(
         [
           # parameter_name[, column_name]
           'wfid',
@@ -144,7 +144,8 @@ class WorkitemsController < ApplicationController
 
     elsif params[:state] == 'proceeded'
 
-      wi.destroy
+      #wi.destroy
+      OpenWFE::Extras::ArWorkitem.destroy(wi.id)
 
       owi.attributes = wi1.attributes
       RuotePlugin.ruote_engine.reply(owi)
@@ -180,7 +181,7 @@ class WorkitemsController < ApplicationController
   #
   def find_workitem
 
-    workitem = OpenWFE::Extras::Workitem.find_by_wfid_and_expid(
+    workitem = OpenWFE::Extras::ArWorkitem.find_by_wfid_and_expid(
       params[:wfid], swapdots(params[:expid]))
 
     current_user.may_see?(workitem) ? workitem : nil

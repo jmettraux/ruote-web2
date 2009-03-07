@@ -11,6 +11,29 @@
 
 ActiveRecord::Schema.define(:version => 20090119093821) do
 
+  create_table "ar_workitems", :force => true do |t|
+    t.string   "fei"
+    t.string   "wfid"
+    t.string   "expid"
+    t.string   "wfname"
+    t.string   "wfrevision"
+    t.string   "participant_name"
+    t.string   "store_name"
+    t.datetime "dispatch_time"
+    t.datetime "last_modified"
+    t.text     "wi_fields"
+    t.string   "activity"
+    t.text     "keywords"
+  end
+
+  add_index "ar_workitems", ["expid"], :name => "index_ar_workitems_on_expid"
+  add_index "ar_workitems", ["fei"], :name => "index_ar_workitems_on_fei", :unique => true
+  add_index "ar_workitems", ["participant_name"], :name => "index_ar_workitems_on_participant_name"
+  add_index "ar_workitems", ["store_name"], :name => "index_ar_workitems_on_store_name"
+  add_index "ar_workitems", ["wfid"], :name => "index_ar_workitems_on_wfid"
+  add_index "ar_workitems", ["wfname"], :name => "index_ar_workitems_on_wfname"
+  add_index "ar_workitems", ["wfrevision"], :name => "index_ar_workitems_on_wfrevision"
+
   create_table "definitions", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -21,18 +44,6 @@ ActiveRecord::Schema.define(:version => 20090119093821) do
   end
 
   add_index "definitions", ["name"], :name => "index_definitions_on_name", :unique => true
-
-  create_table "fields", :force => true do |t|
-    t.string  "fkey",        :null => false
-    t.string  "vclass",      :null => false
-    t.string  "svalue"
-    t.text    "yvalue"
-    t.integer "workitem_id", :null => false
-  end
-
-  add_index "fields", ["fkey"], :name => "index_fields_on_fkey"
-  add_index "fields", ["svalue"], :name => "index_fields_on_svalue"
-  add_index "fields", ["vclass"], :name => "index_fields_on_vclass"
 
   create_table "group_definitions", :force => true do |t|
     t.integer  "group_id"
@@ -100,26 +111,5 @@ ActiveRecord::Schema.define(:version => 20090119093821) do
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
-
-  create_table "workitems", :force => true do |t|
-    t.string   "fei"
-    t.string   "wfid"
-    t.string   "expid"
-    t.string   "wf_name"
-    t.string   "wf_revision"
-    t.string   "participant_name"
-    t.string   "store_name"
-    t.datetime "dispatch_time"
-    t.datetime "last_modified"
-    t.text     "yattributes"
-  end
-
-  add_index "workitems", ["expid"], :name => "index_workitems_on_expid"
-  add_index "workitems", ["fei"], :name => "index_workitems_on_fei", :unique => true
-  add_index "workitems", ["participant_name"], :name => "index_workitems_on_participant_name"
-  add_index "workitems", ["store_name"], :name => "index_workitems_on_store_name"
-  add_index "workitems", ["wf_name"], :name => "index_workitems_on_wf_name"
-  add_index "workitems", ["wf_revision"], :name => "index_workitems_on_wf_revision"
-  add_index "workitems", ["wfid"], :name => "index_workitems_on_wfid"
 
 end

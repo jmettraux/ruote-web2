@@ -13,7 +13,12 @@ end
 
 class WorkitemsControllerTest < ActionController::TestCase
 
-  fixtures :users, :groups, :workitems
+  fixtures :users, :groups, :ar_workitems
+
+  def setup
+    super
+    OpenWFE::Extras::HistoryEntry.destroy_all
+  end
 
   def test_should_not_get_index
     get :index
@@ -91,10 +96,11 @@ class WorkitemsControllerTest < ActionController::TestCase
 
     assert_response 302
     assert_equal 'http://test.host/workitems', @response.headers['Location']
-    wi = OpenWFE::Extras::Workitem.find(1).as_owfe_workitem
+    wi = OpenWFE::Extras::ArWorkitem.find(1).as_owfe_workitem
     assert_equal 'petit bateau', wi.attributes['type']
 
     hes = OpenWFE::Extras::HistoryEntry.find_all_by_wfid(wi.fei.wfid)
+    #puts; hes.each { |he| p he }
     assert_equal 1, hes.size
     assert_equal 'saved', hes.first.event
     assert_equal 'admin', hes.first.source
@@ -107,7 +113,7 @@ class WorkitemsControllerTest < ActionController::TestCase
         [ 'participant', { 'ref' => 'aaron' }, [] ] ] ])
     sleep 0.350
 
-    assert_equal 'aaron', OpenWFE::Extras::Workitem.find(:all).last.store_name
+    assert_equal 'aaron', OpenWFE::Extras::ArWorkitem.find(:all).last.store_name
 
     RuotePlugin.ruote_engine.cancel_process(fei)
     sleep 0.350
@@ -120,7 +126,7 @@ class WorkitemsControllerTest < ActionController::TestCase
         [ 'participant', { 'ref' => 'nemo' }, [] ] ] ])
     sleep 0.350
 
-    assert_equal 'unknown', OpenWFE::Extras::Workitem.find(:all).last.store_name
+    assert_equal 'unknown', OpenWFE::Extras::ArWorkitem.find(:all).last.store_name
 
     RuotePlugin.ruote_engine.cancel_process(fei)
     sleep 0.350
@@ -172,16 +178,18 @@ class WorkitemsControllerTest < ActionController::TestCase
 
     workitems = ActiveSupport::JSON.decode(@response.body)
 
+    #p workitems['elements']
+    #p workitems['elements'].size
+
     wi = workitems['elements'].find { |wi|
       wi['flow_expression_id']['workflow_instance_id'] == fei.wfid }
-
-    #p wi
 
     assert_not_nil wi
     assert_equal 'Ukifune', wi['attributes']['girl']
 
     hes = OpenWFE::Extras::HistoryEntry.find_all_by_wfid(fei.wfid)
     assert_equal 5, hes.size
+
     hes = hes.select { |he| he.event == 'proceeded' }
     assert_equal 1, hes.size
   end
@@ -198,7 +206,7 @@ class WorkitemsControllerTest < ActionController::TestCase
 
     assert_response 302
     assert_equal 'http://test.host/workitems', @response.headers['Location']
-    wi = OpenWFE::Extras::Workitem.find(1)
+    wi = OpenWFE::Extras::ArWorkitem.find(1)
     assert_equal 'el_cheapo', wi.store_name
 
     hes = OpenWFE::Extras::HistoryEntry.find_all_by_wfid(wi.wfid)

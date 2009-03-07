@@ -25,7 +25,7 @@
   <% fei = workitem.full_fei %>
   <tr class="workitem">
     <td><%= link_to h(fei.wfid), workitems_path(fei.wfid) %></td>
-    <td><%= link_to_slice(workitem, :wf_name, :workflow) %> <%= h workitem.wf_revision %></td>
+    <td><%= link_to_slice(workitem, :wfname, :workflow) %> <%= h workitem.wfrevision %></td>
     <td><%= display_since(workitem, :dispatch_time) %></td>
     <td><%= h workitem.full_fei.expid %></td>
     <td><%= link_to_slice(workitem, :store_name, :store) %></td>
