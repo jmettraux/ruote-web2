@@ -5,9 +5,26 @@
     form.action = workitemPath;
     form.submit();
   }
+  function doSearch () {
+    var q = document.getElementById('query').value;
+    if (q == '') return;
+    q = encodeURI(q);
+    h = document.location.href.split('?')[0];
+    document.location.href = h + '?q=' + q;
+  }
 </script>
 
-<div class='content_title'>/workitems</div>
+<div class="column span-12 first content_title">/workitems</div>
+
+<div class="column span-12 last align-right workitem_search">
+  <input
+    type="text"
+    id="query"
+    onkeyup="onEnter(this, event, doSearch); return false;"
+    value="<%= params[:q] %>"
+  />
+  <%= link_to_function 'search', 'doSearch();' %>
+</div>
 
 <table class='coll'>
   <thead>

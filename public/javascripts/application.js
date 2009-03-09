@@ -23,11 +23,12 @@ function linkToCss (href) {
     // making sure that controller-related css are placed last
 }
 
-//var ById = function () {
-//  var bi = {};
-//  bi.__noSuchMethod__ = function (i, a) { alert(i); return document.getElementById(i); };
-//  return bi;
-//}();
-  //
-  // fail :(
-
+//
+// when 'enter' is hit, will call 'func'
+//
+function onEnter (field, evt, func) {
+  var e = evt || window.event;
+  var c = e.charCode || e.keyCode;
+  if (c == 13) func();
+  return false;
+}
