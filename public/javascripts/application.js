@@ -3,7 +3,7 @@
 // $(whatever) style
 //
 function byId (i) { return document.getElementById(i); } 
-  // I know, but let's get js framework agnostic
+  // I know, but let's get js framework independent
 
 //
 // links to a CSS file (in the document <HEAD/>)

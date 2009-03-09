@@ -17,7 +17,9 @@ WARNING : this project is in a really early stage !
 
 prerequesite : Rails 2.3.1
 
-  sudo gem install rails activerecord --no-ri --no-rdoc --source http://gems.rubyonrails.org
+  sudo gem install rails rack actionpack activerecord activeresource activesupport --no-ri --no-rdoc --source http://gems.rubyonrails.org
+
+Make sure to have git at version 1.6+ as well.
 
 
 This sequence of commands will install ruote-web2 in your current directory (under ruote-web2/)

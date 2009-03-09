@@ -42,7 +42,9 @@ class WorkitemsController < ApplicationController
 
     @workitems = if @query
 
-      OpenWFE::Extras::ArWorkitem.search(@query, current_user.store_names)
+      OpenWFE::Extras::ArWorkitem.search(
+        @query,
+        current_user.is_admin? ? nil : current_user.store_names)
 
       # TODO : paginate that !
 
