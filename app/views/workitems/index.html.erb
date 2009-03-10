@@ -63,6 +63,10 @@
 </div>
 <% end %>
 
+<div class="processes_launch align-right">
+  <%= link_to('launch', definitions_path, :title => 'launch a new process from a definition') %>
+</div>
+
 <% form_tag(
   '/none',
   :id => 'workitem_delegation_form',
@@ -71,4 +75,13 @@
 
   <input type="hidden" name="store_name" id="store_name" value="<%= current_user.login %>" />
 <% end %>
+
+<div id="help">
+  <p>
+A list of workitems (tasks) that your user may view or edit.
+  </p>
+  <p>
+'pick' allows you to make a workitem yours (transferring it to your personal woritem store).
+  </p>
+</div>
 

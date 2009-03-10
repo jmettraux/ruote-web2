@@ -37,7 +37,7 @@
 
         <div id="subheader" class="column span-24 first last">
           <div class="column span-8 first">
-            open source ruby workflow and bpm engine
+            open source ruby workflow engine
           </div>
           <div class="column span-16 last align-right">
             <%= current_user ? render_res_menu : 'please log in' %>
@@ -57,12 +57,17 @@
         <%= yield :layout %>
       </div>
 
-      <div class="column span-24 first last align-right">
+      <div class="column span-24 first last">
         <div id="footer" class="column span-24 first last">
-          <% if current_user %>
-          <a href="<%= as_x_href(:xml) %>" title="show raw XML (may not yet be implemented)">as xml</a> |
-          <a href="<%= as_x_href(:json) %>" title="show raw JSON (may not yet be implemented)">as json</a>
-          <% end %>
+          <div id="footer-left" class="column span-12 first">
+            <%= link_to_function('help', 'toggleHelp()') %>
+          </div>
+          <div id="footer-right" class="column span-12 last align-right">
+            <% if current_user %>
+            <a href="<%= as_x_href(:xml) %>" title="show raw XML (may not yet be implemented)">as xml</a> |
+            <a href="<%= as_x_href(:json) %>" title="show raw JSON (may not yet be implemented)">as json</a>
+            <% end %>
+          </div>
         </div>
       </div>
 

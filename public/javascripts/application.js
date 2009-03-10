@@ -32,3 +32,11 @@ function onEnter (field, evt, func) {
   if (c == 13) func();
   return false;
 }
+
+function toggleHelp () {
+  var h = document.getElementById('help');
+  if ( ! h) return;
+  if (h.style.display == 'block') h.style.display = 'none';
+  else h.style.display = 'block';
+}
+

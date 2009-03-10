@@ -19,10 +19,29 @@
     <td><%= link_to h(definition.uri), definition.full_uri %></td>
     <td><%= comma_list(definition.groups) %></td>
     <td class='coll_buttons'>
-      <%= link_to 'show', definition %> |
-      <%= link_to_if current_user.is_admin?, 'edit', edit_definition_path(definition) %> |
-      <%= link_to_if current_user.may_remove?(definition), 'remove', definition, :confirm => 'Are you sure ?', :method => :delete %> |
-      <%= link_to_if current_user.may_launch?(definition), 'launch', new_process_path(:definition_id => definition.id) %>
+
+      <%= link_to('show', definition) %> |
+
+      <%= link_to_if(
+        current_user.is_admin?,
+        'edit',
+        edit_definition_path(definition),
+        { :title => 'edit this process definition' }) %> |
+
+      <%= link_to_if(
+        current_user.may_remove?(definition),
+        'remove',
+        definition,
+        { :confirm => 'Are you sure ?',
+          :method => :delete,
+          :title => 'remove this definition' }) %> |
+
+      <%= link_to_if(
+        current_user.may_launch?(definition),
+        'launch',
+        new_process_path(:definition_id => definition.id),
+        { :title => 'launch a new instance of this process' }) %>
+
     </td>
   </tr>
 <% end %>
@@ -32,4 +51,10 @@
     </td>
   </tr>
 </table>
+
+<div id="help">
+  <p>
+[Business] process definitions. Edit them (or their initial payload) or launch them.
+  </p>
+</div>
 

@@ -30,9 +30,17 @@
     </tr>
     <tr class="button-row">
       <td colspan="2">
-        <%= link_to_if current_user.may_launch?(@definition), 'launch', new_process_path(:definition_id => @definition.id) %> |
-        <%= link_to_if current_user.is_admin?, 'edit', edit_definition_path(@definition) %> |
-        <%= link_to 'back', :back %>
+        <%= link_to_if(
+          current_user.may_launch?(@definition),
+          'launch',
+          new_process_path(:definition_id => @definition.id),
+          { :title => 'launch a new instance of this process definition' }) %> |
+        <%= link_to_if(
+          current_user.is_admin?,
+          'edit',
+          edit_definition_path(@definition),
+          { :title => 'edit this process definition' }) %> |
+        <%= link_to('back', :back) %>
       </td>
     </tr>
   </table>

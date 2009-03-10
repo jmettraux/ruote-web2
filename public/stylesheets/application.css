@@ -116,6 +116,17 @@ p.quiet { color: #666; }
   margin-bottom: 14px;
 }
 
+#help {
+  display: none;
+  font-size: 80%;
+  font-style: italic;
+  margin-top: 7px;
+}
+#help > p {
+  margin: 0px;
+  padding: 0px;
+}
+
 /* COLL */
 
 table.coll {
