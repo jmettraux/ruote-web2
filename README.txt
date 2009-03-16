@@ -15,7 +15,7 @@ WARNING : this project is in a really early stage !
 
 == getting it
 
-prerequesite : Rails 2.3.1
+prerequesite : Rails 2.3.2
 
   sudo gem install rails rack actionpack activerecord activeresource activesupport --no-ri --no-rdoc --source http://gems.rubyonrails.org
 
