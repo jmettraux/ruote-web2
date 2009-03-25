@@ -65,13 +65,16 @@ class ErrorsController < ApplicationController
     e = OpenWFE::Extras::ProcessError.find_by_wfid_and_expid(
       params[:wfid], swapdots(params[:expid]))
 
-    return error_reply("no error at #{request.request_uri}", 404) unless e
+    return error_reply(
+      "no error at /errors/#{params[:wfid]}/#{params[:expid]}", 404
+    ) unless e
 
     RuotePlugin.ruote_engine.replay_at_error(e)
 
-    msg = "replayed /errors/#{e.wfid}/#{e.expid}"
+    msg = "replayed /errors/#{params[:wfid]}/#{params[:expid]}"
 
     respond_to do |format|
+
       format.html do
         flash[:notice] = msg
         redirect_to :action => 'index'

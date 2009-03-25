@@ -22,9 +22,10 @@
 
        fei = entry.full_fei
        sfei = fei ? "#{fei.sub_instance_id} #{fei.expname} #{fei.expid}" : ''
+       cat = entry.created_at.to_s
   %>
     <tr>
-      <td class="created_at"><%= entry.created_at %></td>
+      <td class="created_at" title="<%= cat %>"><%= cat[0..18] %></td>
       <td class="since"><%= display_since(entry, :created_at) %></td>
       <td class="source"><%= view_link(entry, :source) %></td>
       <td class="event"><%= view_link(entry, :event) %></td>
@@ -32,7 +33,7 @@
       <td class="wfname"><%= view_link(entry, :wfname) %> <%= h entry.wfrevision %></td>
       <td class="fei"><%= sfei %></td>
       <td class="participant"><%= view_link(entry, :participant) %></td>
-      <td class="message" title="<%= h entry.message %>"><%= h truncate(entry.message) %></td>
+      <td class="message" title="<%= h entry.message %>"><%= h truncate(entry.message, :length => 15) %></td>
     </tr>
   <% end %>
   </tbody>
