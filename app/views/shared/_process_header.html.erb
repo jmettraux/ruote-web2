@@ -9,6 +9,6 @@
 </tr>
 <tr>
   <td>errors</td>
-  <td><%= process.errors.size %></td>
+  <td><%= link_to process.errors.size.to_s, errors_path(process.wfid) %></td>
 </tr>
 

@@ -11,7 +11,7 @@
       <td>1</td>
     </tr>
     -->
-    <tr>
+    <tr class="nhover">
       <td colspan='2'>
         <%= link_to_if current_user.is_admin?, 'edit', edit_process_path(@process.wfid) %> |
         <%= link_to_if current_user.is_launcher?(@process), 'abort', process_path(@process.wfid), :confirm => 'Are you sure ?', :method => :delete %> |

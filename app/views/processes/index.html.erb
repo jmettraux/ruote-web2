@@ -22,7 +22,10 @@
     <td><%= h display_time(ps.launch_time) %></td>
     <td><%= ps.launcher ? link_to_slice(ps, :launcher) : '-' %></td>
     <td><%= h ps.branches %></td>
-    <td><%= h ps.errors.size %></td>
+    <td><%= link_to_if(
+      current_user.is_admin? && ps.errors.size > 0,
+      h(ps.errors.size),
+      errors_path(ps.wfid)) %></td>
     <td class="coll_buttons">
       <%= link_to 'show', process_path(ps.wfid) %> |
       <%= link_to_if current_user.is_admin?, 'edit', edit_process_path(ps.wfid) %> |

@@ -35,7 +35,7 @@
     <tr>
       <td><%= h display_time(e.date) %> .<%= h e.date.usec.to_s[0, 3] %></td>
       <td><%= h e.wfid %></td>
-      <td><%= h e.fei.expid %></td>
+      <td><%= link_to h(e.fei.expid), expression_path(e.fei) %></td>
       <td><%= h e.message %></td>
       <td title="<%= h e.stacktrace %>"><%= h truncate(e.stacktrace, :length => 40) %></td>
       <td class="coll_buttons">
