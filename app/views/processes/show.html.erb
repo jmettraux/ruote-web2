@@ -1,20 +1,58 @@
 
+<% form_for(:process, @process, :html => { :method => :delete }) do |f| %>
+
 <div style="float: left;">
 
-  <div class='content_title'><%= process_path(@process.wfid) %></div>
+  <div class='content_title'><%= edit_process_path(@process.wfid) %></div>
 
   <table>
-    <%= render :partial => 'shared/process_header', :locals => { :process => @process } %>
-    <!--
+
     <tr>
-      <td>0</td>
-      <td>1</td>
+      <td class="wide-first-col">wfid</td>
+      <td><%= h @process.wfid %></td>
     </tr>
-    -->
-    <tr class="nhover">
+    <tr>
+      <td>workflow</td>
+      <td><%= h @process.wfname %> <%= h @process.wfrevision %></td>
+    </tr>
+    <tr>
+      <td>launched</td>
+      <td><%= h display_time(@process.launch_time) %></td>
+    </tr>
+    <tr>
+      <td>workitems</td>
+      <td><%= link_to @process.applied_workitems.size.to_s, workitems_path(@process.wfid) %></td>
+    </tr>
+
+    <% if @process.paused %>
+    <tr>
+      <td>paused</td>
+      <td><b>true</b></td>
+    </tr>
+    <% end %>
+
+    <tr>
+      <td>errors</td>
+      <td><%= link_to @process.errors.size.to_s, errors_path(@process.wfid) %></td>
+    </tr>
+
+    <% for fexp in @process.all_expressions.select { |fexp| ! fexp.is_a?(OpenWFE::Environment) }.reverse %>
+    <tr>
+      <td><%= @shown ? '' : 'expressions' %></td>
+      <td
+        onmouseover="FluoCan.highlight('fluo', '<%= fexp.fei.expid %>')"
+        onmouseout="FluoCan.highlight('fluo', null)"
+      ><%= link_to_if current_user.is_admin?, h(fexp.fei.to_web_s), edit_expression_path(fexp) %></td>
+      <% @shown = true %>
+    </tr>
+    <% end %>
+    <tr class='nhover'>
       <td colspan='2'>
-        <%= link_to_if current_user.is_admin?, 'edit', edit_process_path(@process.wfid) %> |
-        <%= link_to_if current_user.is_launcher?(@process), 'abort', process_path(@process.wfid), :confirm => 'Are you sure ?', :method => :delete %> |
+
+        <% if current_user.is_launcher?(@process) %>
+          <%= f.submit('abort process', :title => 'cancels (terminates) this process instance', :confirm => 'Are you sure ?') %>
+        <% end %>
+
         <%= link_to 'back', :back %>
       <td>
     </tr>
@@ -24,7 +62,9 @@
 
 <div class="align-right">
 
-  <%= render_fluo :process => @process, :workitems => @process.expressions.collect { |exp| exp.fei.expid } %>
+  <%= render_fluo :process => @process, :workitems => @process.workitem_expids %>
 
 </div>
+
+<% end %>
 

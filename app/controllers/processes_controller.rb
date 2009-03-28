@@ -100,15 +100,6 @@ class ProcessesController < ApplicationController
     end
   end
 
-  # GET /processes/:id/edit
-  #
-  def edit
-
-    @process = ruote_engine.process_status(params[:id])
-
-    # only replying in HTML ...
-  end
-
   # GET /processes/:id/tree
   #
   def tree

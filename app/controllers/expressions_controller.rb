@@ -27,7 +27,22 @@ class ExpressionsController < ApplicationController
 
   before_filter :login_required
 
+  def show
+    find_expression
+  end
+
   def edit
+    find_expression
+  end
+
+
+  protected
+
+  def authorized?
+    current_user && current_user.is_admin?
+  end
+
+  def find_expression
 
     wfid = params[:wfid]
     expid = swapdots(params[:expid])
@@ -37,12 +52,6 @@ class ExpressionsController < ApplicationController
     @expression = @process.all_expressions.find { |fexp|
       fexp.fei.wfid == wfid && fexp.fei.expid == expid
     }
-  end
-
-  protected
-
-  def authorized?
-    current_user && current_user.is_admin?
   end
 
 end

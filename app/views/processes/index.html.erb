@@ -28,7 +28,6 @@
       errors_path(ps.wfid)) %></td>
     <td class="coll_buttons">
       <%= link_to 'show', process_path(ps.wfid) %> |
-      <%= link_to_if current_user.is_admin?, 'edit', edit_process_path(ps.wfid) %> |
       <%= link_to_if current_user.is_launcher?(ps), 'abort', process_path(ps.wfid), :confirm => 'Are you sure ?', :method => :delete %>
     </td>
   </tr>
