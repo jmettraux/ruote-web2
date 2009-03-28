@@ -36,6 +36,10 @@
       <td><%= link_to @process.errors.size.to_s, errors_path(@process.wfid) %></td>
     </tr>
 
+    <tr>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+
     <% for fexp in @process.all_expressions.select { |fexp| ! fexp.is_a?(OpenWFE::Environment) }.reverse %>
     <tr>
       <td><%= @shown ? '' : 'expressions' %></td>
@@ -46,7 +50,8 @@
       <% @shown = true %>
     </tr>
     <% end %>
-    <tr class='nhover'>
+
+    <tr class='button-row'>
       <td colspan='2'>
 
         <% if current_user.is_launcher?(@process) %>
@@ -56,6 +61,7 @@
         <%= link_to 'back', :back %>
       <td>
     </tr>
+
   </table>
 
 </div>
