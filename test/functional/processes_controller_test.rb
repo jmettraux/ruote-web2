@@ -117,5 +117,9 @@ class ProcessesControllerTest < ActionController::TestCase
     get :new, :definition_id => 1
     assert_response :success
   end
+
+  def test_cancelling_process
+    raise "implement me !"
+  end
 end
 

@@ -1,0 +1,66 @@
+
+<script>
+  function showEditionDiv () {
+    byId('edition').style.display = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  }
+</script>
+
+<div style="float: left;">
+
+  <div class='content_title'><%= expression_path(@expression) %></div>
+
+  <% form_for(
+    :expression,
+    @expression,
+    :url => { :action => 'destroy' },
+    :html => { :method => :delete }) do |f|
+  %>
+    <table>
+
+      <tr>
+        <td class="wide-first-col">class</td>
+        <td><%= h @expression.class %></td>
+      </tr>
+      <tr>
+        <td>process</td>
+        <td><%= link_to h(@expression.fei.wfid), process_path(@expression.fei.wfid) %></td>
+      </tr>
+
+      <tr class='button-row'>
+        <td colspan='2'>
+          <%= f.submit(
+            'cancel expression',
+            :title => 'cancels this expression, removes its branch from the process tree',
+            :confirm => 'Are you sure ?'
+          ) %> |
+          <%= link_to_function 'edit', 'showEditionBox()' %> |
+          <%= link_to 'back', :back %>
+        <td>
+      </tr>
+
+    </table>
+  <% end %>
+
+  <% form_for(
+    :expression,
+    @expression,
+    :url => { :action => 'update' },
+    :html => { :method => :put }) do |f|
+  %>
+    <div id="">
+    </div>
+  <% end %>
+
+</div>
+
+<div class="align-right">
+
+  <%= render_fluo(
+    :process => @process,
+    :workitems => @process.workitem_expids,
+    :expid => @expression.fei.expid)
+  %>
+
+</div>
+
+

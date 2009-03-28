@@ -31,14 +31,33 @@ class ExpressionsController < ApplicationController
     find_expression
   end
 
-  def edit
-    find_expression
-  end
+  def destroy
 
+    find_expression
+
+    ruote_engine.cancel_expression(@expression)
+
+    sleep 0.350
+
+    @process = ruote_engine.process_status(params[:wfid])
+
+    if @process
+
+      redirect_to(
+        :controller => :processes, :action => :show, :wfid => @process.wfid)
+    else
+
+      redirect_to(
+        :controller => :processes, :action => :index)
+    end
+  end
 
   protected
 
   def authorized?
+    #
+    # only admins may see and edit expressions
+    #
     current_user && current_user.is_admin?
   end
 
@@ -50,7 +69,9 @@ class ExpressionsController < ApplicationController
     @process = ruote_engine.process_status(params[:wfid])
 
     @expression = @process.all_expressions.find { |fexp|
-      fexp.fei.wfid == wfid && fexp.fei.expid == expid
+      fexp.fei.wfid == wfid &&
+      fexp.fei.expid == expid &&
+      (not fexp.is_a?(OpenWFE::Environment))
     }
   end
 
