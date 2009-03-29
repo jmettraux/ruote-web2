@@ -10,11 +10,13 @@ class ExpressionsControllerTest < ActionController::TestCase
     @fei = RuotePlugin.ruote_engine.launch(OpenWFE.process_definition {
       sequence { alice; bob }
     })
-    sleep 0.200
+    sleep 0.250
   end
   def teardown
-    RuotePlugin.ruote_engine.cancel_process(@fei.wfid)
-    sleep 0.200
+    if @fei
+      RuotePlugin.ruote_engine.cancel_process(@fei.wfid)
+      sleep 0.250
+    end
   end
 
   def test_admin_can_get_expression
@@ -49,11 +51,25 @@ class ExpressionsControllerTest < ActionController::TestCase
     delete :destroy, :wfid => @fei.wfid, :expid => '0_0_0'
     assert_response 302
 
-    p @response.headers
+    #p @response.headers
+    assert_equal(
+      "http://test.host/processes/#{@fei.wfid}", @response.headers['Location'])
+
+    ps = RuotePlugin.ruote_engine.process_status(@fei.wfid)
+    wi = ps.applied_workitems.first
+    assert_equal '0.0.1', wi.fei.expid
   end
 
   def test_cancelling_root_expression_redirect_to_processes_index
 
-    raise "implement me !"
+    login_as :admin
+
+    delete :destroy, :wfid => @fei.wfid, :expid => '0'
+    assert_response 302
+
+    #p @response.headers
+    assert_equal('http://test.host/processes', @response.headers['Location'])
+
+    @fei = nil # prevents teardown from cancelling the now missing process
   end
 end

@@ -41,15 +41,7 @@ class ExpressionsController < ApplicationController
 
     @process = ruote_engine.process_status(params[:wfid])
 
-    if @process
-
-      redirect_to(
-        :controller => :processes, :action => :show, :wfid => @process.wfid)
-    else
-
-      redirect_to(
-        :controller => :processes, :action => :index)
-    end
+    redirect_to(@process ? process_path(@process.wfid) : processes_path)
   end
 
   protected
