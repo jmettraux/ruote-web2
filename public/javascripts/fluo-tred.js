@@ -129,6 +129,7 @@ var FluoTred = function () {
         atts = atts.substring(1, atts.length - 1);
 
         var d = document.createElement('div');
+        d.setAttribute('class', 'tred_exp');
         node.appendChild(d);
 
         var sen = document.createElement('span');

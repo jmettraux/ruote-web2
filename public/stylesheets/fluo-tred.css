@@ -1,6 +1,6 @@
 
 .tred_expression {
-  line-height: 1;
+  line-height: 1.2;
 }
 .tred_expression_atts,
 .tred_text,
@@ -28,12 +28,17 @@
   cursor: pointer;
   margin-left: 3px;
 }
-input[type="text"] {
+.tred_exp > input[type="text"] {
   color: #888;
   font-family: Courier;
   font-size: 14px;
   border: 0px;
-  margin: 0px;
+  margin: -1px;
+  padding: 0px;
   width: 400px;
+}
+img.tred_button {
+  margin: 0px;
+  vertical-align: middle;
 }
 

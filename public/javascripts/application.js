@@ -33,10 +33,16 @@ function onEnter (field, evt, func) {
   return false;
 }
 
+function toggleVisibility (i) {
+  var e = i;
+  if ((typeof e) == 'string') e = byId(i);
+  if (e.style.display == 'block') e.style.display = 'none';
+  else e.style.display = 'block';
+}
+
 function toggleHelp () {
   var h = document.getElementById('help');
   if ( ! h) return;
-  if (h.style.display == 'block') h.style.display = 'none';
-  else h.style.display = 'block';
+  toggleVisibility(h);
 }
 

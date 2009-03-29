@@ -2,13 +2,7 @@
 <%= javascript_include_tag 'fluo-tred' %>
 
 <script>
-
   linkToCss('fluo-tred');
-
-  function showEditor () {
-    byId('editor').style.display = 'block';
-  }
-
 </script>
 
 <div style="float: left;">
@@ -39,7 +33,7 @@
             :title => 'cancels this expression, removes its branch from the process tree',
             :confirm => 'Are you sure ?'
           ) %> |
-          <%= link_to_function 'edit', 'showEditor()' %> |
+          <%= link_to_function 'edit', 'toggleVisibility("editor")' %> |
           <%= link_to 'back', :back %>
         <td>
       </tr>
@@ -55,12 +49,27 @@
   %>
     <div id="editor" style="display: none;">
 
-      <div id="tred">
+      <div id="editor-in">
+
+        <div id="tred">
+        </div>
+
+        <div id="flu">
+          <canvas id="editor-fluo" width="200" height="200"></canvas>
+        </div>
+
+        <div style="clear: both;"></div>
+
       </div>
 
-      <div id="flu">
-        <canvas id="editor-fluo" width="200" height="200"></canvas>
-      </div>
+      <%= f.submit(
+        'update expression',
+        :title => 'modifies the expression directly (warning this may ruin your process instance)',
+        :confirm => 'Are you sure ?')
+      %> | 
+      <%= link_to_function 'cancel', 'toggleVisibility("editor")' %> |
+      <%= link_to_function 'reset', 'tredReset()' %> |
+      <%= link_to_function 'undo', 'FluoTred.undo("tred")' %>
 
     </div>
   <% end %>
@@ -78,8 +87,26 @@
 </div>
 
 <script>
-  var tred = byId('tred');
 
-  FluoTred.renderFlow(tred, <%= @expression.raw_representation.to_json %>);
+  var tred = byId('tred');
+  var original_tree = <%= @expression.raw_representation.to_json %>;
+
+  function tredReset () {
+    //FluoTred.renderFlow(tred, original_tree);
+    alert("implement me !");
+  }
+
+  FluoTred.renderFlow(tred, original_tree);
+  tred.onOver = function (expid) {
+    FluoCan.highlight('editor-fluo', expid);
+  };
+  tred.onChange = function (tree) {
+    FluoCan.renderFlow('editor-fluo', tree);
+    FluoCan.crop('editor-fluo');
+  };
+
+  FluoCan.renderFlow('editor-fluo', original_tree);
+  FluoCan.crop('editor-fluo');
+
 </script>
 
