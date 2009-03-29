@@ -27,10 +27,38 @@ class ExpressionsController < ApplicationController
 
   before_filter :login_required
 
+  # GET /expressions/:wfid/:expid
+  #
   def show
+
     find_expression
+
+    respond_to do |format|
+
+      format.html
+        # => app/views/expressions/show.html.erb
+
+      format.json do
+        render(:json => OpenWFE::Json.expression_to_h(
+          @expression,
+          :linkgen => linkgen).to_json)
+      end
+
+      format.xml do
+        render(:xml => OpenWFE::Xml.expression_to_xml(
+          @expression,
+          :indent => 2, :linkgen => linkgen))
+      end
+    end
   end
 
+  # PUT /expressions/:wfid/:expid
+  #
+  def update
+  end
+
+  # DELETE /expressions/:wfid/:expid
+  #
   def destroy
 
     find_expression
@@ -42,6 +70,29 @@ class ExpressionsController < ApplicationController
     @process = ruote_engine.process_status(params[:wfid])
 
     redirect_to(@process ? process_path(@process.wfid) : processes_path)
+  end
+
+  # GET /expressions/:wfid/:expid/tree
+  #
+  def show_tree
+
+    find_expression
+
+    respond_to do |format|
+
+      format.html do
+        render(:json => @expression.raw_representation.to_json)
+      end
+
+      format.json do
+        render(:json => @expression.raw_representation.to_json)
+      end
+    end
+  end
+
+  # UPDATE /expressions/:wfid/:expid/tree
+  #
+  def update_tree
   end
 
   protected

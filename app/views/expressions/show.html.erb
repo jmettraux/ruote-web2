@@ -1,8 +1,14 @@
 
+<%= javascript_include_tag 'fluo-tred' %>
+
 <script>
-  function showEditionDiv () {
-    byId('edition').style.display = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+  linkToCss('fluo-tred');
+
+  function showEditor () {
+    byId('editor').style.display = 'block';
   }
+
 </script>
 
 <div style="float: left;">
@@ -33,7 +39,7 @@
             :title => 'cancels this expression, removes its branch from the process tree',
             :confirm => 'Are you sure ?'
           ) %> |
-          <%= link_to_function 'edit', 'showEditionBox()' %> |
+          <%= link_to_function 'edit', 'showEditor()' %> |
           <%= link_to 'back', :back %>
         <td>
       </tr>
@@ -47,7 +53,15 @@
     :url => { :action => 'update' },
     :html => { :method => :put }) do |f|
   %>
-    <div id="">
+    <div id="editor" style="display: none;">
+
+      <div id="tred">
+      </div>
+
+      <div id="flu">
+        <canvas id="editor-fluo" width="200" height="200"></canvas>
+      </div>
+
     </div>
   <% end %>
 
@@ -63,4 +77,9 @@
 
 </div>
 
+<script>
+  var tred = byId('tred');
+
+  FluoTred.renderFlow(tred, <%= @expression.raw_representation.to_json %>);
+</script>
 

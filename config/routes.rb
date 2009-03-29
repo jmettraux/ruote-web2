@@ -57,14 +57,31 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing the them or commenting them out if you're using named routes and resources.
 
   map.wfid_resources :workitems
-  map.wfid_resources :expressions
   map.wfid_resources :errors
 
+  map.wfid_resources :expressions
+  map.connect(
+    'expressions/:wfid/:expid/tree',
+    :controller => 'expressions',
+    :action => 'show_tree',
+    :conditions => { :method => :get })
+  map.connect(
+    'expressions/:wfid/:expid/tree',
+    :controller => 'expressions',
+    :action => 'update_tree',
+    :conditions => { :method => :put })
+
   map.resources :definitions
-  map.connect 'definitions/:id/tree.js', :controller => 'definitions', :action => 'tree'
+  map.connect(
+    'definitions/:id/tree.js',
+    :controller => 'definitions',
+    :action => 'tree')
 
   map.resources :processes
-  map.connect 'processes/:id/tree.js', :controller => 'processes', :action => 'tree'
+  map.connect(
+    'processes/:id/tree.js',
+    :controller => 'processes',
+    :action => 'tree')
 
   map.resources :history
 

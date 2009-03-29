@@ -1,0 +1,39 @@
+
+.tred_expression {
+  line-height: 1;
+}
+.tred_expression_atts,
+.tred_text,
+.tred_expression_name,
+.tred_expression_string,
+.tred_ghost_button {
+  color: #888;
+  font-family: Courier;
+  font-size: 14px;
+  /*margin: 20px 10px;*/
+}
+.tred_expression_name {
+  color: blue;
+}
+.tred_expression_atts {
+}
+.tred_expression_string {
+  color: green;
+}
+.tred_exp_span {
+  /*margin-right: 5px;*/
+}
+.tred_button {
+  color: blue;
+  cursor: pointer;
+  margin-left: 3px;
+}
+input[type="text"] {
+  color: #888;
+  font-family: Courier;
+  font-size: 14px;
+  border: 0px;
+  margin: 0px;
+  width: 400px;
+}
+
