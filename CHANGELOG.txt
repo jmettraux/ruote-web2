@@ -2,7 +2,7 @@
 = OpenWFEru "ruote-web2" - CHANGELOG.txt
 
 
-== ruote-web2 - 0.9.20    not yet released
+== ruote-web2 - 0.9.21    not yet released
 
 - todo  #23886 : added wfname and wfrevision to DbHistory
 - todo  #23697 : using rake gems:install for rufus gems from now on

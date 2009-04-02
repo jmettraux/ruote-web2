@@ -130,7 +130,7 @@ class WorkitemsController < ApplicationController
 
     wi1 = parse_workitem
 
-    wid = "#{owi.fei.wfid}/#{swapdots(owi.fei.expid)}"
+    wid = "#{owi.fei.wfid}/#{OpenWFE.to_uscores(owi.fei.expid)}"
 
     if store_name = params[:store_name]
 
@@ -184,7 +184,7 @@ class WorkitemsController < ApplicationController
   def find_workitem
 
     workitem = OpenWFE::Extras::ArWorkitem.find_by_wfid_and_expid(
-      params[:wfid], swapdots(params[:expid]))
+      params[:wfid], OpenWFE.to_dots(params[:expid]))
 
     current_user.may_see?(workitem) ? workitem : nil
   end

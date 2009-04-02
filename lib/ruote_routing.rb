@@ -114,7 +114,7 @@ class ActionController::Routing::RouteSet::Mapper
       end
       def #{singular}_path (o)
         o = o.fei if o.is_a?(OpenWFE::FlowExpression)
-        "/#{plural}/\#{o.wfid}/\#{swapdots(o.expid)}"
+        "/#{plural}/\#{o.wfid}/\#{OpenWFE.to_uscores(o.expid)}"
       end
       def edit_#{singular}_path (o)
         "\#{#{singular}_path(o)}/edit"
@@ -133,20 +133,6 @@ class ActionController::Routing::RouteSet::Mapper
       end
     EOS
   end
-end
-
-#
-# '.' <-> '_'
-#
-def swapdots (s)
-  (s.index('.') != nil) ? s.gsub(/\./, '_') : s.gsub(/_/, '.')
-end
-
-#
-# '_' --> '.'
-#
-def swap_to_dots (s)
-  (s.index('.') != nil) ? s : s.gsub(/_/, '.')
 end
 
 #

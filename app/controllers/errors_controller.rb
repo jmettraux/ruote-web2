@@ -63,7 +63,7 @@ class ErrorsController < ApplicationController
   def destroy
 
     e = OpenWFE::Extras::ProcessError.find_by_wfid_and_expid(
-      params[:wfid], swapdots(params[:expid]))
+      params[:wfid], OpenWFE.to_dots(params[:expid]))
 
     return error_reply(
       "no error at /errors/#{params[:wfid]}/#{params[:expid]}", 404

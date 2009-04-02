@@ -166,7 +166,7 @@ class WorkitemsControllerTest < ActionController::TestCase
     put(
       :update,
       { :wfid => wfei['workflow_instance_id'],
-        :expid => swapdots(wfei['expression_id']),
+        :expid => OpenWFE.to_uscores(wfei['expression_id']),
         'state' => 'proceeded',
         'fields' => atts })
 

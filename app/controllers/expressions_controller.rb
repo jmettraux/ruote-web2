@@ -107,7 +107,7 @@ class ExpressionsController < ApplicationController
   def find_expression
 
     wfid = params[:wfid]
-    expid = swapdots(params[:expid])
+    expid = OpenWFE.to_dots(params[:expid])
 
     @process = ruote_engine.process_status(params[:wfid])
 
