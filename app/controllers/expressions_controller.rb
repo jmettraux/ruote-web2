@@ -55,6 +55,12 @@ class ExpressionsController < ApplicationController
   # PUT /expressions/:wfid/:expid
   #
   def update
+
+    find_expression
+
+    ruote_engine.update_expression_tree(@expression, parse_tree)
+
+    redirect_to :action => 'show'
   end
 
   # DELETE /expressions/:wfid/:expid
@@ -93,6 +99,8 @@ class ExpressionsController < ApplicationController
   # UPDATE /expressions/:wfid/:expid/tree
   #
   def update_tree
+
+    # TODO, well maybe
   end
 
   protected
@@ -116,6 +124,33 @@ class ExpressionsController < ApplicationController
       fexp.fei.expid == expid &&
       (not fexp.is_a?(OpenWFE::Environment))
     }
+  end
+
+  # parse incoming expression (update)
+  #
+  def parse_tree
+
+    begin
+
+      ct = request.content_type.to_s
+
+      return request.body.read \ # TODO
+        if ct.match(/xml$/)
+
+      return request.body.read \ # TODO
+        if ct.match(/json$/)
+
+      #
+      # then we simply have a form...
+
+      ActiveSupport::JSON.decode(params[:tree])
+
+    rescue Exception => e
+
+      logger.warn("failed to parse expression : #{e}")
+
+      nil
+    end
   end
 
 end

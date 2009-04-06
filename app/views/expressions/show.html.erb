@@ -92,6 +92,9 @@
       <%= link_to_function 'undo', 'FluoTred.undo("tred")' %>
 
     </div>
+
+    <input type="hidden" name="tree" id="tree-field" value=""></input>
+
   <% end %>
 
 </div>
@@ -109,7 +112,8 @@
 <script>
 
   var tred = byId('tred');
-  var original_tree = <%= @expression.raw_representation.to_json %>;
+  var originalTree = <%= @expression.raw_representation.to_json %>;
+  var treeField = byId('tree-field');
 
   tred.onOver = function (expid) {
     FluoCan.highlight('editor-fluo', expid);
@@ -117,12 +121,14 @@
   tred.onChange = function (tree) {
     FluoCan.renderFlow('editor-fluo', tree);
     FluoCan.crop('editor-fluo');
+    treeField.value = FluoTred.asJson(tred);
     repositionFooter();
   };
 
   function tredReset () {
-    FluoTred.renderFlow(tred, original_tree);
-    FluoCan.renderFlow('editor-fluo', original_tree);
+    FluoTred.renderFlow(tred, originalTree);
+    treeField.value = FluoTred.asJson(tred);
+    FluoCan.renderFlow('editor-fluo', originalTree);
     FluoCan.crop('editor-fluo');
     repositionFooter();
   }
