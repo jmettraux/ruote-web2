@@ -1,11 +1,9 @@
 
-//
 // $(whatever) style
 //
 function byId (i) { return document.getElementById(i); } 
   // I know, but let's get js framework independent
 
-//
 // links to a CSS file (in the document <HEAD/>)
 //
 function linkToCss (href) {
@@ -23,7 +21,6 @@ function linkToCss (href) {
     // making sure that controller-related css are placed last
 }
 
-//
 // when 'enter' is hit, will call 'func'
 //
 function onEnter (field, evt, func) {
@@ -33,11 +30,18 @@ function onEnter (field, evt, func) {
   return false;
 }
 
+function filterEnterKeyOut (evt) {
+  var e = evt || window.event;
+  var c = e.charCode || e.keyCode;
+  return (c != 13);
+}
+
 function toggleVisibility (i) {
   var e = i;
   if ((typeof e) == 'string') e = byId(i);
   if (e.style.display == 'block') e.style.display = 'none';
   else e.style.display = 'block';
+  return (e.style.display == 'block'); // true if now visible
 }
 
 function toggleHelp () {

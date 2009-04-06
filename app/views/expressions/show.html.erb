@@ -2,7 +2,25 @@
 <%= javascript_include_tag 'fluo-tred' %>
 
 <script>
+
   linkToCss('fluo-tred');
+
+  function repositionFooter (editorVisible) {
+    var f = byId('footer-block');
+    if (editorVisible) {
+      var e = byId('editor')
+      f.style.top = "" + (e.offsetTop + e.offsetHeight + 15) + "px";
+      f.style.position = 'absolute';
+    }
+    else {
+      f.style.position = 'static';
+    }
+  }
+
+  function toggleEditor () {
+    repositionFooter(toggleVisibility('editor'));
+  }
+
 </script>
 
 <div style="float: left;">
@@ -33,7 +51,7 @@
             :title => 'cancels this expression, removes its branch from the process tree',
             :confirm => 'Are you sure ?'
           ) %> |
-          <%= link_to_function 'edit', 'toggleVisibility("editor")' %> |
+          <%= link_to_function 'edit', 'toggleEditor()' %> |
           <%= link_to 'back', :back %>
         <td>
       </tr>
@@ -45,9 +63,9 @@
     :expression,
     @expression,
     :url => { :action => 'update' },
-    :html => { :method => :put }) do |f|
+    :html => { :method => :put, :onkeypress => 'return filterEnterKeyOut(event);' }) do |f|
   %>
-    <div id="editor" style="display: none;">
+    <div id="editor">
 
       <div id="editor-in">
 
@@ -67,7 +85,7 @@
         :title => 'modifies the expression directly (warning this may ruin your process instance)',
         :confirm => 'Are you sure ?')
       %> | 
-      <%= link_to_function 'cancel', 'toggleVisibility("editor")' %> |
+      <%= link_to_function 'cancel', 'toggleEditor()' %> |
       <%= link_to_function 'reset', 'tredReset()' %> |
       <%= link_to_function 'undo', 'FluoTred.undo("tred")' %>
 
@@ -103,6 +121,7 @@
   tred.onChange = function (tree) {
     FluoCan.renderFlow('editor-fluo', tree);
     FluoCan.crop('editor-fluo');
+    repositionFooter(true);
   };
 
   FluoCan.renderFlow('editor-fluo', original_tree);

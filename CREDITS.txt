@@ -31,4 +31,5 @@ Ron Fox Kendou (concurrence bug)
 - the Styler rails plugin   http://the.railsi.st
 - blueprint css             http://www.blueprintcss.org
 - will_paginate             http://github.com/mislav/will_paginate
+many more...
 

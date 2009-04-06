@@ -1,5 +1,9 @@
 
 #editor {
+  display: none;
+  position: absolute;
+  background-color: white;
+  padding: 1px;
 }
 
 #editor-in {
