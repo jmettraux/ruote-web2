@@ -134,11 +134,11 @@ class ExpressionsController < ApplicationController
 
       ct = request.content_type.to_s
 
-      return request.body.read \ # TODO
-        if ct.match(/xml$/)
+      return request.body.read \
+        if ct.match(/xml$/) # TODO
 
-      return request.body.read \ # TODO
-        if ct.match(/json$/)
+      return request.body.read \
+        if ct.match(/json$/) # TODO
 
       #
       # then we simply have a form...

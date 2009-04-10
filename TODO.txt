@@ -1,6 +1,4 @@
 
-[ ] expressions/show
-[ ] expressions/edit
-
-[ ] /errors all
+[ ] fix participant ""toto"" bug when updating expression
+[ ] expression update ?= applied_workitem update
 
