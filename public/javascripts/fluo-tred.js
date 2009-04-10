@@ -19,18 +19,31 @@
 //  ]
 //]
 
-HTMLElement.prototype.firstChildOfClass = function (className) {
-  for (var i=0; i < this.childNodes.length; i++) {
-    var c = this.childNodes[i];
-    if (c.className == className) return c;
+try {
+  HTMLElement.prototype.firstChildOfClass = function (className) {
+    for (var i=0; i < this.childNodes.length; i++) {
+      var c = this.childNodes[i];
+      if (c.className == className) return c;
+    }
+    return null;
   }
-  return null;
+} catch (e) {
+  // probably testing via Rhino
 }
+
 String.prototype.tstrip = function () {
   var s = this;
   while (s.charAt(0) == ' ') s = s.substring(1);
   while (s.charAt(s.length - 1) == ' ') s = s.substring(0, s.length - 1);
   return s;
+}
+String.prototype.qstrip = function () {
+  var s = this;
+  if (s.match(/".*"/)) s = s.substring(1, s.length - 1);
+  return s;
+}
+String.prototype.tqstrip = function () {
+  return this.tstrip().qstrip();
 }
 
 var FluoTred = function () {
@@ -116,6 +129,36 @@ var FluoTred = function () {
       expdiv.appendChild(buttons);
     }
 
+    var headPattern = /^(\S*)( [.]*[^:]*)?( .*)?$/;
+    var keyPattern = /([^ :]+|".*") *:/;
+
+    function quoteKeys (s) {
+      var ss = '';
+      while (s) {
+        var m = s.match(keyPattern);
+        if ( ! m) {
+          ss += s;
+          break;
+        }
+        ss += s.substring(0, m.index - 1);
+        var m1 = m[1].tstrip();
+        if (m1.match(/^".*"$/)) ss += m1;
+        else ss += ('"' + m1 + '"');
+        ss += ':';
+        s = s.substring(m.index + m[0].length);
+      }
+      return ss;
+    }
+
+    function renderAttributes (h) {
+      s = '';
+      for (var k in h) {
+        s += ('' + k + ': ' + fluoToJson(h[k]) + ', ');
+      }
+      if (s.length > 1) s = s.substring(0, s.length - 2);
+      return s;
+    }
+
     return {
 
       render: function (node, exp) {
@@ -125,8 +168,9 @@ var FluoTred = function () {
         var text = '';
         if ((typeof exp[2][0]) == 'string') text = exp[2].shift();
 
-        var atts = fluoToJson(exp[1]);
-        atts = atts.substring(1, atts.length - 1);
+        //var atts = fluoToJson(exp[1]);
+        //atts = atts.substring(1, atts.length - 1);
+        var atts = renderAttributes(exp[1]);
 
         var d = document.createElement('div');
         d.setAttribute('class', 'tred_exp');
@@ -189,22 +233,26 @@ var FluoTred = function () {
         return d;
       },
 
+      parseAttributes: function (s) {
+        return fluoFromJson("{" + quoteKeys(s) + "}");
+      },
+
       parse: function (s) {
 
-        var m = s.match(/^(\S*)( [.]*[^:]*)?( .*)?$/);
+        var m = s.match(headPattern);
 
-        if (m == null) return ['---', {}, []];
+        if (m == null) return [ '---', {}, [] ];
 
         var expname = m[1];
 
         var children = [];
         if (m[2]) {
           var t = m[2].tstrip();
+          if (t.match(/".*"/)) t = t.substring(1, t.length - 1);
           if (t != '') children.push(t);
         }
 
-        var atts = m[3];
-        atts = atts ? fluoFromJson('({' + atts + '})') : {};
+        atts = ExpressionHead.parseAttributes(m[3]);
 
         return [ expname, atts, children ];
       },
@@ -217,7 +265,7 @@ var FluoTred = function () {
         var text = node.childNodes[1].firstChild.nodeValue;
         var atts = node.childNodes[2].firstChild.nodeValue;
 
-        atts = fluoFromJson('({' + atts + '})');
+        atts = ExpressionHead.parseAttributes(atts);
 
         var children = [];
         if (text != '') children.push(text.tstrip()); 
@@ -301,7 +349,6 @@ var FluoTred = function () {
       return;
     }
 
-    //renderOpening(node, exp);
     ExpressionHead.render(node, exp);
 
     //
@@ -451,6 +498,9 @@ var FluoTred = function () {
   // public methods
   //
   return {
+
+    ExpressionHead: ExpressionHead, // for testing purposes
+
     renderFlow: renderFlow,
     addExpression: addExpression,
     removeExpression: removeExpression,
