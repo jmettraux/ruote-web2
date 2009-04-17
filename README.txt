@@ -26,7 +26,10 @@ This sequence of commands will install ruote-web2 in your current directory (und
 
   git clone git://github.com/jmettraux/ruote-web2.git
   cd ruote-web2
-  rake submodule:update
+
+  git submodule init
+  git submodule update
+
   sudo rake gems:install
   rake ruote:install
   
