@@ -67,7 +67,7 @@ class ActiveSupport::TestCase
 
     @request.env['RAW_POST_DATA'] = body
 
-    post method
+    post(method)
   end
 end
 

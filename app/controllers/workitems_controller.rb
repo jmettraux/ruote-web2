@@ -59,7 +59,7 @@ class WorkitemsController < ApplicationController
         [
           # parameter_name[, column_name]
           'wfid',
-          [ 'workflow', 'wf_name' ],
+          [ 'workflow', 'wfname' ],
           [ 'store', 'store_name' ],
           [ 'participant', 'participant_name' ]
         ],
